@@ -1,48 +1,98 @@
+:root {
+  --bg: #0b0f14;
+  --bg-2: #0f141b;
+  --text: #e6eef8;
+  --muted: #9bb0c6;
+  --accent: #7dd6ff;
+  --accent-2: #9f7bff;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-    margin: 0;
-    overflow: hidden;
-    background-color: #000;
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
-#ui-controls {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    color: white;
-    font-family: sans-serif;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 100;
+#app {
+  position: fixed;
+  inset: 0;
+  display: grid;
 }
 
-#loading-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-family: sans-serif;
+canvas.webgl {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
-#loader {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #3498db;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 2s linear infinite;
-    margin-bottom: 20px;
+.hud {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: color-mix(in oklab, var(--bg) 70%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
+  border-radius: 12px;
+  backdrop-filter: blur(8px) saturate(140%);
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.brand {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+}
+.brand .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, var(--accent) 0 50%, var(--accent-2) 60% 100%);
+  box-shadow: 0 0 14px color-mix(in oklab, var(--accent) 70%, transparent);
+}
+
+.actions { display: inline-flex; gap: 8px; align-items: center; }
+
+button, .link {
+  all: unset;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in oklab, var(--muted) 30%, transparent);
+  color: var(--text);
+  background: color-mix(in oklab, var(--bg-2) 80%, transparent);
+  transition: 160ms ease-out;
+}
+button:hover, .link:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--accent) 14%, transparent);
+}
+
+.link { text-decoration: none; }
+
+/* lil-gui adjust */
+.lil-gui.root {
+  --background-color: color-mix(in oklab, var(--bg-2) 85%, transparent);
+  --title-background-color: color-mix(in oklab, var(--bg-2) 95%, transparent);
+  --font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial;
+  --font-size: 12px;
+  --padding: 8px;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hud { gap: 8px; padding: 8px 10px; }
+  button, .link { padding: 6px 10px; }
 }
