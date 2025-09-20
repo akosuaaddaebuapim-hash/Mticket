@@ -1,32 +1,343 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Ultra-modern 23-story twisted skyscraper demo in Three.js" />
-    <title>Ultra Modern 23-Story Skyscraper — Three.js</title>
-    <link rel="preconnect" href="https://unpkg.com" crossorigin />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <div id="app">
-      <div class="hud">
-        <div class="brand">
-          <span class="dot"></span>
-          <span>Skyscraper23</span>
-        </div>
-        <div class="actions">
-          <button id="toggle-mode" title="Toggle Day/Night">Day/Night</button>
-          <button id="screenshot" title="Download Screenshot">📸 Screenshot</button>
-          <a id="github-link" class="link" href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
-        </div>
-      </div>
-      <noscript>
-        This demo requires JavaScript (ES Modules). Please enable JavaScript.
-      </noscript>
-    </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Futuristic Tech HQ – Ridge Royal, Accra</title>
+  <meta name="description" content="A 23-story ultra-modern skyscraper designed for a technology company in Ridge Royal, Accra. Innovative, unique, and highly functional. Explore with interactive 2D/3D web visualization.">
+  <style>
+    :root {
+      --primary-blue: #1E90FF;
+      --vivid-purple: #8A2BE2;
+      --tech-cyan: #00FFCC;
+      --electric-pink: #FF00FF;
+      --futuristic-gold: #FFD700;
+      --slate: #232c36;
+      --night: #1b2230;
+      --glass-white: rgba(255,255,255,0.30);
+      --glass-highlight: rgba(255,255,255,0.15);
+      --leaf-green: #32CD32;
+      --accent-orange: #FF4500;
+      --deep-grey: #1a1a1a;
+      --silhouette: #22292F;
+      --tree-green: #337844;
+      --car-blue: #3C75B6;
+      --person-purple: #c46eca;
+      --person-cyan: #5ddacc;
+      --width: calc(90vw < 1000px ? 90vw : 1000px);
+      --tower-width: 320px;
+      --tower-height: 700px;
+      --podium-height: 130px;
+      --sky-garden-height: 30px;
+      --bg-gradient: linear-gradient(180deg, #4B0082 0%, #00BFFF 68%, #FFD700 100%);
+    }
+    body {
+      margin: 0;
+      background: var(--bg-gradient), #111;
+      font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 2s;
+    }
+    header {
+      margin-top: 2rem;
+    }
+    h1 {
+      letter-spacing: 2px;
+      background: linear-gradient(to right, var(--primary-blue), var(--vivid-purple), var(--futuristic-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 2.6rem;
+      text-align: center;
+      margin-bottom: 0.25em;
+    }
+    h2 {
+      margin-top: 0.6em;
+      margin-bottom: 0.6em;
+      color: var(--futuristic-gold);
+      font-size: 1.4rem;
+      text-align: center;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--tech-cyan);
+      margin-bottom: 1.2em;
+      text-align: center;
+    }
+    main {
+      max-width: 100vw;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .skyscraper-container {
+      margin: 2em auto 0 auto;
+      width: var(--width);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    /* SVG Responsive */
+    svg {
+      display: block;
+      max-width: 95vw;
+      height: auto;
+      box-shadow: 0 8px 56px 8px rgba(30, 144, 255, 0.15);
+      border-radius: 3.5rem 3.5rem 1rem 1rem/2rem 2rem 2rem 2rem;
+      background: linear-gradient(180deg, rgba(34,41,47,.10) 60%, rgba(34,41,47,.33) 100%);
+      margin-bottom: 2em;
+    }
+    /* Podium Animation */
+    .podium {
+      filter: drop-shadow(0 2px 12px var(--primary-blue));
+      opacity: 0.95;
+      stroke-width: 1.2;
+    }
+    /* Rotating Animation for the Tower */
+    @keyframes tower-rotate {
+      0% {transform: rotate(-1deg);}
+      50% {transform: rotate(2deg);}
+      100% {transform: rotate(-1deg);}
+    }
+    .tower-group {
+      transform-origin: 50% 100%;
+      animation: tower-rotate 11s infinite linear alternate;
+      will-change: transform;
+    }
+    /* Diagrid Blinks */
+    .diagrid-flash1 {
+      filter: drop-shadow(0 0 12px var(--tech-cyan));
+      animation: diagrid-glow1 3.1s infinite alternate;
+    }
+    .diagrid-flash2 {
+      filter: drop-shadow(0 0 15px var(--futuristic-gold));
+      animation: diagrid-glow2 2.6s infinite alternate;
+    }
+    @keyframes diagrid-glow1 {
+      0%,90% { opacity:0.95; }
+      30% { opacity:1; }
+      60% { opacity:0.45; }
+    }
+    @keyframes diagrid-glow2 {
+      0%,70% { opacity:.88;}
+      35% { opacity:1;}
+      80% { opacity:0.63; }
+    }
+    /* Glassy Skybridge */
+    .skybridge {
+      filter: drop-shadow(0 0 9px var(--electric-pink));
+      opacity:0.84;
+      mix-blend-mode: screen;
+    }
+    /* Garden Animation */
+    .sky-garden-flash {
+      filter: drop-shadow(0 5px 11px var(--leaf-green));
+      animation: garden-glow 6.5s infinite alternate;
+    }
+    @keyframes garden-glow {
+      0% { opacity: 0.65;}
+      60% { opacity:1;}
+      100% { opacity:0.85; }
+    }
+    /* Car Animation */
+    .car {
+      animation: car-move 13s linear infinite;
+    }
+    @keyframes car-move {
+      0% { transform: translateX(0);}
+      100% { transform: translateX(650px);}
+    }
+    /* Person */
+    .person {
+      transition: opacity 0.6s;
+      opacity:0.89;
+      cursor: pointer;
+    }
+    .person:hover { opacity:1; filter: drop-shadow(0 2px 10px var(--person-cyan)); }
+    /* Responsive adjustments */
+    @media (max-width: 699px) {
+      :root{ --tower-width: 210px; --tower-height: 430px;}
+      h1 {font-size:2rem;}
+      .skyscraper-container {width:98vw;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Futuristic Tech HQ Skyscraper</h1>
+    <div class="subtitle">Ridge Royal, Accra &ndash; Unique, Complex, and Utterly Modern</div>
+    <h2>Explore our ultra-modern 23-story vision for Ghana's tech future</h2>
+  </header>
 
-    <script type="module" src="./src/main.js"></script>
-  </body>
+  <main>
+    <section class="skyscraper-container" aria-label="Skyscraper and urban environment visualization">
+      <!-- SVG Illustration (1000 x 800 basis, scalable) -->
+      <svg id="accra-tower-svg" width="1000" height="800" viewBox="0 0 1000 800" aria-labelledby="viz-title viz-desc" role="img">
+        <title id="viz-title">23-Story Futuristic Skyscraper, Ridge Royal, Accra</title>
+        <desc id="viz-desc">A visually striking skyscraper with twisting diagrid, glass skybridge, gardens, and urban context of people, cars, and trees in Ridge Accra.</desc>
+        <defs>
+          <!-- Gradients for glass and metal -->
+          <linearGradient id="grad-glass" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#00FFFF" stop-opacity="0.82"/>
+            <stop offset="90%" stop-color="#fff" stop-opacity="0.23"/>
+            <stop offset="100%" stop-color="#8A2BE2" stop-opacity="0.17"/>
+          </linearGradient>
+          <linearGradient id="grad-metal" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFD700" stop-opacity="1"/>
+            <stop offset="85%" stop-color="#1E90FF" stop-opacity="0.17"/>
+          </linearGradient>
+          <radialGradient id="grad-day" cx="0.6" cy="0.21" r="0.8">
+            <stop offset="0%" stop-color="#E6F6FF"/>
+            <stop offset="100%" stop-color="#00BFFF" stop-opacity="0.38"/>
+          </radialGradient>
+          <!-- For trees and people -->
+          <linearGradient id="grad-tree" x1="0" y1="0" x2="0.5" y2="1">
+            <stop offset="0%" stop-color="#A8E063"/>
+            <stop offset="100%" stop-color="#3B7A57"/>
+          </linearGradient>
+        </defs>
+        <!-- Background: Sky and distant city -->
+        <rect x="0" y="0" width="1000" height="800" fill="url(#grad-day)" />
+        <!-- Distant city silhouette -->
+        <g>
+          <rect x="0" y="670" width="1000" height="90" fill="#223" opacity="0.28"/>
+          <rect x="80" y="650" width="60" height="33" fill="#34445E" opacity="0.20"/>
+          <rect x="530" y="668" width="80" height="26" fill="#223" opacity="0.33"/>
+          <rect x="330" y="689" width="40" height="21" fill="#223" opacity="0.19"/>
+          <rect x="720" y="675" width="57" height="19" fill="#292B41" opacity="0.25"/>
+        </g>
+        <!-- Podium Base -->
+        <g class="podium">
+          <rect x="260" y="630" width="480" height="70" rx="22" fill="url(#grad-metal)" stroke="#FFD700" />
+          <!-- Podium garden band -->
+          <rect x="280" y="690" width="440" height="24" rx="13" fill="url(#grad-tree)" opacity="0.84"/>
+        </g>
+        <!-- Main Tower: twisting diagrid -->
+        <g class="tower-group">
+          <!-- Tower glass core -->
+          <rect x="384" y="160" width="232" height="470" rx="75" fill="url(#grad-glass)" stroke="#20BDD0" stroke-width="3" opacity="0.87"/>
+          <!-- Diagrid overlay - stylized -->
+          <g class="diagrid-flash1">
+            <polygon points="386,168 400,188 498,630 480,630" fill="none" stroke="#FFD700" stroke-width="6"/>
+            <polygon points="612,168 598,188 498,630 520,630" fill="none" stroke="#1E90FF" stroke-width="6"/>
+            <polygon points="407,172 422,196 570,630 552,630" fill="none" stroke="#8A2BE2" stroke-width="5"/>
+            <polygon points="591,172 578,196 430,630 448,630" fill="none" stroke="#00FFCC" stroke-width="5"/>
+            <polyline points="435,196 530,630" fill="none" stroke="#FFD700" stroke-width="4"/>
+            <polyline points="561,196 466,630" fill="none" stroke="#FFD700" stroke-width="4"/>
+          </g>
+          <!-- Horizontal diagrid bands -->
+          <g class="diagrid-flash2">
+            <rect x="384" y="230" width="232" height="15" rx="7.5" fill="#FFD700" opacity="0.18"/>
+            <rect x="384" y="300" width="232" height="15" rx="7.5" fill="#1E90FF" opacity="0.18"/>
+            <rect x="384" y="370" width="232" height="15" rx="7.5" fill="#8A2BE2" opacity="0.16"/>
+            <rect x="384" y="440" width="232" height="15" rx="7.5" fill="#00FFCC" opacity="0.18"/>
+            <rect x="384" y="510" width="232" height="15" rx="7.5" fill="#FFD700" opacity="0.18"/>
+          </g>
+          <!-- Sky gardens (smaller bands) -->
+          <g class="sky-garden-flash">
+            <ellipse cx="500" cy="200" rx="90" ry="13" fill="url(#grad-tree)" opacity="0.82" />
+            <ellipse cx="500" cy="350" rx="85" ry="8.5" fill="url(#grad-tree)" opacity="0.75" />
+            <ellipse cx="500" cy="500" rx="78" ry="6.7" fill="url(#grad-tree)" opacity="0.84" />
+          </g>
+          <!-- Skybridge (mid-tower) -->
+          <rect class="skybridge" x="472" y="335" width="56" height="42" rx="13" fill="url(#grad-glass)" stroke="#FF00FF" stroke-width="2.2" />
+          <!-- Rooftop crowns -->
+          <ellipse cx="500" cy="160" rx="55" ry="13" fill="url(#grad-metal)" opacity="0.71"/>
+          <rect x="470" y="105" width="60" height="35" rx="14" fill="#FFF" opacity="0.16"/>
+          <ellipse cx="500" cy="105" rx="20" ry="7" fill="#FFD700" opacity="0.48"/>
+          <!-- Roof pool outline -->
+          <rect x="480" y="120" width="40" height="14" rx="8" fill="#00BFFF" stroke="#8A2BE2" stroke-width="2.5" opacity="0.65"/>
+        </g>
+        <!-- Plaza and urban landscaping -->
+        <g>
+          <!-- Tree group, left -->
+          <ellipse cx="350" cy="720" rx="32" ry="36" fill="url(#grad-tree)" />
+          <rect x="344" y="730" width="7" height="32" rx="3.5" fill="#6C4F38" />
+          <ellipse cx="290" cy="750" rx="18" ry="22" fill="url(#grad-tree)" />
+          <rect x="285" y="759" width="5" height="17" rx="2.2" fill="#6C4F38" />
+          <!-- Tree group, right -->
+          <ellipse cx="610" cy="712" rx="26" ry="30" fill="url(#grad-tree)" />
+          <rect x="605" y="722" width="6" height="20" rx="2.5" fill="#6C4F38" />
+          <ellipse cx="700" cy="755" rx="17" ry="13" fill="url(#grad-tree)" />
+          <rect x="695" y="761" width="3.5" height="11" rx="1.7" fill="#5B892A" />
+        </g>
+        <!-- People (abstract figures) -->
+        <g>
+          <!-- Grouping people at plaza, left -->
+          <ellipse class="person" cx="380" cy="761" rx="7" ry="13" fill="#c46eca"/>
+          <ellipse class="person" cx="405" cy="770" rx="5" ry="11" fill="#5ddacc"/>
+          <ellipse class="person" cx="440" cy="755" rx="7" ry="11" fill="#FFD700"/>
+          <!-- Group right (standing and seated) -->
+          <ellipse class="person" cx="590" cy="765" rx="8" ry="14" fill="#00FFCC"/>
+          <ellipse class="person" cx="620" cy="773" rx="5" ry="12" fill="#8A2BE2"/>
+          <!-- Single children -->
+          <ellipse class="person" cx="500" cy="777" rx="5" ry="10" fill="#FF00FF"/>
+        </g>
+        <!-- Cars (side, moving right!) -->
+        <g>
+          <!-- Car 1, blue -->
+          <rect class="car" x="350" y="795" width="50" height="20" rx="9" fill="#3C75B6" stroke="#222" stroke-width="1"/>
+          <ellipse class="car" cx="362" cy="815" rx="6" ry="6" fill="#222"/>
+          <ellipse class="car" cx="390" cy="815" rx="6" ry="6" fill="#222"/>
+          <!-- Car 2, orange (mid right) -->
+          <rect class="car" x="670" y="799" width="44" height="19" rx="8.5" fill="#FF8700" stroke="#222" stroke-width="1"/>
+          <ellipse class="car" cx="679" cy="817" rx="6" ry="5.5" fill="#222"/>
+          <ellipse class="car" cx="702" cy="817" rx="6" ry="5.5" fill="#222"/>
+        </g>
+        <!-- Info Badges (accessible description) -->
+        <g>
+          <!-- Hover-area on the skybridge -->
+          <title>Skybridge (Levels 12-14): Social and Innovation Hub</title>
+          <!-- Hover-area rooftop -->
+          <title>Rooftop Observatory, Pool, Urban Farm</title>
+        </g>
+      </svg>
+      <!-- Optional 3D Model Viewer (if you have a GLB file and want to enable this, see the comment below) -->
+      <!--
+      <model-viewer src="your-model.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate 
+        style="width:100%; height:400px; background: #222; margin-top:2em; border-radius:1rem;">
+      </model-viewer>
+      <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+      -->
+    </section>
+    <section aria-label="Project Details" style="max-width: 880px; margin: 0 auto; padding: 1em;">
+      <h2>Design Highlights</h2>
+      <ul>
+        <li><strong>Futuristic</strong> twisting diagrid exoskeleton and transparent double-skin glass tower.
+        <li>Animated, illuminated <strong>skybridge</strong> at mid-height for social interaction.</li>
+        <li><strong>Biophilic</strong> sky gardens, green podium, and rooftop urban farm.</li>
+        <li>Modular, column-free interior spaces for R&amp;D, collaboration, and immersive digital experiences.</li>
+        <li>Tech-forward lobby: holographic art, ambient LEDs, AI concierge, and immersive digital directory</li>
+        <li>Integration with urban Accra: animated people, tree-lined streets, modern cars, and lush landscaping.</li>
+        <li><strong>Carbon-neutral-ready</strong>: BIPV glass, rainwater management, and real-time environmental dashboards.</li>
+      </ul>
+      <h2>Key Stats</h2>
+      <table style="background:rgba(30,144,255,0.10);width:100%;border: 1.5px solid #FFD700;border-radius:0.5rem;text-align:left;margin-bottom:2em;">
+        <tr style="background:rgba(255,255,255,0.08);">
+          <th style="padding:0.6em;">Component</th><th style="padding:0.6em;">Detail</th>
+        </tr>
+        <tr><td>Total floors</td><td>23 (incl. rooftop complex)</td></tr>
+        <tr><td>Structural system</td><td>Twisting diagrid steel exoskeleton + glass</td></tr>
+        <tr><td>Facade</td><td>Dynamic glass, BIPV, active shading, night LED</td></tr>
+        <tr><td>Vertical uses</td><td>Co-working, R&amp;D, wellness, event, social skybridge, farm, sky pool</td></tr>
+        <tr><td>Environmental</td><td>Tropical gardens, rooftop solar, smart water, rain harvesting</td></tr>
+      </table>
+      <div style="color: #aaa; font-size: 0.93em; text-align: right;">
+        &copy; 2025 Futuristic Skyscraper Concept | Visualization and HTML by A. Researcher
+      </div>
+    </section>
+  </main>
+  <footer style="text-align: center; margin-bottom:2em; color: #bae9fa; font-size: 1.03em;">
+    <span>View the live demo or remix this code on <a href="https://github.com/" style="color: #FFD700;">GitHub Pages</a>.</span>
+  </footer>
+</body>
 </html>
