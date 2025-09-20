@@ -1,104 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Scribe Haus | Skyscraper Concept</title>
-
-  <!-- Model Viewer Library -->
-  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-
+  <meta charset="UTF-8">
+  <title>Scribe Haus Skyscraper Walkthrough</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #0f0f0f, #1a1a1a);
-      color: #e0e0e0;
-    }
-    header {
-      padding: 2rem;
-      text-align: center;
-      background: #111;
-      border-bottom: 1px solid #333;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      color: #00ffe7;
-    }
-    h2 {
-      font-size: 1.5rem;
-      color: #00bcd4;
-      margin-top: 2rem;
-    }
-    .section {
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem;
-    }
-    img {
-      width: 100%;
-      border: 1px solid #444;
-      border-radius: 8px;
-      margin-top: 1rem;
-    }
-    model-viewer {
-      width: 100%;
-      height: 600px;
-      margin-top: 2rem;
-      border: 1px solid #444;
-      border-radius: 8px;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #666;
-      border-top: 1px solid #333;
+    body { margin: 0; overflow: hidden; background: #111; }
+    canvas { display: block; }
+    #info {
+      position: absolute; top: 10px; left: 10px;
+      color: #0ff; font-family: sans-serif; font-size: 14px;
+      background: rgba(0,0,0,0.5); padding: 8px; border-radius: 4px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Scribe Haus: Ultra-Modern Skyscraper Concept</h1>
-    <p>Design Notes by Akosua</p>
-  </header>
+<div id="info">
+  <b>Scribe Haus Skyscraper Walkthrough</b><br>
+  Controls: WASD = move, Mouse = look, Space = up, Shift = down
+</div>
 
-  <div class="section">
-    <h2>Project Overview</h2>
-    <p>
-      Commissioned by Scribe Haus, this 23-story skyscraper is designed to redefine the skyline. The brief was clear: ultra-modern, futuristic, and unlike anything currently standing in Ghana. It had to be bold, functional, and emotionally resonant—an architectural statement for a tech-forward future.
-    </p>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/PointerLockControls.js"></script>
 
-    <h2>Exterior Concept</h2>
-    <p>
-      The building forms a striking “M” silhouette—two vertical towers joined by a diagonal tech spine. Materials are layered glass, steel, and kinetic surfaces. Integrated greenery softens the brutalism, while the dome base anchors the structure with immersive public zones.
-    </p>
-    <img src="skyscraper-concept.jpeg" alt="Skyscraper Concept Render">
+<script>
+  // Scene setup
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x111111);
 
-    <h2>Interior Strategy</h2>
-    <ul>
-      <li>Modular floor plates for co-working, labs, and executive pods</li>
-      <li>Biometric access, ambient lighting, and vertical gardens</li>
-      <li>Suspended walkways and adaptive zones for tech installations</li>
-    </ul>
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 2000);
+  const renderer = new THREE.WebGLRenderer({antialias:true});
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
 
-    <h2>Live 3D Walkthrough</h2>
-    <model-viewer src="skyscraper.glb" alt="Skyscraper Walkthrough"
-      camera-controls auto-rotate shadow-intensity="1" exposure="1.2" environment-image="neutral">
-    </model-viewer>
-    <p>
-      This embedded viewer allows real-time exploration of the structure. Users can rotate, zoom, and inspect the geometry. Future iterations will include interior navigation and interactive hotspots.
-    </p>
+  // Lighting
+  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
+  hemiLight.position.set(0, 200, 0);
+  scene.add(hemiLight);
+  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  dirLight.position.set(100, 200, 100);
+  scene.add(dirLight);
 
-    <h2>Next Steps</h2>
-    <p>
-      Finalizing structural grid and lighting simulations. Asset generation is underway. GitHub repo will host all iterations, including mockups, walkthroughs, and deployment notes. This page serves as the live dashboard for the concept.
-    </p>
-  </div>
+  // Ground
+  const groundGeo = new THREE.PlaneGeometry(2000, 2000);
+  const groundMat = new THREE.MeshPhongMaterial({color:0x222222, depthWrite:true});
+  const ground = new THREE.Mesh(groundGeo, groundMat);
+  ground.rotation.x = -Math.PI/2;
+  scene.add(ground);
 
-  <footer>
-    &copy; 2025 Akosua | Scribe Haus Contract Design
-  </footer>
+  // Towers (simple blocks for now)
+  const towerMat = new THREE.MeshPhongMaterial({color:0x00bcd4, transparent:true, opacity:0.7});
+  const towerGeo = new THREE.BoxGeometry(40, 230, 40);
+
+  const tower1 = new THREE.Mesh(towerGeo, towerMat);
+  tower1.position.set(-80,115, -80);
+  scene.add(tower1);
+
+  const tower2 = tower1.clone();
+  tower2.position.set(80,115,-80);
+  scene.add(tower2);
+
+  const tower3 = tower1.clone();
+  tower3.position.set(-80,115,80);
+  scene.add(tower3);
+
+  const tower4 = tower1.clone();
+  tower4.position.set(80,115,80);
+  scene.add(tower4);
+
+  // Dome base
+  const domeGeo = new THREE.SphereGeometry(60, 32, 32, 0, Math.PI*2, 0, Math.PI/2);
+  const domeMat = new THREE.MeshPhongMaterial({color:0x888888, transparent:true, opacity:0.5});
+  const dome = new THREE.Mesh(domeGeo, domeMat);
+  dome.position.set(0,0,0);
+  scene.add(dome);
+
+  // V-shaped skybridge
+  const bridgeMat = new THREE.MeshPhongMaterial({color:0x00ffcc, transparent:true, opacity:0.8});
+  const bridgeGeo = new THREE.BoxGeometry(20,10,200);
+
+  const bridge1 = new THREE.Mesh(bridgeGeo, bridgeMat);
+  bridge1.rotation.y = Math.PI/6;
+  bridge1.position.set(-40,150,0);
+  scene.add(bridge1);
+
+  const bridge2 = bridge1.clone();
+  bridge2.rotation.y = -Math.PI/6;
+  bridge2.position.set(40,150,0);
+  scene.add(bridge2);
+
+  // Horizontal connectors
+  function addConnector(y){
+    const connGeo = new THREE.BoxGeometry(160,10,20);
+    const conn = new THREE.Mesh(connGeo, bridgeMat);
+    conn.position.set(0,y,-80);
+    scene.add(conn);
+
+    const conn2 = conn.clone();
+    conn2.position.set(0,y,80);
+    scene.add(conn2);
+  }
+  addConnector(70);
+  addConnector(140);
+  addConnector(210);
+
+  // Controls
+  const controls = new THREE.PointerLockControls(camera, document.body);
+  document.body.addEventListener('click', ()=>controls.lock());
+  scene.add(controls.getObject());
+
+  const velocity = new THREE.Vector3();
+  const direction = new THREE.Vector3();
+  const move = {forward:false, back:false, left:false, right:false, up:false, down:false};
+
+  document.addEventListener('keydown', e=>{
+    switch(e.code){
+      case 'KeyW': move.forward=true; break;
+      case 'KeyS': move.back=true; break;
+      case 'KeyA': move.left=true; break;
+      case 'KeyD': move.right=true; break;
+      case 'Space': move.up=true; break;
+      case 'ShiftLeft': move.down=true; break;
+    }
+  });
+  document.addEventListener('keyup', e=>{
+    switch(e.code){
+      case 'KeyW': move.forward=false; break;
+      case 'KeyS': move.back=false; break;
+      case 'KeyA': move.left=false; break;
+      case 'KeyD': move.right=false; break;
+      case 'Space': move.up=false; break;
+      case 'ShiftLeft': move.down=false; break;
+    }
+  });
+
+  camera.position.set(0,20,200);
+
+  // Animate
+  const clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const delta = clock.getDelta();
+    velocity.x -= velocity.x * 10.0 * delta;
+    velocity.z -= velocity.z * 10.0 * delta;
+    velocity.y -= velocity.y * 10.0 * delta;
+
+    direction.z = Number(move.forward) - Number(move.back);
+    direction.x = Number(move.right) - Number(move.left);
+    direction.y = Number(move.up) - Number(move.down);
+    direction.normalize();
+
+    const speed = 200.0;
+    if(move.forward||move.back) velocity.z -= direction.z * speed * delta;
+    if(move.left||move.right) velocity.x -= direction.x * speed * delta;
+    if(move.up||move.down) velocity.y -= direction.y * speed * delta;
+
+    controls.moveRight(-velocity.x * delta);
+    controls.moveForward(-velocity.z * delta);
+    controls.getObject().position.y += velocity.y * delta;
+
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+</script>
 </body>
 </html>
