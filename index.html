@@ -2,70 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Scribe Haus Skyscraper Walkthrough</title>
+  <title>Scribe Haus Skyscraper</title>
   <style>
-    body { margin: 0; overflow: hidden; background: #111; }
+    body { margin: 0; overflow: hidden; background: #000; }
     canvas { display: block; }
-    #info {
-      position: absolute; top: 10px; left: 10px;
-      color: #0ff; font-family: sans-serif; font-size: 14px;
-      background: rgba(0,0,0,0.5); padding: 8px; border-radius: 4px;
-    }
   </style>
 </head>
 <body>
-<div id="info">
-  <b>Scribe Haus Skyscraper Walkthrough</b><br>
-  Controls: WASD = move, Mouse = look, Space = up, Shift = down
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/PointerLockControls.js"></script>
-
 <script>
-  // Scene setup
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x111111);
+  scene.background = new THREE.Color(0x000000);
 
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 2000);
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 2000);
+  camera.position.set(200,200,400);
+
   const renderer = new THREE.WebGLRenderer({antialias:true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // Lighting
-  const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1.2);
-  hemiLight.position.set(0, 200, 0);
-  scene.add(hemiLight);
-  const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  dirLight.position.set(100, 200, 100);
-  scene.add(dirLight);
+  const light = new THREE.DirectionalLight(0xffffff, 1);
+  light.position.set(200,400,200);
+  scene.add(light);
+  scene.add(new THREE.AmbientLight(0x404040));
 
-  // Ground
-  const groundGeo = new THREE.PlaneGeometry(2000, 2000);
-  const groundMat = new THREE.MeshPhongMaterial({color:0x222222, depthWrite:true});
-  const ground = new THREE.Mesh(groundGeo, groundMat);
-  ground.rotation.x = -Math.PI/2;
-  scene.add(ground);
-
-  // Towers (simple blocks for now)
+  // Towers
   const towerMat = new THREE.MeshPhongMaterial({color:0x00bcd4, transparent:true, opacity:0.7});
   const towerGeo = new THREE.BoxGeometry(40, 230, 40);
 
   const tower1 = new THREE.Mesh(towerGeo, towerMat);
-  tower1.position.set(-80,115, -80);
+  tower1.position.set(-80,115,-80);
   scene.add(tower1);
 
-  const tower2 = tower1.clone();
-  tower2.position.set(80,115,-80);
-  scene.add(tower2);
-
-  const tower3 = tower1.clone();
-  tower3.position.set(-80,115,80);
-  scene.add(tower3);
-
-  const tower4 = tower1.clone();
-  tower4.position.set(80,115,80);
-  scene.add(tower4);
+  const tower2 = tower1.clone(); tower2.position.set(80,115,-80); scene.add(tower2);
+  const tower3 = tower1.clone(); tower3.position.set(-80,115,80); scene.add(tower3);
+  const tower4 = tower1.clone(); tower4.position.set(80,115,80); scene.add(tower4);
 
   // Dome base
   const domeGeo = new THREE.SphereGeometry(60, 32, 32, 0, Math.PI*2, 0, Math.PI/2);
@@ -74,7 +45,7 @@
   dome.position.set(0,0,0);
   scene.add(dome);
 
-  // V-shaped skybridge
+  // V-shaped skybridges
   const bridgeMat = new THREE.MeshPhongMaterial({color:0x00ffcc, transparent:true, opacity:0.8});
   const bridgeGeo = new THREE.BoxGeometry(20,10,200);
 
@@ -94,7 +65,6 @@
     const conn = new THREE.Mesh(connGeo, bridgeMat);
     conn.position.set(0,y,-80);
     scene.add(conn);
-
     const conn2 = conn.clone();
     conn2.position.set(0,y,80);
     scene.add(conn2);
@@ -103,61 +73,10 @@
   addConnector(140);
   addConnector(210);
 
-  // Controls
-  const controls = new THREE.PointerLockControls(camera, document.body);
-  document.body.addEventListener('click', ()=>controls.lock());
-  scene.add(controls.getObject());
-
-  const velocity = new THREE.Vector3();
-  const direction = new THREE.Vector3();
-  const move = {forward:false, back:false, left:false, right:false, up:false, down:false};
-
-  document.addEventListener('keydown', e=>{
-    switch(e.code){
-      case 'KeyW': move.forward=true; break;
-      case 'KeyS': move.back=true; break;
-      case 'KeyA': move.left=true; break;
-      case 'KeyD': move.right=true; break;
-      case 'Space': move.up=true; break;
-      case 'ShiftLeft': move.down=true; break;
-    }
-  });
-  document.addEventListener('keyup', e=>{
-    switch(e.code){
-      case 'KeyW': move.forward=false; break;
-      case 'KeyS': move.back=false; break;
-      case 'KeyA': move.left=false; break;
-      case 'KeyD': move.right=false; break;
-      case 'Space': move.up=false; break;
-      case 'ShiftLeft': move.down=false; break;
-    }
-  });
-
-  camera.position.set(0,20,200);
-
-  // Animate
-  const clock = new THREE.Clock();
+  // Orbit animation
   function animate(){
     requestAnimationFrame(animate);
-    const delta = clock.getDelta();
-    velocity.x -= velocity.x * 10.0 * delta;
-    velocity.z -= velocity.z * 10.0 * delta;
-    velocity.y -= velocity.y * 10.0 * delta;
-
-    direction.z = Number(move.forward) - Number(move.back);
-    direction.x = Number(move.right) - Number(move.left);
-    direction.y = Number(move.up) - Number(move.down);
-    direction.normalize();
-
-    const speed = 200.0;
-    if(move.forward||move.back) velocity.z -= direction.z * speed * delta;
-    if(move.left||move.right) velocity.x -= direction.x * speed * delta;
-    if(move.up||move.down) velocity.y -= direction.y * speed * delta;
-
-    controls.moveRight(-velocity.x * delta);
-    controls.moveForward(-velocity.z * delta);
-    controls.getObject().position.y += velocity.y * delta;
-
+    scene.rotation.y += 0.002;
     renderer.render(scene,camera);
   }
   animate();
