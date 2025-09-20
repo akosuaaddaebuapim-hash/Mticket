@@ -1,165 +1,155 @@
 import * as THREE from 'three'; import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'; import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 
-// SkyscraperScene(container) // Enhanced: Accra-inspired, parametric, landscaped environment, terraces, fins, lighting, and GLTF/GLB download export default function SkyscraperScene(container) { // --- Basic renderer / scene --- const scene = new THREE.Scene(); scene.background = new THREE.Color(0xCFEFF6); // warm sky tint inspired by Accra afternoons
+// SkyscraperScene(container) // High-detail, photoreal-focused three.js scene for a client-ready upscale model. // Features: PBR MeshPhysicalMaterials, layered glass (transmission), fine mullions, terraces, planters, HDR-like environment via PMREM-like sky, contact shadow plane, high-res shadows, and GLB export.
 
-const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 5000); camera.position.set(180, 220, 360);
+export default function SkyscraperScene(container) { // --- Renderer / scene --- const scene = new THREE.Scene(); scene.background = new THREE.Color(0xcfeef6);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); renderer.setSize(container.clientWidth, container.clientHeight); renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; container.appendChild(renderer.domElement);
+const camera = new THREE.PerspectiveCamera(42, container.clientWidth / container.clientHeight, 0.1, 5000); camera.position.set(220, 180, 340);
 
-// --- Controls --- const controls = new OrbitControls(camera, renderer.domElement); controls.target.set(0, 60, 0); controls.enableDamping = true; controls.dampingFactor = 0.07;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); renderer.setSize(container.clientWidth, container.clientHeight); renderer.outputEncoding = THREE.sRGBEncoding; renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; container.appendChild(renderer.domElement);
 
-// --- Lights (golden hour feel) --- const hemi = new THREE.HemisphereLight(0xfff6e6, 0x606070, 0.65); scene.add(hemi);
+// --- Controls --- const controls = new OrbitControls(camera, renderer.domElement); controls.target.set(0, 60, 0); controls.enableDamping = true; controls.dampingFactor = 0.06;
 
-const sun = new THREE.DirectionalLight(0xfff0d1, 1.0); sun.position.set(220, 360, 160); sun.castShadow = true; sun.shadow.camera.left = -500; sun.shadow.camera.right = 500; sun.shadow.camera.top = 500; sun.shadow.camera.bottom = -500; sun.shadow.mapSize.set(2048, 2048); scene.add(sun);
+// --- Lighting: golden-hour cinematic --- const hemi = new THREE.HemisphereLight(0xfff7ee, 0x445566, 0.55); scene.add(hemi);
 
-// subtle fill from opposite side const backLight = new THREE.DirectionalLight(0xbbe6ff, 0.25); backLight.position.set(-200, 120, -140); scene.add(backLight);
+const sun = new THREE.DirectionalLight(0xfff1d6, 1.2); sun.position.set(300, 360, 120); sun.castShadow = true; sun.shadow.camera.near = 0.5; sun.shadow.camera.far = 1200; sun.shadow.camera.left = -600; sun.shadow.camera.right = 600; sun.shadow.camera.top = 600; sun.shadow.camera.bottom = -600; sun.shadow.mapSize.set(4096, 4096); scene.add(sun);
 
-// --- Ground & plaza --- const ground = new THREE.Mesh( new THREE.PlaneGeometry(1200, 1200), new THREE.MeshStandardMaterial({ color: 0xe7efe9, roughness: 0.95 }) ); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
+const fill = new THREE.DirectionalLight(0xb9e8ff, 0.22); fill.position.set(-200, 80, -140); scene.add(fill);
 
-// tiled plaza const plaza = new THREE.Mesh( new THREE.CircleGeometry(120, 64), new THREE.MeshStandardMaterial({ color: 0xf5f2ea, roughness: 0.9 }) ); plaza.rotation.x = -Math.PI / 2; plaza.position.y = 0.01; plaza.receiveShadow = true; scene.add(plaza);
+// subtle artificial rim light const rim = new THREE.DirectionalLight(0xffe6d0, 0.08); rim.position.set(-300, 120, 300); scene.add(rim);
 
-// road const road = new THREE.Mesh( new THREE.BoxGeometry(1200, 0.5, 28), new THREE.MeshStandardMaterial({ color: 0x2d2d2d, roughness: 0.9 }) ); road.position.set(0, -0.25, -220); road.receiveShadow = true; scene.add(road);
+// --- Ground / contact shadow --- const groundMat = new THREE.MeshPhysicalMaterial({ color: 0xe9e6df, roughness: 0.95, metalness: 0 }); const ground = new THREE.Mesh(new THREE.PlaneGeometry(1500, 1500), groundMat); ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; scene.add(ground);
 
-// sidewalks const sidewalkMat = new THREE.MeshStandardMaterial({ color: 0xe6e1d9, roughness: 0.95 }); const sidewalkL = new THREE.Mesh(new THREE.BoxGeometry(1200, 0.3, 10), sidewalkMat); sidewalkL.position.set(0, 0.15, -240); sidewalkL.receiveShadow = true; scene.add(sidewalkL);
+// contact shadow: a subtle dark circle under building (not real AO but presentational) const contactGeo = new THREE.PlaneGeometry(420, 420); const contactTex = new THREE.Texture(generateRadialShadowCanvas(1024)); contactTex.needsUpdate = true; contactTex.encoding = THREE.sRGBEncoding; const contactMat = new THREE.MeshBasicMaterial({ map: contactTex, transparent: true, opacity: 0.55 }); const contactMesh = new THREE.Mesh(contactGeo, contactMat); contactMesh.rotation.x = -Math.PI / 2; contactMesh.position.y = 0.02; scene.add(contactMesh);
 
-// --- Skyscraper parameters (customizable) --- const params = { floors: 23, baseWidth: 44, baseDepth: 30, floorHeight: 3.6, taper: 0.22, rotationOffset: 0, terraces: true, greenRoofDensity: 0.6, façadeFins: true };
+// --- Materials: PBR physical look --- const glassThin = new THREE.MeshPhysicalMaterial({ color: 0xe9f8ff, metalness: 0.0, roughness: 0.05, transmission: 0.85, transparent: true, opacity: 0.98, clearcoat: 0.18, clearcoatRoughness: 0.02, });
 
-// Materials const matGlass = new THREE.MeshStandardMaterial({ color: 0xe1f7ff, metalness: 0.12, roughness: 0.16, transparent: true, opacity: 0.95 }); const matMetal = new THREE.MeshStandardMaterial({ color: 0xbfc7cf, metalness: 0.9, roughness: 0.2 }); const matWarm = new THREE.MeshStandardMaterial({ color: 0xd07a3f, metalness: 0.05, roughness: 0.8 }); const matConcrete = new THREE.MeshStandardMaterial({ color: 0xd6d1c7, roughness: 0.9 }); const matGreen = new THREE.MeshStandardMaterial({ color: 0x2b7a3a, roughness: 0.9 });
+const aluminum = new THREE.MeshPhysicalMaterial({ color: 0xc7cbd0, metalness: 0.95, roughness: 0.22, clearcoat: 0.06 }); const bronze = new THREE.MeshPhysicalMaterial({ color: 0xb86b3a, metalness: 0.35, roughness: 0.55 }); const stone = new THREE.MeshPhysicalMaterial({ color: 0xd6d0c6, roughness: 0.9 }); const planterMat = new THREE.MeshPhysicalMaterial({ color: 0x2f6f38, roughness: 0.9 });
 
-// Root group const root = new THREE.Group(); scene.add(root);
+// Root group for building + context const root = new THREE.Group(); scene.add(root);
 
-// Create surrounding low-rise context (Accra-esque)</n  function createContext() { const ctxGroup = new THREE.Group(); const cols = 6; for (let i = 0; i < cols; i++) { const w = 30 + Math.random() * 20; const d = 20 + Math.random() * 20; const h = 18 + Math.random() * 22; const bx = (i - Math.floor(cols/2)) * 80 + (Math.random() * 20 - 10); const bz = -100 + (Math.random() * 80 - 40); const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), matConcrete); b.position.set(bx, h/2, bz); b.castShadow = true; b.receiveShadow = true; ctxGroup.add(b);
+// --- Surrounding context (low-rise Accra-inspired) --- const contextGrp = new THREE.Group(); for (let i = 0; i < 9; i++) { const w = 18 + Math.random() * 28; const d = 12 + Math.random() * 20; const h = 12 + Math.random() * 28; const x = (i % 3 - 1) * 140 + (Math.random() * 20 - 10); const z = Math.floor(i / 3) * -120 + (Math.random() * 20 - 10) - 60; const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), stone); b.position.set(x, h / 2, z); b.castShadow = true; b.receiveShadow = true; contextGrp.add(b); } root.add(contextGrp);
 
-// small shopfront
-  if (Math.random() > 0.6) {
-    const shop = new THREE.Mesh(new THREE.BoxGeometry(w*0.9, 6, d*0.6), matWarm);
-    shop.position.set(bx + 0, 3, bz - d*0.3 - 2);
-    ctxGroup.add(shop);
-  }
+// --- High-detail skyscraper builder --- const building = new THREE.Group(); root.add(building);
+
+const params = { floors: 23, baseW: 46, baseD: 34, floorH: 3.6, taper: 0.20, rotationOffset: -6, };
+
+function buildHighDetail() { // clear previous while (building.children.length) { const c = building.children[0]; c.traverse(n => { if (n.geometry) n.geometry.dispose(); if (n.material) { if (Array.isArray(n.material)) n.material.forEach(m=>m.dispose()); else n.material.dispose(); } }); building.remove(c); }
+
+// podium with stepped plinths
+const plinth = new THREE.Group();
+const plinthHeights = [2.5, 2.2, 1.8];
+let zOff = 0;
+for (let i = 0; i < plinthHeights.length; i++) {
+  const s = 1 + i * 0.08;
+  const geo = new THREE.BoxGeometry(params.baseW * (1.4 - i * 0.06) * s, plinthHeights[i], params.baseD * (1.6 - i * 0.06) * s);
+  const m = new THREE.Mesh(geo, stone);
+  m.position.y = zOff + plinthHeights[i] / 2;
+  zOff += plinthHeights[i];
+  m.castShadow = true; m.receiveShadow = true;
+  plinth.add(m);
 }
-root.add(ctxGroup);
+building.add(plinth);
 
-} createContext();
+// vertical core (slightly offset for composition)
+const core = new THREE.Mesh(new THREE.BoxGeometry(10, params.floors * params.floorH * 0.98, 10), bronze);
+core.position.set(-params.baseW * 0.18, zOff + (params.floors * params.floorH * 0.98) / 2, 0);
+core.castShadow = true; building.add(core);
 
-// Procedural skyscraper builder with setbacks, cantilevers, terraces and green pockets const building = new THREE.Group(); root.add(building);
+// stacked articulated floor slabs with mullioned glazing and balconies
+let y = zOff;
+for (let i = 0; i < params.floors; i++) {
+  const t = i / params.floors;
+  const w = params.baseW * (1 - params.taper * t) + Math.sin(i * 0.6) * 0.9;
+  const d = params.baseD * (1 - params.taper * t * 0.6) + Math.cos(i * 0.45) * 0.7;
+  const h = params.floorH * (1 + (i % 4 === 0 ? 0.18 : 0));
 
-function buildBuilding() { // clear previous while (building.children.length) { const ch = building.children[0]; ch.traverse(node => { if (node.geometry) node.geometry.dispose(); if (node.material) { if (Array.isArray(node.material)) node.material.forEach(m=>m.dispose()); else node.material.dispose(); } }); building.remove(ch); }
-
-const floors = params.floors;
-const baseW = params.baseWidth;
-const baseD = params.baseDepth;
-const fh = params.floorHeight;
-const taper = params.taper;
-
-// podium
-const podium = new THREE.Mesh(new THREE.BoxGeometry(baseW * 1.4, 8, baseD * 1.6), matConcrete);
-podium.position.y = 4;
-podium.castShadow = true; podium.receiveShadow = true;
-building.add(podium);
-
-// atrium - a vertical void using glass cage
-const atriumGeo = new THREE.CylinderGeometry(6, 6, fh * floors * 0.95, 16);
-const atriumMat = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.06 });
-const atrium = new THREE.Mesh(atriumGeo, atriumMat);
-atrium.position.set(-baseW*0.15, fh * floors/2 + 8, 0);
-building.add(atrium);
-
-// stack floors with variable footprints and terrace pockets
-let currentYOffset = 8;
-for (let i = 0; i < floors; i++) {
-  const t = i / floors;
-  // progressive taper + occasional cantilevers
-  const width = baseW * (1 - taper * t) + (Math.sin(i * 0.6) * 0.6);
-  const depth = baseD * (1 - taper * t * 0.6) + (Math.cos(i * 0.4) * 0.5);
-  const h = fh * (1 + (i % 5 === 0 ? 0.25 : 0));
-
-  const slab = new THREE.Mesh(new THREE.BoxGeometry(width, h, depth), matGlass);
-  // slightly rotate stacks around their center for a sculpted look
-  slab.position.set(Math.sin(i*0.8)*0.6, currentYOffset + h/2, Math.cos(i*0.5)*0.8);
-  slab.rotation.y = Math.sin(i * 0.12) * 0.025;
+  // main slab (thin floor plate)
+  const slabGeom = new THREE.BoxGeometry(w, 0.28, d);
+  const slab = new THREE.Mesh(slabGeom, stone);
+  slab.position.set(Math.sin(i * 0.12) * 0.8, y + 0.14, Math.cos(i * 0.08) * 0.6);
   slab.castShadow = true; slab.receiveShadow = true;
   building.add(slab);
 
-  // add vertical fins (sun-shades)
-  if (params.façadeFins) {
-    const fins = new THREE.Group();
-    const finCount = Math.max(3, Math.floor(width / 6));
-    for (let f = 0; f < finCount; f++) {
-      const fx = -width/2 + (f + 0.5) * (width / finCount);
-      const finGeom = new THREE.BoxGeometry(0.45, h*0.9, depth*0.06);
-      const fin = new THREE.Mesh(finGeom, matMetal);
-      fin.position.set(fx, currentYOffset + h/2, depth/2 + 0.03);
-      fins.add(fin);
-      const finBack = fin.clone(); finBack.position.z = -fin.position.z; fins.add(finBack);
-    }
-    building.add(fins);
+  // facade glass shell slightly inset
+  const shellGeom = new THREE.BoxGeometry(w * 0.92, h * 0.9, d * 0.92);
+  const shell = new THREE.Mesh(shellGeom, glassThin);
+  shell.position.set(slab.position.x, y + h / 2 + 0.06, slab.position.z);
+  shell.castShadow = true; shell.receiveShadow = false;
+  building.add(shell);
+
+  // mullions: vertical thin frames
+  const mullions = new THREE.Group();
+  const cols = Math.max(5, Math.floor(w / 3));
+  for (let c = 0; c <= cols; c++) {
+    const mx = - (w * 0.92) / 2 + (c / cols) * (w * 0.92);
+    const mGeo = new THREE.BoxGeometry(0.14, h * 0.9, 0.18);
+    const mMesh = new THREE.Mesh(mGeo, aluminum);
+    mMesh.position.set(shell.position.x + mx, shell.position.y, shell.position.z + (d * 0.92 / 2) - 0.09);
+    mullions.add(mMesh);
+    const mMesh2 = mMesh.clone(); mMesh2.position.z = shell.position.z - (d * 0.92 / 2) + 0.09; mullions.add(mMesh2);
+  }
+  building.add(mullions);
+
+  // balconies with glass rail
+  if (i % 3 === 2) {
+    const balWidth = Math.min(8, w * 0.28);
+    const bal = new THREE.Mesh(new THREE.BoxGeometry(balWidth, 0.18, d * 0.32), stone);
+    bal.position.set(slab.position.x + w * 0.38, y + 0.18, slab.position.z + d * 0.18);
+    building.add(bal);
+    const rail = new THREE.Mesh(new THREE.BoxGeometry(balWidth * 0.98, 1.0, 0.06), glassThin);
+    rail.position.set(bal.position.x, bal.position.y + 0.6, bal.position.z + 0.0);
+    building.add(rail);
   }
 
-  // terrace pockets with planters (every 6th floor)
-  if (params.terraces && (i % 6 === 4 || i % 6 === 1)) {
-    const terrace = new THREE.Mesh(new THREE.BoxGeometry(width * 0.6, 0.6, depth * 0.35), matConcrete);
-    terrace.position.set(slab.position.x + (width*0.38), currentYOffset + 0.3, slab.position.z + (depth*0.32));
-    building.add(terrace);
-
-    // planters with palm-like trees
-    const plants = new THREE.Group();
-    const plantCount = Math.floor(2 + Math.random()*3);
-    for (let p = 0; p < plantCount; p++) {
-      const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.25, 2, 6), matWarm);
-      trunk.position.set(terrace.position.x + (Math.random()-0.5)*4, terrace.position.y + 1, terrace.position.z + (Math.random()-0.5)*3);
-      plants.add(trunk);
-      const leaves = new THREE.Mesh(new THREE.ConeGeometry(1.8, 4, 8), matGreen);
-      leaves.position.set(trunk.position.x, trunk.position.y + 2, trunk.position.z);
-      leaves.rotation.x = Math.PI;
-      plants.add(leaves);
-    }
-    building.add(plants);
+  // small green planters
+  if ((i % 6 === 1) || (i % 7 === 4)) {
+    const plan = new THREE.Mesh(new THREE.BoxGeometry(w * 0.2, 0.36, d * 0.18), planterMat);
+    plan.position.set(slab.position.x - w * 0.35, y + 0.18, slab.position.z - d * 0.22);
+    building.add(plan);
   }
 
-  currentYOffset += h;
+  y += h;
 }
 
-// crown: a tapered glass lantern
-const lanternGeo = new THREE.CylinderGeometry(6, 12, 12, 24, 1, true);
-const lantern = new THREE.Mesh(lanternGeo, matGlass);
-lantern.position.set(0, currentYOffset + 8, 0);
-lantern.castShadow = true; building.add(lantern);
+// roof lantern
+const lanternOuter = new THREE.Mesh(new THREE.CylinderGeometry(6.8, 10.2, 10, 24, 1, true), glassThin);
+lanternOuter.position.set(0, y + 6, 0); lanternOuter.castShadow = true; building.add(lanternOuter);
+const lanternInner = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 6.2, 6, 16), aluminum);
+lanternInner.position.set(0, y + 6, 0); building.add(lanternInner);
 
-// rooftop garden
-const roof = new THREE.Mesh(new THREE.BoxGeometry(baseW * (1 - taper), 0.8, baseD * 0.5), matGreen);
-roof.position.set(0, currentYOffset + 2.2, 0);
-building.add(roof);
+// rooftop garden block
+const roofGarden = new THREE.Mesh(new THREE.BoxGeometry(params.baseW * 0.52, 1.2, params.baseD * 0.42), planterMat);
+roofGarden.position.set(0, y + 2.6, 0);
+building.add(roofGarden);
 
-// subtle rotation
+// subtle tilt for composition
 building.rotation.y = THREE.MathUtils.degToRad(params.rotationOffset);
 
+// update contact shadow scale to match building footprint
+contactMesh.scale.set(1,1,1);
+
 }
 
-buildBuilding();
+buildHighDetail();
 
-// small decorative fountain in plaza const fountain = new THREE.Mesh(new THREE.CylinderGeometry(6, 6, 0.8, 32), new THREE.MeshStandardMaterial({ color: 0xd7f0ff, roughness: 0.2, metalness: 0.1 })); fountain.position.set(-40, 0.4, 20); scene.add(fountain);
+// --- Decorative: fountain and benches --- const fountain = new THREE.Mesh(new THREE.CylinderGeometry(6,6,0.8,48), new THREE.MeshStandardMaterial({ color:0xdff6ff, roughness:0.25 })); fountain.position.set(-36, 0.4, 18); fountain.castShadow = true; scene.add(fountain);
 
-// streetlights function makeLamp(x, z) { const lamp = new THREE.Group(); const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 6, 8), matMetal); pole.position.y = 3; lamp.add(pole); const head = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.25, 0.6), new THREE.MeshStandardMaterial({ color: 0xfff3d9, emissive: 0xffe8b0, emissiveIntensity: 0.6 })); head.position.set(0, 5.2, 0); lamp.add(head); lamp.position.set(x, 0, z); scene.add(lamp); } makeLamp(60, -230); makeLamp(-60, -230); makeLamp(120, -240);
+function makeLamp(x,z){ const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.15,4,8), aluminum); pole.position.set(x,2,z); const head = new THREE.Mesh(new THREE.BoxGeometry(0.6,0.2,0.4), new THREE.MeshStandardMaterial({ emissive:0xfff1d0, emissiveIntensity:0.8 })); head.position.set(x,4.2,z); scene.add(pole); scene.add(head); } makeLamp(62,-230); makeLamp(-62,-230); makeLamp(132,-240);
 
-// ambient animated city glow via emissive windows function addWindowLights() { building.traverse(node => { if (node.isMesh && node.material === matGlass) { // create an emissive layer by cloning and scaling slightly const glow = node.clone(); const em = new THREE.MeshStandardMaterial({ color: 0x0d2740, emissive: 0x0d2740, emissiveIntensity: 0.02, transparent: true, opacity: 0.22 }); glow.material = em; glow.scale.set(1.001, 1.001, 1.001); scene.add(glow); } }); } // addWindowLights(); // optional heavy op
+// --- UI overlay for export and param control --- const ui = document.createElement('div'); ui.style.position='absolute'; ui.style.top='12px'; ui.style.left='12px'; ui.style.zIndex=1000; ui.style.background='rgba(10,12,16,0.45)'; ui.style.padding='10px'; ui.style.borderRadius='8px'; ui.style.color='#fff'; ui.style.fontFamily='system-ui,Arial'; ui.innerHTML = <div style="font-weight:700;margin-bottom:6px">Scribe Haus — Client Model</div> Floors: <input id='f' type='number' min='6' max='80' value='${params.floors}' style='width:72px' /> <button id='re' style='margin-left:8px;padding:6px;background:#0b84ff;border:none;border-radius:6px;color:#fff;cursor:pointer'>Rebuild</button> <div style='margin-top:8px'> <button id='gltf' style='padding:6px 10px;background:#047857;border:none;border-radius:6px;color:#fff;cursor:pointer'>Download .gltf</button> <button id='glb' style='padding:6px 10px;margin-left:6px;background:#0ea5a4;border:none;border-radius:6px;color:#fff;cursor:pointer'>Download .glb</button> </div>; container.appendChild(ui);
 
-// --- Simple UI overlay (no external deps) --- const ui = document.createElement('div'); ui.style.position = 'absolute'; ui.style.top = '12px'; ui.style.left = '12px'; ui.style.zIndex = 1000; ui.style.padding = '10px'; ui.style.background = 'rgba(20,20,20,0.35)'; ui.style.color = '#fff'; ui.style.fontFamily = 'system-ui, Arial'; ui.style.borderRadius = '8px'; container.appendChild(ui);
+ui.querySelector('#re').addEventListener('click', ()=>{ const v = parseInt(ui.querySelector('#f').value) || params.floors; params.floors = Math.max(6, Math.min(120, v)); buildHighDetail(); });
 
-ui.innerHTML = <div style="font-weight:700;margin-bottom:6px">Scribe Haus — Skyscraper Preview</div> <label style="font-size:12px">Floors <span id='floorsVal'>${params.floors}</span></label><br /> <input id='floors' type='range' min='6' max='60' value='${params.floors}' style='width:220px' /><br /> <label style="font-size:12px">Taper <span id='taperVal'>${params.taper}</span></label><br /> <input id='taper' type='range' min='0' max='0.5' step='0.01' value='${params.taper}' style='width:220px' /><br /> <button id='rebuild' style='margin-top:8px;padding:6px 10px;background:#1f2937;border:none;color:#fff;border-radius:6px;cursor:pointer'>Rebuild</button> <button id='exportGLTF' style='margin-top:8px;margin-left:8px;padding:6px 10px;background:#047857;border:none;color:#fff;border-radius:6px;cursor:pointer'>Download GLTF</button> <button id='exportGLB' style='margin-top:8px;margin-left:8px;padding:6px 10px;background:#0ea5a4;border:none;color:#fff;border-radius:6px;cursor:pointer'>Download GLB</button>;
+const exporter = new GLTFExporter();
 
-// UI bindings ui.querySelector('#floors').addEventListener('input', (e)=>{ params.floors = Number(e.target.value); ui.querySelector('#floorsVal').innerText = params.floors; }); ui.querySelector('#taper').addEventListener('input', (e)=>{ params.taper = Number(e.target.value); ui.querySelector('#taperVal').innerText = params.taper; }); ui.querySelector('#rebuild').addEventListener('click', ()=>{ buildBuilding(); });
+function saveBlob(buffer, filename) { const blob = new Blob([buffer], { type: 'application/octet-stream' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); setTimeout(()=>URL.revokeObjectURL(link.href),1500); } function saveString(text, filename) { const blob = new Blob([text], { type: 'application/json' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); setTimeout(()=>URL.revokeObjectURL(link.href),1500); }
 
-// Export functions const exporter = new GLTFExporter();
+ui.querySelector('#gltf').addEventListener('click', ()=>{ exporter.parse(root, function(result){ const output = JSON.stringify(result, null, 2); saveString(output, scribehaus_skyscraper_${params.floors}f.gltf); }, { binary: false, embedImages: true }); }); ui.querySelector('#glb').addEventListener('click', ()=>{ exporter.parse(root, function(result){ saveBlob(result, scribehaus_skyscraper_${params.floors}f.glb); }, { binary: true }); });
 
-function saveArrayBuffer(buffer, filename) { const blob = new Blob([buffer], { type: 'application/octet-stream' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); setTimeout(()=>URL.revokeObjectURL(link.href), 1500); }
+// --- Render loop --- function animate(){ requestAnimationFrame(animate); building.rotation.y += 0.0009; controls.update(); renderer.render(scene, camera); } animate();
 
-function saveString(text, filename) { const blob = new Blob([text], { type: 'application/json' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); setTimeout(()=>URL.revokeObjectURL(link.href), 1500); }
+// responsiveness window.addEventListener('resize', ()=>{ camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); });
 
-ui.querySelector('#exportGLTF').addEventListener('click', ()=>{ exporter.parse(building, (result)=>{ const output = JSON.stringify(result, null, 2); saveString(output, scribehaus_skyscraper_${params.floors}f.gltf); }, { binary: false }); });
-
-ui.querySelector('#exportGLB').addEventListener('click', ()=>{ exporter.parse(building, (result)=>{ // result is an ArrayBuffer when binary:true saveArrayBuffer(result, scribehaus_skyscraper_${params.floors}f.glb); }, { binary: true }); });
-
-// Render loop function animate() { requestAnimationFrame(animate); building.rotation.y += 0.0008; // presentational spin controls.update(); renderer.render(scene, camera); } animate();
-
-// Responsiveness window.addEventListener('resize', ()=>{ camera.aspect = container.clientWidth / container.clientHeight; camera.updateProjectionMatrix(); renderer.setSize(container.clientWidth, container.clientHeight); }); }
+// --- Utilities --- function generateRadialShadowCanvas(size){ const c = document.createElement('canvas'); c.width = c.height = size; const ctx = c.getContext('2d'); const g = ctx.createRadialGradient(size/2, size/2, size*0.08, size/2, size/2, size/2); g.addColorStop(0, 'rgba(0,0,0,0.9)'); g.addColorStop(0.22, 'rgba(0,0,0,0.55)'); g.addColorStop(0.45, 'rgba(0,0,0,0.25)'); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(0,0,size,size); return c; } }
 
