@@ -1,377 +1,104 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futuristic M-Skyscraper - Ridge Royal, Accra</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #000;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scribe Haus | Skyscraper Concept</title>
 
-        #ui-controls {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: white;
-            font-family: sans-serif;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 100;
-        }
+  <!-- Model Viewer Library -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
-        #loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-family: sans-serif;
-        }
-
-        #loader {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 2s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #0f0f0f, #1a1a1a);
+      color: #e0e0e0;
+    }
+    header {
+      padding: 2rem;
+      text-align: center;
+      background: #111;
+      border-bottom: 1px solid #333;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #00ffe7;
+    }
+    h2 {
+      font-size: 1.5rem;
+      color: #00bcd4;
+      margin-top: 2rem;
+    }
+    .section {
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+    }
+    img {
+      width: 100%;
+      border: 1px solid #444;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    model-viewer {
+      width: 100%;
+      height: 600px;
+      margin-top: 2rem;
+      border: 1px solid #444;
+      border-radius: 8px;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+      border-top: 1px solid #333;
+    }
+  </style>
 </head>
 <body>
-    <div id="loading-screen">
-        <div id="loader"></div>
-        <div id="loading-text">Loading...</div>
-    </div>
+  <header>
+    <h1>Scribe Haus: Ultra-Modern Skyscraper Concept</h1>
+    <p>Design Notes by Akosua</p>
+  </header>
 
-    <div id="ui-controls">
-        <h1>Skyscraper Controls</h1>
-        <p>Use WASD to move, and the mouse to look.</p>
-        <p>Press 'L' to toggle lights.</p>
-        <label for="rotation-speed">Rotation Speed:</label>
-        <input type="range" id="rotation-speed" min="0" max="0.05" step="0.001" value="0.01">
-    </div>
+  <div class="section">
+    <h2>Project Overview</h2>
+    <p>
+      Commissioned by Scribe Haus, this 23-story skyscraper is designed to redefine the skyline. The brief was clear: ultra-modern, futuristic, and unlike anything currently standing in Ghana. It had to be bold, functional, and emotionally resonant—an architectural statement for a tech-forward future.
+    </p>
 
-    <script src="https://unpkg.com/three@0.158.0/build/three.js"></script>
-    <script src="https://unpkg.com/three@0.158.0/examples/js/controls/PointerLockControls.js"></script>
+    <h2>Exterior Concept</h2>
+    <p>
+      The building forms a striking “M” silhouette—two vertical towers joined by a diagonal tech spine. Materials are layered glass, steel, and kinetic surfaces. Integrated greenery softens the brutalism, while the dome base anchors the structure with immersive public zones.
+    </p>
+    <img src="skyscraper-concept.jpeg" alt="Skyscraper Concept Render">
 
-    <script>
-        // --- Utility Functions ---
-        function createCar(materials) {
-            const carGroup = new THREE.Group();
-            const bodyGeometry = new THREE.BoxGeometry(4, 1.5, 2);
-            const bodyMaterial = new THREE.MeshStandardMaterial({ color: 0x5a5a5a, metalness: 0.8, roughness: 0.5 });
-            const bodyMesh = new THREE.Mesh(bodyGeometry, bodyMaterial);
-            bodyMesh.position.y = 0.75;
-            bodyMesh.castShadow = true;
-            carGroup.add(bodyMesh);
+    <h2>Interior Strategy</h2>
+    <ul>
+      <li>Modular floor plates for co-working, labs, and executive pods</li>
+      <li>Biometric access, ambient lighting, and vertical gardens</li>
+      <li>Suspended walkways and adaptive zones for tech installations</li>
+    </ul>
 
-            const cabinGeometry = new THREE.BoxGeometry(2, 1, 1.8);
-            const cabinMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.7 });
-            const cabinMesh = new THREE.Mesh(cabinGeometry, cabinMaterial);
-            cabinMesh.position.set(0, 2.25, 0);
-            cabinMesh.castShadow = true;
-            carGroup.add(cabinMesh);
+    <h2>Live 3D Walkthrough</h2>
+    <model-viewer src="skyscraper.glb" alt="Skyscraper Walkthrough"
+      camera-controls auto-rotate shadow-intensity="1" exposure="1.2" environment-image="neutral">
+    </model-viewer>
+    <p>
+      This embedded viewer allows real-time exploration of the structure. Users can rotate, zoom, and inspect the geometry. Future iterations will include interior navigation and interactive hotspots.
+    </p>
 
-            const wheelGeometry = new THREE.CylinderGeometry(0.7, 0.7, 0.5, 12);
-            const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.2 });
-            const wheel1 = new THREE.Mesh(wheelGeometry, wheelMaterial);
-            wheel1.position.set(1.5, 0.5, 1.2);
-            wheel1.rotation.x = Math.PI / 2;
-            carGroup.add(wheel1);
-            const wheel2 = new THREE.Mesh(wheelGeometry, wheelMaterial);
-            wheel2.position.set(-1.5, 0.5, 1.2);
-            wheel2.rotation.x = Math.PI / 2;
-            carGroup.add(wheel2);
-            const wheel3 = new THREE.Mesh(wheelGeometry, wheelMaterial);
-            wheel3.position.set(1.5, 0.5, -1.2);
-            wheel3.rotation.x = Math.PI / 2;
-            carGroup.add(wheel3);
-            const wheel4 = new THREE.Mesh(wheelGeometry, wheelMaterial);
-            wheel4.position.set(-1.5, 0.5, -1.2);
-            wheel4.rotation.x = Math.PI / 2;
-            carGroup.add(wheel4);
-            return carGroup;
-        }
+    <h2>Next Steps</h2>
+    <p>
+      Finalizing structural grid and lighting simulations. Asset generation is underway. GitHub repo will host all iterations, including mockups, walkthroughs, and deployment notes. This page serves as the live dashboard for the concept.
+    </p>
+  </div>
 
-        function createPalmTree(materials) {
-            const treeGroup = new THREE.Group();
-            const trunkHeight = Math.random() * 15 + 15;
-            const trunkGeometry = new THREE.CylinderGeometry(1.5, 2, trunkHeight, 8);
-            const trunk = new THREE.Mesh(trunkGeometry, materials.palmTrunk);
-            trunk.castShadow = true;
-            trunk.receiveShadow = true;
-            treeGroup.add(trunk);
-            const leavesGeometry = new THREE.ConeGeometry(8, 20, 8);
-            const leaves = new THREE.Mesh(leavesGeometry, materials.palmLeaves);
-            leaves.position.y = trunkHeight / 2;
-            leaves.castShadow = true;
-            treeGroup.add(leaves);
-            return treeGroup;
-        }
-
-        // --- Main Application Logic ---
-        const loadingScreen = document.getElementById('loading-screen');
-        const uiControls = document.getElementById('ui-controls');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialiasing: true });
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-
-        const controls = new PointerLockControls(camera, document.body);
-        let moveForward = false;
-        let moveBackward = false;
-        let moveLeft = false;
-        let moveRight = false;
-        let rotationSpeed = 0.005;
-
-        renderer.domElement.addEventListener('click', () => {
-            controls.lock();
-        });
-
-        controls.addEventListener('lock', () => {
-            uiControls.style.display = 'none';
-        });
-        controls.addEventListener('unlock', () => {
-            uiControls.style.display = 'block';
-        });
-
-        document.addEventListener('keydown', (event) => {
-            switch (event.code) {
-                case 'KeyW': moveForward = true; break;
-                case 'KeyS': moveBackward = true; break;
-                case 'KeyA': moveLeft = true; break;
-                case 'KeyD': moveRight = true; break;
-            }
-        });
-        document.addEventListener('keyup', (event) => {
-            switch (event.code) {
-                case 'KeyW': moveForward = false; break;
-                case 'KeyS': moveBackward = false; break;
-                case 'KeyA': moveLeft = false; break;
-                case 'KeyD': moveRight = false; break;
-            }
-        });
-
-        const materials = {
-            skyscraper: new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.8, metalness: 0.9 }),
-            glass: new THREE.MeshStandardMaterial({ color: 0x2a52be, transparent: true, opacity: 0.6, roughness: 0.2, metalness: 0.9 }),
-            light: new THREE.MeshBasicMaterial({ color: 0x42f5ad }),
-            ground: new THREE.MeshStandardMaterial({ color: 0x3d702e, roughness: 0.9 }),
-            road: new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.8 }),
-            palmTrunk: new THREE.MeshStandardMaterial({ color: 0x8b5a2b }),
-            palmLeaves: new THREE.MeshStandardMaterial({ color: 0x006400, side: THREE.DoubleSide }),
-            lobbyFloor: new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.5, metalness: 0.2 }),
-            elevator: new THREE.MeshStandardMaterial({ color: 0xaaaaaa, metalness: 0.9, roughness: 0.3 })
-        };
-
-        const numFloors = 23;
-        const floorHeight = 5;
-        const floorWidth = 25;
-        let lightsOn = false;
-        let lastLightToggleTime = 0;
-
-        function createSkyscraper() {
-            const skyscraperGroup = new THREE.Group();
-            const towerRadius = 10;
-            const towerHeight = numFloors * floorHeight;
-
-            const leftTower = new THREE.Mesh(new THREE.CylinderGeometry(towerRadius, towerRadius, towerHeight, 16), materials.skyscraper);
-            leftTower.position.x = -floorWidth;
-            leftTower.position.y = towerHeight / 2;
-            leftTower.castShadow = true;
-            leftTower.receiveShadow = true;
-            skyscraperGroup.add(leftTower);
-
-            const rightTower = new THREE.Mesh(new THREE.CylinderGeometry(towerRadius, towerRadius, towerHeight, 16), materials.skyscraper);
-            rightTower.position.x = floorWidth;
-            rightTower.position.y = towerHeight / 2;
-            rightTower.castShadow = true;
-            rightTower.receiveShadow = true;
-            skyscraperGroup.add(rightTower);
-
-            const centerTowerHeight = towerHeight * 1.5;
-            const centerTower = new THREE.Mesh(new THREE.CylinderGeometry(towerRadius, towerRadius, centerTowerHeight, 16), materials.skyscraper);
-            centerTower.position.y = centerTowerHeight / 2;
-            centerTower.castShadow = true;
-            centerTower.receiveShadow = true;
-            skyscraperGroup.add(centerTower);
-
-            const bridgeGeom = new THREE.BoxGeometry(floorWidth * 2, floorHeight, 5);
-            const bridge1 = new THREE.Mesh(bridgeGeom, materials.glass);
-            bridge1.position.set(0, floorHeight * 5, 0);
-            bridge1.rotation.y = Math.PI / 4;
-            bridge1.castShadow = true;
-            skyscraperGroup.add(bridge1);
-            const bridge2 = new THREE.Mesh(bridgeGeom, materials.glass);
-            bridge2.position.set(0, floorHeight * 10, 0);
-            bridge2.rotation.y = -Math.PI / 4;
-            bridge2.castShadow = true;
-            skyscraperGroup.add(bridge2);
-
-            const spire1 = new THREE.Mesh(new THREE.ConeGeometry(5, 50, 8), materials.detail);
-            spire1.position.set(20, 120, 0);
-            spire1.castShadow = true;
-            skyscraperGroup.add(spire1);
-
-            const fin = new THREE.Mesh(new THREE.BoxGeometry(2, 100, 1), materials.detail);
-            fin.position.set(-15, 80, 10);
-            fin.rotation.y = Math.PI / 4;
-            fin.castShadow = true;
-            skyscraperGroup.add(fin);
-
-            const windowGeometry = new THREE.PlaneGeometry(3, 3);
-            const windowOffset = floorWidth / 2 + 0.1;
-
-            for (let i = 0; i < numFloors; i++) {
-                const floorY = (i * floorHeight) - ((numFloors * floorHeight) / 2);
-                for(let j = 0; j < 4; j++) {
-                    const sideOffset = j * Math.PI / 2;
-                    const windowMesh = new THREE.Mesh(windowGeometry, materials.glass);
-                    windowMesh.position.set(windowOffset * Math.cos(sideOffset), floorY + 2.5, windowOffset * Math.sin(sideOffset));
-                    windowMesh.rotation.y = sideOffset;
-                    skyscraperGroup.add(windowMesh);
-                    const lightMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 2.8), materials.light);
-                    lightMesh.position.copy(windowMesh.position);
-                    lightMesh.position.y += 0.01;
-                    lightMesh.rotation.copy(windowMesh.rotation);
-                    lightMesh.visible = Math.random() > 0.5;
-                    skyscraperGroup.add(lightMesh);
-                }
-            }
-            
-            const lobby = new THREE.Mesh(new THREE.BoxGeometry(floorWidth * 1.5, floorHeight * 2, floorWidth * 1.5), materials.glass);
-            lobby.position.y = floorHeight;
-            lobby.castShadow = true;
-            lobby.receiveShadow = true;
-            skyscraperGroup.add(lobby);
-
-            const lobbyFloor = new THREE.Mesh(new THREE.PlaneGeometry(floorWidth * 1.4, floorWidth * 1.4), materials.lobbyFloor);
-            lobbyFloor.rotation.x = -Math.PI / 2;
-            lobbyFloor.position.y = floorHeight * 0.5;
-            lobbyFloor.receiveShadow = true;
-            skyscraperGroup.add(lobbyFloor);
-
-            const elevator1 = new THREE.Mesh(new THREE.BoxGeometry(4, 10, 4), materials.elevator);
-            elevator1.position.set(5, 5, 0);
-            elevator1.castShadow = true;
-            skyscraperGroup.add(elevator1);
-
-            const elevator2 = new THREE.Mesh(new THREE.BoxGeometry(4, 10, 4), materials.elevator);
-            elevator2.position.set(-5, 5, 0);
-            elevator2.castShadow = true;
-            skyscraperGroup.add(elevator2);
-
-            return skyscraperGroup;
-        }
-
-        function createEnvironment() {
-            const environmentGroup = new THREE.Group();
-            const ground = new THREE.Mesh(new THREE.PlaneGeometry(500, 500), materials.ground);
-            ground.rotation.x = -Math.PI / 2;
-            ground.receiveShadow = true;
-            environmentGroup.add(ground);
-
-            const road = new THREE.Mesh(new THREE.BoxGeometry(500, 0.1, 20), materials.road);
-            road.position.z = 100;
-            road.position.y = 0.05;
-            environmentGroup.add(road);
-            const road2 = new THREE.Mesh(new THREE.BoxGeometry(500, 0.1, 20), materials.road);
-            road2.position.z = -100;
-            road2.position.y = 0.05;
-            environmentGroup.add(road2);
-
-            for (let i = 0; i < 20; i++) {
-                const tree = createPalmTree(materials);
-                tree.position.x = (Math.random() - 0.5) * 300;
-                tree.position.z = (Math.random() - 0.5) * 300;
-                tree.position.y = tree.children[0].geometry.parameters.height / 2;
-                environmentGroup.add(tree);
-            }
-
-            for (let i = 0; i < 5; i++) {
-                const car = createCar(materials);
-                car.position.x = (Math.random() - 0.5) * 400;
-                car.position.z = Math.random() > 0.5 ? 100 : -100;
-                car.position.y = 0;
-                environmentGroup.add(car);
-            }
-            
-            return environmentGroup;
-        }
-
-        document.addEventListener('keydown', (event) => {
-            if (event.code === 'KeyL' && (Date.now() - lastLightToggleTime) > 500) {
-                lightsOn = !lightsOn;
-                toggleBuildingLights(lightsOn);
-                lastLightToggleTime = Date.now();
-            }
-        });
-
-        function toggleBuildingLights(state) {
-            scene.traverse((object) => {
-                if (object.material && object.material.color && object.material.color.getHex() === materials.light.color.getHex()) {
-                    object.visible = state;
-                }
-            });
-        }
-
-        let lastTime = performance.now();
-        const moveSpeed = 0.5;
-
-        function animate(time) {
-            const delta = (time - lastTime) / 1000;
-            lastTime = time;
-
-            if (controls.isLocked) {
-                if (moveForward) controls.moveForward(moveSpeed);
-                if (moveBackward) controls.moveForward(-moveSpeed);
-                if (moveLeft) controls.moveRight(-moveSpeed);
-                if (moveRight) controls.moveRight(moveSpeed);
-            }
-
-            skyscraper.rotation.y += rotationSpeed;
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        }
-
-        const skyscraper = createSkyscraper();
-        const environment = createEnvironment();
-        scene.add(skyscraper);
-        scene.add(environment);
-
-        camera.position.set(80, 20, 80);
-        camera.lookAt(new THREE.Vector3(0, 30, 0));
-
-        loadingScreen.style.display = 'none';
-        animate(0);
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+  <footer>
+    &copy; 2025 Akosua | Scribe Haus Contract Design
+  </footer>
 </body>
 </html>
