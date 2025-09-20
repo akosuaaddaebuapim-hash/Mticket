@@ -1,304 +1,153 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Parametric Skyscraper — Three.js</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    html,body { height:100%; margin:0; background:#0b1020; color:#ddd; font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
-    #container { width:100%; height:100vh; display:block; }
-    .note { position: absolute; left:12px; bottom:12px; z-index:2; font-size:12px; color:#9aa; }
-    .credits { position: absolute; right:12px; bottom:12px; z-index:2; font-size:12px; color:#9aa; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Skyscraper</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        #ui-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-family: sans-serif;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+        }
+    </style>
 </head>
 <body>
-  <div id="container"></div>
-  <div class="note">Drag to orbit • Scroll to zoom • GUI (top-left) controls the design</div>
-  <div class="credits">Exportable GLTF included</div>
-
-  <script type="module">
-    import * as THREE from 'https://unpkg.com/three@0.158.0/build/three.module.js';
-    import { OrbitControls } from 'https://unpkg.com/three@0.158.0/examples/jsm/controls/OrbitControls.js';
-    import { GLTFExporter } from 'https://unpkg.com/three@0.158.0/examples/jsm/exporters/GLTFExporter.js';
-    import { GUI } from 'https://unpkg.com/lil-gui@0.18.0/dist/lil-gui.esm.js';
-
-    // Scene, camera, renderer
-    const container = document.getElementById('container');
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x071322);
-
-    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.5, 2000);
-    camera.position.set(80, 120, 180);
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.shadowMap.enabled = true;
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    container.appendChild(renderer.domElement);
-
-    // Lights
-    const hemi = new THREE.HemisphereLight(0xddeeff, 0x0b1b2b, 0.7);
-    scene.add(hemi);
-
-    const dir = new THREE.DirectionalLight(0xffffff, 1.0);
-    dir.position.set(80, 120, 80);
-    dir.castShadow = true;
-    dir.shadow.mapSize.set(2048,2048);
-    dir.shadow.camera.left=-200; dir.shadow.camera.right=200; dir.shadow.camera.top=200; dir.shadow.camera.bottom=-200;
-    scene.add(dir);
-
-    // Ground / plaza
-    const groundMat = new THREE.MeshStandardMaterial({ color: 0x0f1724, roughness: 0.8, metalness: 0.1 });
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(1200,1200), groundMat);
-    ground.rotateX(-Math.PI/2);
-    ground.receiveShadow = true;
-    scene.add(ground);
-
-    // Environment: subtle reflection using a simple cube texture (procedural colors)
-    const envSize = 32;
-    const envCube = new THREE.WebGLCubeRenderTarget(envSize);
-    // We'll leave envCube empty — MeshStandardMaterial will look fine without an env map here.
-
-    // Parent group for skyscraper
-    const buildingGroup = new THREE.Group();
-    scene.add(buildingGroup);
-
-    // Parameters (GUI)
-    const params = {
-      floors: 23,
-      floorWidth: 22,
-      baseDepth: 18,
-      floorHeight: 3.6,
-      slant: 0.0,            // horizontal skew (m per floor)
-      rotation: 0,
-      material: 'glass',
-      façadeFins: true,
-      crown: true,
-      exportGLTF: () => exportGLTF(),
-      regenerate: () => regenerate(),
-      randomness: 0.12
-    };
-
-    // Materials presets
-    const mats = {
-      glass: new THREE.MeshStandardMaterial({ color:0xdbeeff, roughness:0.15, metalness:0.25, transparent:true, opacity:0.98 }),
-      metal: new THREE.MeshStandardMaterial({ color:0xcfd8dc, roughness:0.35, metalness:0.9 }),
-      terracotta: new THREE.MeshStandardMaterial({ color:0xd36b36, roughness:0.85, metalness:0.05 }),
-    };
-
-    // Helper to create the parametric building
-    function buildSkyscraper(opt = params) {
-      // Clear old
-      while(buildingGroup.children.length) {
-        const c = buildingGroup.children[0];
-        c.traverse(n=>{ if(n.geometry) n.geometry.dispose(); if(n.material) { if(Array.isArray(n.material)){ n.material.forEach(m=>m.dispose()); } else n.material.dispose(); } });
-        buildingGroup.remove(c);
-      }
-
-      const floors = opt.floors;
-      const w = opt.floorWidth;
-      const d = opt.baseDepth;
-      const h = opt.floorHeight;
-      const slant = opt.slant;
-      const randomness = opt.randomness;
-
-      // Podium / podium plaza
-      const podium = new THREE.Mesh(new THREE.BoxGeometry(w*1.6, 6, d*1.6), mats[opt.material]);
-      podium.position.set(0, 3, 0);
-      podium.castShadow = true;
-      podium.receiveShadow = true;
-      buildingGroup.add(podium);
-
-      // Core group for floors
-      const stack = new THREE.Group();
-      stack.position.y = 6; // sit on podium
-      buildingGroup.add(stack);
-
-      // Variation function: slight tapering / cantilevers
-      for (let i = 0; i < floors; i++) {
-        const floorIdxFromBottom = i;
-        // make the floor plate slightly change with height
-        const taperFactor = 1 - Math.min(0.22, (i / floors) * 0.22); // up to ~22% taper
-        const width = w * (taperFactor + (Math.random()-0.5)*randomness*0.2);
-        const depth = d * (taperFactor + (Math.random()-0.5)*randomness*0.2);
-        const floorHeight = h + ((i % 4 === 0) ? 0.6 : 0); // design rhythm: every 4th floor slightly taller
-
-        // Main floor slab
-        const geom = new THREE.BoxGeometry(width, floorHeight, depth, 1, 1, 1);
-        const mat = mats[opt.material].clone();
-        // subtle hue shift by floor
-        if(opt.material === 'glass') {
-          mat.color.offsetHSL(0, 0, ((i % 6) - 3) * 0.004);
-          mat.opacity = 0.95 - Math.min(0.2, i / (floors*8));
+    <div id="ui-controls">
+        <h1>Skyscraper Controls</h1>
+        <label for="rotation-speed">Rotation Speed:</label>
+        <input type="range" id="rotation-speed" min="0" max="0.05" step="0.001" value="0.01">
+    </div>
+    
+    <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+            }
         }
-        const mesh = new THREE.Mesh(geom, mat);
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
+    </script>
 
-        // Position with slant
-        const xOffset = slant * i;
-        mesh.position.set(xOffset, (i * floorHeight) + floorHeight/2, 0);
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-        // Add subtle rotation/offsets for a sculpted look
-        if (i % 5 === 2) mesh.rotation.y = (Math.random()-0.5) * 0.02;
-        if (i % 6 === 4) mesh.position.z = (Math.random()-0.5) * 0.6;
+        // --- Scene Setup ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialiasing: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
 
-        stack.add(mesh);
+        // Add OrbitControls for user interaction
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
 
-        // Add vertical window rhythm (simple inset rectangles simulated with thin planes)
-        const windows = new THREE.Group();
-        const cols = 6;
-        const rows = Math.max(1, Math.floor(width / 2.6));
-        for (let c = 0; c < cols; c++) {
-          const wx = -width/2 + (c + 0.5) * (width / cols);
-          const winGeom = new THREE.PlaneGeometry((width/cols) * 0.8, floorHeight * 0.86);
-          const winMat = new THREE.MeshStandardMaterial({ color:0x071126, roughness:0.1, metalness:0.6, emissive:0x001833, emissiveIntensity:0.02, transparent:true, opacity:0.55 });
-          const win = new THREE.Mesh(winGeom, winMat);
-          win.position.set(wx, ((i * floorHeight) + floorHeight/2), depth/2 + 0.01);
-          win.rotation.y = 0;
-          win.castShadow = false;
-          windows.add(win);
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 2);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+        directionalLight.position.set(5, 10, 7.5);
+        scene.add(directionalLight);
 
-          const winBack = win.clone();
-          winBack.position.z = -depth/2 - 0.01;
-          winBack.rotation.y = Math.PI;
-          windows.add(winBack);
+        // --- Skyscraper Parameters ---
+        const numFloors = 23;
+        const floorHeight = 5;
+        const floorWidth = 20;
+
+        const materials = {
+            core: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.8, metalness: 0.9 }),
+            glass: new THREE.MeshStandardMaterial({ color: 0x2a52be, transparent: true, opacity: 0.6, roughness: 0.2, metalness: 0.9 }),
+            detail: new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.3, metalness: 1.0 }),
+            light: new THREE.MeshBasicMaterial({ color: 0x42f5ad })
+        };
+
+        // --- Build the Skyscraper ---
+        const skyscraperGroup = new THREE.Group();
+        const buildingCore = new THREE.BoxGeometry(floorWidth, numFloors * floorHeight, floorWidth);
+        const coreMesh = new THREE.Mesh(buildingCore, materials.core);
+        coreMesh.position.y = (numFloors * floorHeight) / 2;
+        skyscraperGroup.add(coreMesh);
+
+        for (let i = 0; i < numFloors; i++) {
+            const floorY = (i * floorHeight) - ((numFloors * floorHeight) / 2);
+
+            // Add windows
+            const windowGeometry = new THREE.PlaneGeometry(3, 3);
+            const windowOffset = floorWidth / 2 + 0.1;
+
+            const windowMesh1 = new THREE.Mesh(windowGeometry, materials.glass);
+            windowMesh1.position.set(windowOffset, floorY + 2.5, 0);
+            windowMesh1.rotation.y = Math.PI / 2;
+            skyscraperGroup.add(windowMesh1);
+            
+            // Add glowing lights behind some windows
+            if (Math.random() > 0.7) {
+                const lightMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 2.8), materials.light);
+                lightMesh.position.set(windowOffset - 0.05, floorY + 2.5, 0);
+                lightMesh.rotation.y = Math.PI / 2;
+                skyscraperGroup.add(lightMesh);
+            }
         }
-        stack.add(windows);
 
-        // Fins (balconies / horizontal sunshades)
-        if (opt.façadeFins || opt.façadeFins === undefined) {
-          const fins = new THREE.Group();
-          const finCount = 3 + Math.floor(width / 8);
-          for (let f = 0; f < finCount; f++) {
-            const finW = width * 0.88;
-            const finT = 0.12 + (Math.random() * 0.06);
-            const finGeom = new THREE.BoxGeometry(finW, finT, 0.35);
-            const finMat = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.6, metalness: 0.2 });
-            const fin = new THREE.Mesh(finGeom, finMat);
-            fin.position.set(0, (i * floorHeight) + floorHeight * 0.9 - (f * 0.08), depth/2 + 0.8 + (f * 0.12));
-            fins.add(fin);
+        // Add random ledges and spires
+        for (let i = 0; i < 10; i++) {
+            const ledgeWidth = Math.random() * 15 + 5;
+            const ledgeDepth = Math.random() * 3 + 1;
+            const ledgeHeight = Math.random() * 0.5 + 0.1;
+            const ledgeGeometry = new THREE.BoxGeometry(ledgeWidth, ledgeHeight, ledgeDepth);
+            const ledgeMesh = new THREE.Mesh(ledgeGeometry, materials.detail);
+            
+            ledgeMesh.position.x = (Math.random() - 0.5) * (floorWidth - ledgeWidth);
+            ledgeMesh.position.y = (Math.random() * numFloors * floorHeight) - ((numFloors * floorHeight) / 2);
+            ledgeMesh.position.z = (Math.random() - 0.5) * (floorWidth - ledgeDepth);
 
-            // mirror on back
-            const fin2 = fin.clone();
-            fin2.position.z = -fin.position.z;
-            fins.add(fin2);
-          }
-          stack.add(fins);
+            skyscraperGroup.add(ledgeMesh);
         }
-      } // end floors loop
 
-      // Crown / spire
-      if (opt.crown) {
-        const crownGroup = new THREE.Group();
-        const topY = 6 + floors * h + 4;
-        const spireGeom = new THREE.ConeGeometry(4.0, 28, 16);
-        const spireMat = new THREE.MeshStandardMaterial({ color:0xe6f7ff, metalness:0.2, roughness:0.15, emissive:0x162a3b, emissiveIntensity:0.02 });
-        const spire = new THREE.Mesh(spireGeom, spireMat);
-        spire.position.set(slant * floors, topY, 0);
-        spire.castShadow = true;
-        crownGroup.add(spire);
+        scene.add(skyscraperGroup);
 
-        const ringGeom = new THREE.TorusGeometry(8, 0.9, 12, 100);
-        const ring = new THREE.Mesh(ringGeom, new THREE.MeshStandardMaterial({ color:0xffffff, metalness:0.6, roughness:0.25 }));
-        ring.rotation.x = Math.PI/2;
-        ring.position.set(slant * floors, topY - 4, 0);
-        crownGroup.add(ring);
+        // --- Animation and UI Controls ---
+        camera.position.z = 70;
+        camera.position.y = 30;
 
-        buildingGroup.add(crownGroup);
-      }
+        let rotationSpeed = 0.01;
+        const rotationSpeedControl = document.getElementById('rotation-speed');
+        rotationSpeedControl.addEventListener('input', (event) => {
+            rotationSpeed = parseFloat(event.target.value);
+        });
 
-      // Center buildingGroup for nicer camera framing
-      buildingGroup.position.set(0, 0, 0);
-      buildingGroup.rotation.y = THREE.MathUtils.degToRad(opt.rotation);
-    }
+        function animate() {
+            requestAnimationFrame(animate);
 
-    // Initial build
-    buildSkyscraper();
+            // Rotate the skyscraper
+            skyscraperGroup.rotation.y += rotationSpeed;
 
-    // Orbit Controls
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 40, 0);
-    controls.update();
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
 
-    // GUI
-    const gui = new GUI({ width: 320 });
-    const folder1 = gui.addFolder('Design');
-    folder1.add(params, 'floors', 3, 60, 1).name('Floors').onChange(v => { params.floors = v; buildSkyscraper(); });
-    folder1.add(params, 'floorHeight', 2.6, 5.0, 0.1).name('Floor height').onChange(v => { params.floorHeight = v; buildSkyscraper(); });
-    folder1.add(params, 'slant', -0.25, 0.25, 0.002).name('Slant (m/floor)').onChange(v => { params.slant = v; buildSkyscraper(); });
-    folder1.add(params, 'randomness', 0, 0.4, 0.01).name('Variation').onChange(v => { params.randomness = v; buildSkyscraper(); });
-    folder1.add(params, 'façadeFins').name('Façade fins').onChange(v => { params.façadeFins = v; buildSkyscraper(); });
-    folder1.add(params, 'crown').name('Crown / spire').onChange(v => { params.crown = v; buildSkyscraper(); });
-
-    const folder2 = gui.addFolder('Appearance');
-    folder2.add(params, 'material', ['glass','metal','terracotta']).name('Material').onChange(v => { /* set material then rebuild */ params.material = v; buildSkyscraper(); });
-    folder2.add(params, 'rotation', -180, 180, 1).name('Global Rotation').onChange(v => { params.rotation = v; buildingGroup.rotation.y = THREE.MathUtils.degToRad(v); });
-
-    gui.add(params, 'regenerate').name('Regenerate (randomized)');
-    gui.add(params, 'exportGLTF').name('Export GLTF');
-
-    // Responsive
-    window.addEventListener('resize', onWindowResize);
-    function onWindowResize() {
-      camera.aspect = container.clientWidth / container.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
-    }
-
-    // Render loop
-    const clock = new THREE.Clock();
-    function animate() {
-      requestAnimationFrame(animate);
-      const t = clock.getElapsedTime();
-      // gentle hover for building to make presentation look alive
-      buildingGroup.rotation.y += (THREE.MathUtils.degToRad(params.rotation) - buildingGroup.rotation.y) * 0.04 * 0.5;
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // GLTF Exporter
-    const exporter = new GLTFExporter();
-    function exportGLTF() {
-      // clone to avoid side-effects
-      exporter.parse(buildingGroup, (result) => {
-        const output = JSON.stringify(result, null, 2);
-        saveString(output, `skyscraper_${params.floors}floors.glb.json`);
-      }, { binary: false, trs: true });
-    }
-    // simple file save util
-    function saveString(text, filename) {
-      const blob = new Blob([text], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      link.click();
-      // cleanup
-      setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-    }
-
-    // Regenerate with subtle differences
-    function regenerate() {
-      params.randomness = Math.min(0.25, params.randomness + (Math.random() - 0.5) * 0.08);
-      buildSkyscraper();
-    }
-
-    // Simple keyboard shortcuts
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'r') { params.regenerate(); }
-      if (e.key === 'e') { params.exportGLTF(); }
-    });
-
-    // initial camera framing helper: compute bounding box and frame
-    function frameBuilding() {
-      // estimate height
-      const height = params.floors * params.floorHeight + 16;
-      camera.position.set(0, height * 0.9, height * 1.6);
-      controls.target.set(0, height * 0.45, 0);
-      controls.update();
-    }
-    frameBuilding();
-
-  </script>
+        // Handle window resizing
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
