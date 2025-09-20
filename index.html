@@ -1,91 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Scribe Haus Skyscraper</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scribe Haus — 23-Story Skyscraper in Accra</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
-    body { margin: 0; overflow: hidden; background: #000; }
-    canvas { display: block; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background: #1a1a1a;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+    model-viewer {
+      width: 100%;
+      height: 600px;
+      background: #ddd;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    section {
+      margin-bottom: 2rem;
+    }
+    h2 {
+      margin-top: 0;
+      color: #005b96;
+    }
+    .notes {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #1a1a1a;
+      color: white;
+    }
+    @media (max-width: 768px) {
+      model-viewer {
+        height: 400px;
+      }
+    }
   </style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-<script>
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x000000);
+  <header>
+    <h1>Scribe Haus: 23-Story Skyscraper — Accra</h1>
+    <p>Interactive model, design notes, and walkthrough-ready layout</p>
+  </header>
 
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 2000);
-  camera.position.set(200,200,400);
+  <main>
+    <model-viewer 
+      src="assets/scribe-haus.glb" 
+      alt="23-story skyscraper model" 
+      auto-rotate 
+      camera-controls 
+      shadow-intensity="1" 
+      ar 
+      ar-modes="webxr scene-viewer quick-look">
+    </model-viewer>
 
-  const renderer = new THREE.WebGLRenderer({antialias:true});
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
+    <section class="notes">
+      <h2>Design Notes</h2>
+      <ul>
+        <li>Location: Central Accra, near Independence Avenue</li>
+        <li>Height: 23 stories (~92 meters)</li>
+        <li>Structural system: Reinforced concrete core with steel framing</li>
+        <li>Façade: Glass curtain wall with vertical fins for solar shading</li>
+        <li>Ground floor: Lobby, retail, and public plaza</li>
+        <li>Floors 2–5: Commercial offices</li>
+        <li>Floors 6–20: Residential units (mixed-use)</li>
+        <li>Floors 21–23: Executive suites, rooftop garden, and helipad</li>
+      </ul>
+    </section>
 
-  const light = new THREE.DirectionalLight(0xffffff, 1);
-  light.position.set(200,400,200);
-  scene.add(light);
-  scene.add(new THREE.AmbientLight(0x404040));
+    <section>
+      <h2>Walkthrough Integration</h2>
+      <p>Use the camera controls above to explore the building. For immersive walkthroughs, integrate with Three.js or Unity WebGL in future iterations.</p>
+    </section>
+  </main>
 
-  // Towers
-  const towerMat = new THREE.MeshPhongMaterial({color:0x00bcd4, transparent:true, opacity:0.7});
-  const towerGeo = new THREE.BoxGeometry(40, 230, 40);
-
-  const tower1 = new THREE.Mesh(towerGeo, towerMat);
-  tower1.position.set(-80,115,-80);
-  scene.add(tower1);
-
-  const tower2 = tower1.clone(); tower2.position.set(80,115,-80); scene.add(tower2);
-  const tower3 = tower1.clone(); tower3.position.set(-80,115,80); scene.add(tower3);
-  const tower4 = tower1.clone(); tower4.position.set(80,115,80); scene.add(tower4);
-
-  // Dome base
-  const domeGeo = new THREE.SphereGeometry(60, 32, 32, 0, Math.PI*2, 0, Math.PI/2);
-  const domeMat = new THREE.MeshPhongMaterial({color:0x888888, transparent:true, opacity:0.5});
-  const dome = new THREE.Mesh(domeGeo, domeMat);
-  dome.position.set(0,0,0);
-  scene.add(dome);
-
-  // V-shaped skybridges
-  const bridgeMat = new THREE.MeshPhongMaterial({color:0x00ffcc, transparent:true, opacity:0.8});
-  const bridgeGeo = new THREE.BoxGeometry(20,10,200);
-
-  const bridge1 = new THREE.Mesh(bridgeGeo, bridgeMat);
-  bridge1.rotation.y = Math.PI/6;
-  bridge1.position.set(-40,150,0);
-  scene.add(bridge1);
-
-  const bridge2 = bridge1.clone();
-  bridge2.rotation.y = -Math.PI/6;
-  bridge2.position.set(40,150,0);
-  scene.add(bridge2);
-
-  // Horizontal connectors
-  function addConnector(y){
-    const connGeo = new THREE.BoxGeometry(160,10,20);
-    const conn = new THREE.Mesh(connGeo, bridgeMat);
-    conn.position.set(0,y,-80);
-    scene.add(conn);
-    const conn2 = conn.clone();
-    conn2.position.set(0,y,80);
-    scene.add(conn2);
-  }
-  addConnector(70);
-  addConnector(140);
-  addConnector(210);
-
-  // Orbit animation
-  function animate(){
-    requestAnimationFrame(animate);
-    scene.rotation.y += 0.002;
-    renderer.render(scene,camera);
-  }
-  animate();
-
-  window.addEventListener('resize', ()=>{
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-</script>
+  <footer>
+    &copy; 2025 Scribe Haus | Designed by Akosua
+  </footer>
 </body>
 </html>
