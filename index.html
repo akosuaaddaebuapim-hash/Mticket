@@ -4,33 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Futuristic Skyscraper - Ridge Royal, Accra</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #000;
-        }
-
-        #ui-controls {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: white;
-            font-family: sans-serif;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 100;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div id="loading-screen">
+        <div id="loader"></div>
+        <div id="loading-text">Loading...</div>
+    </div>
+
     <div id="ui-controls">
         <h1>Skyscraper Controls</h1>
+        <p>Use WASD to move, and the mouse to look.</p>
+        <p>Press 'L' to toggle lights.</p>
         <label for="rotation-speed">Rotation Speed:</label>
         <input type="range" id="rotation-speed" min="0" max="0.05" step="0.001" value="0.01">
     </div>
-    
+
     <script async src="https://unpkg.com/es-module-shims@1.8.0/dist/es-module-shims.js"></script>
     <script type="importmap">
         {
@@ -40,175 +29,6 @@
             }
         }
     </script>
-
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-        // --- Scene Setup ---
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialiasing: true });
-        renderer.shadowMap.enabled = true; // Enable shadows
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-
-        // Add OrbitControls for user interaction
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-
-        // --- Lighting ---
-        const ambientLight = new THREE.AmbientLight(0x404040, 1.5);
-        scene.add(ambientLight);
-
-        const sunLight = new THREE.DirectionalLight(0xffffff, 1);
-        sunLight.position.set(50, 100, 50);
-        sunLight.castShadow = true;
-        sunLight.shadow.mapSize.width = 2048;
-        sunLight.shadow.mapSize.height = 2048;
-        sunLight.shadow.camera.near = 0.5;
-        sunLight.shadow.camera.far = 500;
-        sunLight.shadow.camera.left = -100;
-        sunLight.shadow.camera.right = 100;
-        sunLight.shadow.camera.top = 100;
-        sunLight.shadow.camera.bottom = -100;
-        scene.add(sunLight);
-
-        // --- Materials ---
-        const materials = {
-            core: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.8, metalness: 0.9 }),
-            glass: new THREE.MeshStandardMaterial({ color: 0x2a52be, transparent: true, opacity: 0.6, roughness: 0.2, metalness: 0.9 }),
-            detail: new THREE.MeshStandardMaterial({ color: 0xcccccc, roughness: 0.3, metalness: 1.0 }),
-            light: new THREE.MeshBasicMaterial({ color: 0x42f5ad }),
-            ground: new THREE.MeshStandardMaterial({ color: 0x3d702e, roughness: 0.9 }),
-            palmTrunk: new THREE.MeshStandardMaterial({ color: 0x8b5a2b }),
-            palmLeaves: new THREE.MeshStandardMaterial({ color: 0x006400, side: THREE.DoubleSide })
-        };
-
-        // --- Environment ---
-        // Ground
-        const ground = new THREE.Mesh(new THREE.PlaneGeometry(300, 300), materials.ground);
-        ground.rotation.x = -Math.PI / 2;
-        ground.receiveShadow = true;
-        scene.add(ground);
-
-        // Skybox
-        const skyGeometry = new THREE.SphereGeometry(400, 32, 32);
-        const skyMaterial = new THREE.MeshBasicMaterial({ color: 0x87ceeb, side: THREE.BackSide });
-        const sky = new THREE.Mesh(skyGeometry, skyMaterial);
-        scene.add(sky);
-        
-        // --- Palm Tree Function ---
-        function createPalmTree() {
-            const treeGroup = new THREE.Group();
-            
-            // Trunk
-            const trunkHeight = Math.random() * 15 + 10;
-            const trunkGeometry = new THREE.CylinderGeometry(1.5, 2, trunkHeight, 8);
-            const trunk = new THREE.Mesh(trunkGeometry, materials.palmTrunk);
-            trunk.castShadow = true;
-            trunk.receiveShadow = true;
-            treeGroup.add(trunk);
-            
-            // Leaves
-            const leavesGeometry = new THREE.ConeGeometry(5, 10, 8);
-            const leaves = new THREE.Mesh(leavesGeometry, materials.palmLeaves);
-            leaves.position.y = trunkHeight / 2;
-            leaves.castShadow = true;
-            treeGroup.add(leaves);
-            
-            return treeGroup;
-        }
-
-        // Add multiple palm trees
-        for (let i = 0; i < 15; i++) {
-            const tree = createPalmTree();
-            tree.position.x = (Math.random() - 0.5) * 200;
-            tree.position.z = (Math.random() - 0.5) * 200;
-            scene.add(tree);
-        }
-
-        // --- Build the Skyscraper ---
-        const skyscraperGroup = new THREE.Group();
-        const numFloors = 23;
-        const floorHeight = 5;
-        const floorWidth = 20;
-
-        const buildingCore = new THREE.BoxGeometry(floorWidth, numFloors * floorHeight, floorWidth);
-        const coreMesh = new THREE.Mesh(buildingCore, materials.core);
-        coreMesh.position.y = (numFloors * floorHeight) / 2;
-        coreMesh.castShadow = true;
-        coreMesh.receiveShadow = true;
-        skyscraperGroup.add(coreMesh);
-
-        for (let i = 0; i < numFloors; i++) {
-            const floorY = (i * floorHeight) - ((numFloors * floorHeight) / 2);
-
-            // Add windows
-            const windowGeometry = new THREE.PlaneGeometry(3, 3);
-            const windowOffset = floorWidth / 2 + 0.1;
-
-            const windowMesh1 = new THREE.Mesh(windowGeometry, materials.glass);
-            windowMesh1.position.set(windowOffset, floorY + 2.5, 0);
-            windowMesh1.rotation.y = Math.PI / 2;
-            skyscraperGroup.add(windowMesh1);
-            
-            if (Math.random() > 0.7) {
-                const lightMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 2.8), materials.light);
-                lightMesh.position.set(windowOffset - 0.05, floorY + 2.5, 0);
-                lightMesh.rotation.y = Math.PI / 2;
-                skyscraperGroup.add(lightMesh);
-            }
-        }
-
-        // Add random ledges
-        for (let i = 0; i < 10; i++) {
-            const ledgeWidth = Math.random() * 15 + 5;
-            const ledgeDepth = Math.random() * 3 + 1;
-            const ledgeHeight = Math.random() * 0.5 + 0.1;
-            const ledgeGeometry = new THREE.BoxGeometry(ledgeWidth, ledgeHeight, ledgeDepth);
-            const ledgeMesh = new THREE.Mesh(ledgeGeometry, materials.detail);
-            
-            ledgeMesh.position.x = (Math.random() - 0.5) * (floorWidth - ledgeWidth);
-            ledgeMesh.position.y = (Math.random() * numFloors * floorHeight) - ((numFloors * floorHeight) / 2);
-            ledgeMesh.position.z = (Math.random() - 0.5) * (floorWidth - ledgeDepth);
-            ledgeMesh.castShadow = true;
-            ledgeMesh.receiveShadow = true;
-
-            skyscraperGroup.add(ledgeMesh);
-        }
-
-        scene.add(skyscraperGroup);
-        skyscraperGroup.position.y = 0; // Ensure skyscraper sits on the ground
-
-        // --- Animation and UI Controls ---
-        camera.position.set(50, 40, 80);
-
-        let rotationSpeed = 0.01;
-        const rotationSpeedControl = document.getElementById('rotation-speed');
-        rotationSpeedControl.addEventListener('input', (event) => {
-            rotationSpeed = parseFloat(event.target.value);
-        });
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Rotate the skyscraper
-            skyscraperGroup.rotation.y += rotationSpeed;
-
-            controls.update();
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Handle window resizing
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
