@@ -8,68 +8,60 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f0f0;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      background-color: #ffffff;
+      color: #222;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 20px;
       text-align: center;
     }
-    header {
-      margin-bottom: 20px;
-    }
     h1 {
-      font-size: 2em;
-      margin: 0;
+      font-size: 2.4em;
+      margin-bottom: 10px;
     }
     h2 {
       font-size: 1.2em;
       font-weight: normal;
-      color: #666;
-      margin-top: 8px;
+      color: #555;
+      margin-bottom: 30px;
     }
     img {
-      max-width: 90%;
-      height: auto;
+      width: 100%;
+      max-width: 800px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    .status {
-      margin-top: 20px;
-      font-size: 1em;
-      background: #fff3cd;
+    .notice {
+      margin-top: 30px;
+      background-color: #fff3cd;
       color: #856404;
-      padding: 12px 20px;
+      padding: 20px;
       border-radius: 8px;
+      font-size: 1em;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      max-width: 600px;
     }
     footer {
-      margin-top: 40px;
+      margin-top: 60px;
       font-size: 0.9em;
-      color: #999;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>mticket Hotel – Roman Ridge, Accra</h1>
-    <h2>A visionary landmark in Ghanaian hospitality</h2>
-  </header>
-
-  <img src="3d.png" alt="3D model of mticket Hotel – twin towers with skybridge" />
-
-  <div class="status">
-    🚧 <strong>Interactive 3D experience coming soon.</strong><br />
-    This preview image showcases the architectural concept of the mticket Hotel.<br />
-    The full 3D viewer will allow you to rotate, zoom, and explore the hotel in real time.<br />
-    Stay tuned as we build out the immersive walkthrough.
+  <div class="container">
+    <h1>mticket Hotel</h1>
+    <h2>Roman Ridge, Accra – A New Icon in Ghanaian Hospitality</h2>
+    <img src="3d.png" alt="3D architectural preview of mticket Hotel" />
+    <div class="notice">
+      🚧 <strong>Under Construction:</strong><br />
+      This is a preview of the mticket Hotel concept. The full interactive 3D experience is being built and will allow users to rotate, zoom, and explore the hotel in real time.<br />
+      Please check back soon for the immersive walkthrough.
+    </div>
+    <footer>
+      &copy; 2025 mticket Hospitality. All rights reserved.
+    </footer>
   </div>
-
-  <footer>
-    &copy; 2025 mticket Hospitality. All rights reserved.
-  </footer>
 </body>
 </html>
