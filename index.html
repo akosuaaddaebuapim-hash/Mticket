@@ -5,95 +5,83 @@
   <title>mticket Hotel – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
+      background: linear-gradient(to bottom right, #e6f0ff, #ffffff);
       font-family: 'Segoe UI', sans-serif;
-      background-color: #ffffff;
       color: #222;
+      overflow: hidden;
     }
-    .hero {
-      background: url('hotel.jpeg') center center / cover no-repeat;
-      height: 60vh;
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
+      flex-direction: column;
     }
-    .hero-overlay {
-      background-color: rgba(0, 0, 0, 0.5);
+
+    .image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.5s ease, box-shadow 0.5s ease;
+      box-shadow: 0 0 40px rgba(0,0,0,0.3);
+    }
+
+    .image-wrapper:hover img {
+      transform: scale(1.02);
+      box-shadow: 0 0 60px rgba(0,0,0,0.4);
+    }
+
+    .disclaimer {
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-    }
-    .hero-text {
-      position: relative;
-      color: #fff;
-      text-align: center;
-      z-index: 1;
-    }
-    .hero-text h1 {
-      font-size: 2.8em;
-      margin: 0;
-    }
-    .hero-text h2 {
-      font-size: 1.2em;
-      font-weight: normal;
-      margin-top: 10px;
-    }
-    .content {
-      max-width: 960px;
-      margin: -80px auto 40px;
-      padding: 20px;
-      background: #fff;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.85);
+      padding: 16px 24px;
       border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .content img {
-      max-width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .notice {
-      margin-top: 30px;
-      background-color: #fff3cd;
-      color: #856404;
-      padding: 20px;
-      border-radius: 8px;
       font-size: 1em;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    footer {
+      max-width: 90%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       text-align: center;
-      font-size: 0.9em;
-      color: #aaa;
-      margin: 40px 0;
+    }
+
+    .disclaimer strong {
+      color: #b36b00;
+    }
+
+    @media (max-width: 768px) {
+      .disclaimer {
+        font-size: 0.9em;
+        padding: 12px 18px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-text">
-      <h1>mticket Hotel</h1>
-      <h2>Roman Ridge, Accra – A New Icon in Ghanaian Hospitality</h2>
+  <div class="container">
+    <div class="image-wrapper">
+      <img src="4D.png" alt="mticket Hotel – Roman Ridge, Accra" />
+      <div class="disclaimer">
+        🚧 <strong>Under Construction:</strong><br />
+        This is a visual preview of the mticket Hotel concept in Roman Ridge, Accra.<br />
+        A full interactive 3D experience is being built, where users will be able to rotate, zoom, and explore the hotel in real time.<br />
+        Please check back soon for the immersive walkthrough.
+      </div>
     </div>
   </div>
-
-  <div class="content">
-    <img src="3d.png" alt="3D architectural preview of mticket Hotel" />
-    <div class="notice">
-      🚧 <strong>Under Construction:</strong><br />
-      This is a preview of the mticket Hotel concept. The full interactive 3D experience is being built and will allow users to rotate, zoom, and explore the hotel in real time.<br />
-      Please check back soon for the immersive walkthrough.
-    </div>
-  </div>
-
-  <footer>
-    &copy; 2025 mticket Hospitality. All rights reserved.
-  </footer>
 </body>
 </html>
