@@ -5,27 +5,63 @@
   <title>Luxury Hotel Concepts – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* 1. Global Setup with background.jpg for the entire website */
+    /* 1. Global Setup with Rich Dark Bronze Theme and Animated Overlay */
+    @keyframes slow-pulse {
+        0% { filter: brightness(1); }
+        50% { filter: brightness(1.05); }
+        100% { filter: brightness(1); }
+    }
+    @keyframes subtle-scan {
+        0% { background-position: 0% 0%; }
+        100% { background-position: 100% 100%; }
+    }
+
     html, body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-      color: #fff;
+      color: #e0e0e0; 
       scroll-behavior: smooth;
       overflow-x: hidden;
       
-      /* Using background.jpg for the entire body */
+      /* Base Background: background.jpg */
       background-image: url('background.jpg');
       background-size: cover; 
       background-attachment: fixed; 
       background-position: center center;
-      background-color: #0a0a0a; /* Fallback color */
+      background-color: #1a1510; 
+      position: relative; /* Needed for the pseudo-element overlay */
     }
 
-    /* 2. Professional Hero Section Styling - No blinking, elegant presentation */
+    /* Animated Overlay for Background.jpg */
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Place behind all content */
+        background-image: repeating-linear-gradient(
+          45deg,
+          rgba(184, 134, 11, 0.05) 0%, /* Transparent bronze lines */
+          rgba(184, 134, 11, 0.05) 1px,
+          transparent 1px,
+          transparent 100px
+        );
+        background-size: 200px 200px;
+        animation: subtle-scan 150s linear infinite; /* Very slow, constant motion */
+        opacity: 0.5;
+    }
+
+    /* 2. Dynamic Hero Section Styling - Non-Blinking, Breathing Effect */
     @keyframes hero-shift {
       0% { transform: scale(1.02) translateX(0); }
       100% { transform: scale(1.02) translateX(-2%); }
+    }
+    @keyframes depth-pulse {
+        0%, 100% { box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); }
+        50% { box-shadow: 0 0 80px rgba(0, 0, 0, 1); }
     }
 
     .hero-section {
@@ -38,11 +74,12 @@
       justify-content: center;
       text-align: center;
       overflow: hidden;
-      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
+      /* Add a deep, pulsating shadow for premium depth */
+      animation: depth-pulse 10s infinite alternate ease-in-out; 
       margin-bottom: 2px;
     }
 
-    /* HERO Background: hero.png - Subtle cinematic movement */
+    /* HERO Background: hero.png - Animated Filter */
     .hero-bg {
       position: absolute;
       top: 0;
@@ -53,8 +90,8 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      animation: hero-shift 40s infinite alternate; 
-      filter: contrast(1.1) brightness(0.45); 
+      animation: hero-shift 40s infinite alternate, slow-pulse 8s infinite alternate; /* Two animations running */
+      filter: sepia(0.3) contrast(1.1) brightness(0.6) saturate(1.2); 
       z-index: 1;
     }
 
@@ -64,7 +101,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 15%, rgba(0, 0, 0, 0.3)); /* Slightly less opaque */
+      background: linear-gradient(to top, rgba(26, 21, 16, 0.9) 15%, rgba(26, 21, 16, 0.4)); 
       z-index: 2;
     }
 
@@ -73,11 +110,11 @@
       z-index: 3;
       max-width: 1200px;
       padding: 60px;
-      background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+      background: rgba(26, 21, 16, 0.85); /* More opaque for readability */
       border-radius: 4px;
-      border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle, static border */
-      backdrop-filter: blur(5px); /* Elegant frosted glass effect */
-      box-shadow: 0 8px 30px rgba(0,0,0,0.7); /* Soft shadow */
+      border: 1px solid rgba(184, 134, 11, 0.3); 
+      backdrop-filter: blur(5px); 
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8); 
     }
 
     .hero-content h1 {
@@ -85,19 +122,19 @@
       font-weight: 200; 
       margin-bottom: 25px; 
       letter-spacing: 12px;
-      color: #ffffff;
-      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Clean, professional shadow */
+      color: #f0f0f0; 
+      text-shadow: 0 0 5px rgba(184, 134, 11, 0.5); /* Subtle bronze effect */
       animation: fadeIn 2s ease-out;
-      border-bottom: 2px solid #e69900; 
+      border-bottom: 2px solid #b8860b; 
       padding-bottom: 20px;
-      text-transform: uppercase; /* Force uppercase via CSS */
+      text-transform: uppercase; 
     }
 
     .hero-content p {
       font-size: 1.8em; 
       line-height: 1.6;
       font-weight: 300;
-      color: #ffd790; 
+      color: #deb887; 
       letter-spacing: 1px;
       animation: fadeIn 3s ease-out;
     }
@@ -107,7 +144,7 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 3. General Section Styling */
+    /* 3. General Section Styling - More Background Visibility */
     .section {
       position: relative;
       width: 100%;
@@ -118,8 +155,8 @@
       justify-content: center;
       padding: 50px 20px;
       box-sizing: border-box;
-      /* Sections use a more transparent background to let background.jpg show through */
-      background-color: rgba(0, 0, 0, 0.85); 
+      /* Increased Transparency: Lets more of background.jpg show through */
+      background-color: rgba(26, 21, 16, 0.8); 
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
       margin-bottom: 2px;
     }
@@ -131,14 +168,14 @@
       margin-bottom: 30px;
       border-radius: 8px; 
       overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 1), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 1), 0 0 0 1px rgba(184, 134, 11, 0.2); 
       transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.6s ease;
       opacity: 0.98;
     }
 
     .image-wrapper:hover {
       transform: scale(1.01); 
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 1), 0 0 0 6px #e69900;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 1), 0 0 0 6px #daa520; 
       opacity: 1;
     }
 
@@ -151,8 +188,8 @@
     }
 
     .download-button {
-      background-color: #e69900;
-      color: #111111; 
+      background-color: #b8860b; 
+      color: #f0f0f0; 
       padding: 16px 30px;
       text-decoration: none;
       border-radius: 30px;
@@ -164,9 +201,24 @@
     }
 
     .download-button:hover {
-      background-color: #ffb31a;
+      background-color: #daa520; 
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+    }
+
+    /* 6. Footer Styling - Confirmed Scribe Haus Integration */
+    .footer {
+      background-color: #0d0a08; 
+      color: #554a3e; 
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+    }
+    .footer span {
+      color: #b8860b; 
+      font-weight: 600;
     }
 
     /* 5. Media Queries for Responsiveness */
@@ -194,7 +246,7 @@
       <h1>Hotel Concepts</h1>
       <p>
         Presenting a refined architectural vision for Roman Ridge, Accra.
-        <br>Our portfolio features **29 unique design concepts**. 
+        <br>Our portfolio features 29 unique design concepts. 
         <br>Scroll down to explore the gallery and download files.
       </p>
     </div>
@@ -402,6 +454,10 @@
     </a>
     <a href="1.png" download class="download-button">Download Concept 1</a>
   </div>
+
+  <footer class="footer">
+    Powered by <span>Scribe Haus</span>
+  </footer>
 
 </body>
 </html>
