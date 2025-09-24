@@ -2,21 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>mticket Hotel – Roman Ridge, Accra</title>
+  <title>Hotel Concepts – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* 1. Full-Screen Fixed Background */
+    /* 1. Global Setup and Animated Textured Background */
     html, body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
       color: #fff;
-      background-color: #000;
-      /* Smooth scrolling for the long page */
-      scroll-behavior: smooth; 
+      background-color: #0d0d0d; /* Very dark base */
+      scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
-    /* Set 4D.png data as the fixed, full-screen background */
+    /* CSS Keyframes for Subtle Animation */
+    @keyframes texture-move {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 100%; }
+    }
+
+    /* Fixed, Animated Background */
     body::before {
       content: '';
       position: fixed;
@@ -24,13 +30,19 @@
       left: 0;
       width: 100%;
       height: 100%;
-      /* !!! PASTE YOUR 4D.png BASE64 DATA HERE !!! */
-      background-image: url('data:image/png;base64,YOUR_4D.PNG_BASE64_DATA_HERE'); 
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      filter: brightness(0.7);
       z-index: -1;
+      /* Advanced CSS texture: subtle diagonal lines with a dark, metallic feel */
+      background: 
+        repeating-linear-gradient(
+          -45deg,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.04) 5px,
+          transparent 5px,
+          transparent 10px
+        );
+      background-size: 200px 200px;
+      animation: texture-move 60s linear infinite; /* Slow, continuous animation */
+      filter: brightness(0.8);
     }
 
     /* 2. Content Sections Styling */
@@ -44,52 +56,63 @@
       justify-content: center;
       padding: 50px 20px;
       box-sizing: border-box;
-      background-color: rgba(0, 0, 0, 0.4); 
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+      /* Dark semi-transparent overlay that contrasts with the fixed background */
+      background-color: rgba(0, 0, 0, 0.6); 
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
       margin-bottom: 2px;
     }
 
-    /* 3. Image and Text Styling */
+    /* 3. Text Styling (Intro) */
     .intro-text {
       text-align: center;
-      max-width: 900px;
-      padding: 40px;
-      background: rgba(0, 0, 0, 0.7); /* Slightly darker background for text */
+      max-width: 1000px;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(50, 50, 50, 0.9));
       border-radius: 15px;
       margin-bottom: 80px;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
-      border: 1px solid #b36b00; /* Subtle gold accent */
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+      border-left: 5px solid #e69900; /* Bold Gold Line */
+      transition: transform 0.5s ease;
+    }
+
+    .intro-text:hover {
+      transform: translateY(-5px);
     }
 
     .intro-text h1 {
-      font-size: 4.5em; /* Bigger heading */
-      font-weight: 100; /* Thinner font for a modern look */
+      font-size: 5em; 
+      font-weight: 100;
       margin-bottom: 15px;
-      text-shadow: 0 0 10px #b36b00; /* Gold glow */
-      letter-spacing: 2px;
+      letter-spacing: 4px;
+      color: #fff;
+      text-shadow: 0 0 20px rgba(230, 153, 0, 0.6); /* Soft gold glow */
+      transition: color 0.3s ease;
     }
 
     .intro-text p {
-      font-size: 1.5em; 
+      font-size: 1.6em; 
       line-height: 1.6;
       font-weight: 300;
-      color: #ccc;
-      text-transform: uppercase; /* Powerful text */
+      color: #aaa;
+      text-transform: uppercase;
     }
 
+    /* 4. Image Styling (Concepts) */
     .image-wrapper {
       width: 100%;
-      max-width: 950px;
+      max-width: 1050px; /* Even bigger */
       margin-bottom: 30px;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 5px rgba(255, 255, 255, 0.1);
-      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 1), 0 0 0 8px rgba(255, 255, 255, 0.05);
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.6s ease;
+      opacity: 0.9;
     }
 
     .image-wrapper:hover {
-      transform: scale(1.02);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 0 5px #e69900;
+      transform: scale(1.03); /* More dramatic hover */
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 1), 0 0 0 8px #e69900;
+      opacity: 1;
     }
 
     .image-wrapper img {
@@ -97,29 +120,33 @@
       height: 100%;
       display: block;
       object-fit: cover;
+      filter: saturate(1.05); /* Make pictures "clearer" and bolder */
     }
 
     .download-button {
-      background-color: #b36b00;
-      color: white;
-      padding: 15px 30px;
+      background-color: #e69900;
+      color: #1a1a1a; /* Dark text on gold button */
+      padding: 18px 35px;
       text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 1.2em;
-      transition: background-color 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      border-radius: 50px; /* Pill shape */
+      font-weight: 700;
+      font-size: 1.3em;
+      letter-spacing: 1px;
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
     }
 
     .download-button:hover {
-      background-color: #e69900;
-      transform: translateY(-3px);
+      background-color: #ffb31a;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
 
-    /* Media Queries for Responsiveness */
+    /* 5. Media Queries for Responsiveness */
     @media (max-width: 768px) {
       .intro-text h1 {
         font-size: 3em;
+        letter-spacing: 2px;
       }
 
       .intro-text p {
@@ -128,7 +155,7 @@
       
       .download-button {
         font-size: 1em;
-        padding: 12px 24px;
+        padding: 15px 30px;
       }
     }
   </style>
@@ -137,16 +164,16 @@
 
   <div class="section" style="min-height: 80vh;">
     <div class="intro-text">
-      <h1>**mticket Hotel Concepts**</h1>
-      <p>A BOLD VISION FOR ROMAN RIDGE, ACCRA. <br>EACH VISUAL REPRESENTS A UNIQUE, SPECTACULAR DESIGN IDEA. <br>**SCROLL AND EXPLORE OUR FULL GALLERY.**</p>
+      <h1>HOTEL CONCEPTS</h1>
+      <p>A BOLD VISION FOR ROMAN RIDGE, ACCRA. <br>EACH VISUAL REPRESENTS A UNIQUE, SPECTACULAR DESIGN IDEA. <br>SCROLL AND EXPLORE THE FULL GALLERY.</p>
     </div>
   </div>
 
   <div class="section">
-    <a href="data:image/jpeg;base64,YOUR_A.JPG_BASE64_DATA_HERE" download="Concept_A.jpg" class="image-wrapper">
-      <img src="data:image/jpeg;base64,YOUR_A.JPG_BASE64_DATA_HERE" alt="Hotel Concept A: Modern Lobby Design" />
+    <a href="a.jpg" download class="image-wrapper">
+      <img src="a.jpg" alt="Hotel Concept A: Modern Lobby Design" />
     </a>
-    <a href="data:image/jpeg;base64,YOUR_A.JPG_BASE64_DATA_HERE" download="Concept_A.jpg" class="download-button">Download Concept A</a>
+    <a href="a.jpg" download class="download-button">Download Concept A</a>
   </div>
 
   <div class="section">
