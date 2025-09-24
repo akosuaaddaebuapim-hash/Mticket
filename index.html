@@ -5,14 +5,32 @@
   <title>mticket Hotel – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    /* 1. Full-Screen Fixed Background */
     html, body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      color: #222;
-      background-color: #f0f0f0;
+      color: #fff; /* Default text color set to white for contrast */
+      background-color: #000; /* Fallback for black background */
     }
 
+    /* Set 4D.png as the fixed, full-screen background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('4D.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: brightness(0.7); /* Slightly darken the background to make content pop */
+      z-index: -1;
+    }
+
+    /* 2. Content Sections Styling */
     .section {
       position: relative;
       width: 100%;
@@ -23,40 +41,51 @@
       justify-content: center;
       padding: 50px 20px;
       box-sizing: border-box;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      transition: background-image 0.5s ease;
+      /* Semi-transparent dark overlay for sections for better contrast with the images inside */
+      background-color: rgba(0, 0, 0, 0.4); 
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
+      margin-bottom: 2px; /* Small space between sections */
     }
 
-    .section-1 { background-image: url('textures/linen.png'); }
-    .section-2 { background-image: url('textures/paper.png'); }
-    .section-3 { background-image: url('textures/concrete.png'); }
-    .section-4 { background-image: url('textures/fabric.png'); }
-    .section-5 { background-image: url('textures/wood.png'); }
-    .section-6 { background-image: url('textures/canvas.png'); }
-    .section-7 { background-image: url('textures/graph.png'); }
-    .section-8 { background-image: url('textures/brushed-metal.png'); }
-    .section-9 { background-image: url('textures/sand.png'); }
-    .section-10 { background-image: url('textures/denim.png'); }
-    .section-11 { background-image: url('textures/dark-noise.png'); }
-    .section-12 { background-image: url('textures/noise.png'); }
-    .section-13 { background-image: url('textures/dots.png'); }
-    .section-14 { background-image: url('textures/cross.png'); }
+    /* 3. Image and Text Styling */
+    .intro-text {
+      text-align: center;
+      max-width: 900px;
+      padding: 40px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 15px;
+      margin-bottom: 80px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+    }
+
+    .intro-text h1 {
+      font-size: 4em;
+      font-weight: 200;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 10px #000;
+    }
+
+    .intro-text p {
+      font-size: 1.4em;
+      line-height: 1.6;
+      font-weight: 300;
+      color: #ccc;
+    }
 
     .image-wrapper {
       width: 100%;
-      max-width: 900px;
-      margin-bottom: 20px;
+      max-width: 950px;
+      margin-bottom: 30px;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+      /* Making the image bold with strong shadow and transition */
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 5px rgba(255, 255, 255, 0.1);
       transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
 
     .image-wrapper:hover {
-      transform: scale(1.01);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      transform: scale(1.02);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 0 5px #b36b00;
     }
 
     .image-wrapper img {
@@ -69,126 +98,142 @@
     .download-button {
       background-color: #b36b00;
       color: white;
-      padding: 12px 24px;
+      padding: 15px 30px;
       text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
-      font-size: 1em;
+      font-size: 1.2em;
       transition: background-color 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     }
 
     .download-button:hover {
-      background-color: #995c00;
-      transform: translateY(-2px);
+      background-color: #e69900;
+      transform: translateY(-3px);
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+      .intro-text h1 {
+        font-size: 2.5em;
+      }
+
+      .intro-text p {
+        font-size: 1.1em;
+      }
+      
+      .download-button {
+        font-size: 1em;
+        padding: 12px 24px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div class="section" style="background: linear-gradient(to bottom right, #e6f0ff, #ffffff);">
-    <div style="text-align: center; max-width: 800px; padding: 0 20px;">
-      <h1 style="font-size: 3em; font-weight: 300; margin-bottom: 20px;">Welcome to our gallery of ideas!</h1>
-      <p style="font-size: 1.2em; line-height: 1.6;">These are all stunning **ideas** and concepts for what the hotel could be. Scroll down to experience the full visual journey. Every picture stands on its own, big and bold.</p>
+  <div class="section" style="min-height: 80vh;">
+    <div class="intro-text">
+      <h1>**mticket Hotel Concepts**</h1>
+      <p>Step inside the vision for mticket Hotel in Roman Ridge, Accra. Each image represents a **bold, unique design idea** for a spectacular future. Scroll down to explore the gallery. **All concepts are available for download.**</p>
     </div>
   </div>
 
-  <div class="section section-1">
+  <div class="section">
     <a href="a.jpg" download class="image-wrapper">
-      <img src="a.jpg" alt="Hotel Concept A" />
+      <img src="a.jpg" alt="Hotel Concept A: Modern Lobby Design" />
     </a>
-    <a href="a.jpg" download class="download-button">Download Image</a>
+    <a href="a.jpg" download class="download-button">Download Concept A</a>
   </div>
 
-  <div class="section section-2">
+  <div class="section">
     <a href="b.jpg" download class="image-wrapper">
-      <img src="b.jpg" alt="Hotel Concept B" />
+      <img src="b.jpg" alt="Hotel Concept B: Rooftop Terrace View" />
     </a>
-    <a href="b.jpg" download class="download-button">Download Image</a>
+    <a href="b.jpg" download class="download-button">Download Concept B</a>
   </div>
 
-  <div class="section section-3">
+  <div class="section">
     <a href="c.jpg" download class="image-wrapper">
-      <img src="c.jpg" alt="Hotel Concept C" />
+      <img src="c.jpg" alt="Hotel Concept C: Luxury Suite Interior" />
     </a>
-    <a href="c.jpg" download class="download-button">Download Image</a>
+    <a href="c.jpg" download class="download-button">Download Concept C</a>
   </div>
 
-  <div class="section section-4">
+  <div class="section">
     <a href="d.jpg" download class="image-wrapper">
-      <img src="d.jpg" alt="Hotel Concept D" />
+      <img src="d.jpg" alt="Hotel Concept D: Poolside Design" />
     </a>
-    <a href="d.jpg" download class="download-button">Download Image</a>
+    <a href="d.jpg" download class="download-button">Download Concept D</a>
   </div>
   
-  <div class="section section-5">
+  <div class="section">
     <a href="e.jpg" download class="image-wrapper">
-      <img src="e.jpg" alt="Hotel Concept E" />
+      <img src="e.jpg" alt="Hotel Concept E: Restaurant Dining Area" />
     </a>
-    <a href="e.jpg" download class="download-button">Download Image</a>
+    <a href="e.jpg" download class="download-button">Download Concept E</a>
   </div>
 
-  <div class="section section-6">
+  <div class="section">
     <a href="f.jpg" download class="image-wrapper">
-      <img src="f.jpg" alt="Hotel Concept F" />
+      <img src="f.jpg" alt="Hotel Concept F: Executive Meeting Room" />
     </a>
-    <a href="f.jpg" download class="download-button">Download Image</a>
+    <a href="f.jpg" download class="download-button">Download Concept F</a>
   </div>
 
-  <div class="section section-7">
+  <div class="section">
     <a href="g.jpg" download class="image-wrapper">
-      <img src="g.jpg" alt="Hotel Concept G" />
+      <img src="g.jpg" alt="Hotel Concept G: Exterior Night View" />
     </a>
-    <a href="g.jpg" download class="download-button">Download Image</a>
+    <a href="g.jpg" download class="download-button">Download Concept G</a>
   </div>
   
-  <div class="section section-8">
+  <div class="section">
     <a href="h.jpg" download class="image-wrapper">
-      <img src="h.jpg" alt="Hotel Concept H" />
+      <img src="h.jpg" alt="Hotel Concept H: Fitness Center" />
     </a>
-    <a href="h.jpg" download class="download-button">Download Image</a>
+    <a href="h.jpg" download class="download-button">Download Concept H</a>
   </div>
   
-  <div class="section section-9">
+  <div class="section">
     <a href="i.jpg" download class="image-wrapper">
-      <img src="i.jpg" alt="Hotel Concept I" />
+      <img src="i.jpg" alt="Hotel Concept I: Guest Bathroom Design" />
     </a>
-    <a href="i.jpg" download class="download-button">Download Image</a>
+    <a href="i.jpg" download class="download-button">Download Concept I</a>
   </div>
 
-  <div class="section section-10">
+  <div class="section">
     <a href="j.jpg" download class="image-wrapper">
-      <img src="j.jpg" alt="Hotel Concept J" />
+      <img src="j.jpg" alt="Hotel Concept J: Bar and Lounge Area" />
     </a>
-    <a href="j.jpg" download class="download-button">Download Image</a>
+    <a href="j.jpg" download class="download-button">Download Concept J</a>
   </div>
 
-  <div class="section section-11">
+  <div class="section">
     <a href="k.jpg" download class="image-wrapper">
-      <img src="k.jpg" alt="Hotel Concept K" />
+      <img src="k.jpg" alt="Hotel Concept K: Entrance Foyer" />
     </a>
-    <a href="k.jpg" download class="download-button">Download Image</a>
+    <a href="k.jpg" download class="download-button">Download Concept K</a>
   </div>
 
-  <div class="section section-12">
+  <div class="section">
     <a href="l.jpg" download class="image-wrapper">
-      <img src="l.jpg" alt="Hotel Concept L" />
+      <img src="l.jpg" alt="Hotel Concept L: Standard Room Layout" />
     </a>
-    <a href="l.jpg" download class="download-button">Download Image</a>
+    <a href="l.jpg" download class="download-button">Download Concept L</a>
   </div>
 
-  <div class="section section-13">
+  <div class="section">
     <a href="m.jpg" download class="image-wrapper">
-      <img src="m.jpg" alt="Hotel Concept M" />
+      <img src="m.jpg" alt="Hotel Concept M: Alfresco Dining" />
     </a>
-    <a href="m.jpg" download class="download-button">Download Image</a>
+    <a href="m.jpg" download class="download-button">Download Concept M</a>
   </div>
 
-  <div class="section section-14">
+  <div class="section">
     <a href="n.jpg" download class="image-wrapper">
-      <img src="n.jpg" alt="Hotel Concept N" />
+      <img src="n.jpg" alt="Hotel Concept N: Panoramic View from Balcony" />
     </a>
-    <a href="n.jpg" download class="download-button">Download Image</a>
+    <a href="n.jpg" download class="download-button">Download Concept N</a>
   </div>
 
 </body>
