@@ -33,7 +33,83 @@
       filter: brightness(0.95);
     }
 
-    /* 2. Content Sections Styling */
+    /* 2. Impressive HERO Section Styling */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh; /* Full screen height */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
+      margin-bottom: 2px;
+    }
+
+    /* HERO Background: hero.png with Parallax/Zoom Effect */
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('hero.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed; /* Pseudo-parallax */
+      animation: hero-zoom 30s infinite alternate; /* Subtle breathing animation */
+      z-index: 1;
+    }
+
+    @keyframes hero-zoom {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6); /* Darkens background for text contrast */
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 1000px;
+      padding: 40px;
+    }
+
+    .hero-content h1 {
+      font-size: 6em; 
+      font-weight: 100;
+      margin-bottom: 15px;
+      letter-spacing: 8px;
+      color: #fff;
+      text-shadow: 0 0 30px rgba(230, 153, 0, 0.8);
+      animation: fadeIn 2s ease-out;
+    }
+
+    .hero-content p {
+      font-size: 1.8em; 
+      line-height: 1.6;
+      font-weight: 300;
+      color: #ddd;
+      text-transform: uppercase;
+      animation: fadeIn 3s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 3. General Section Styling */
     .section {
       position: relative;
       width: 100%;
@@ -44,48 +120,12 @@
       justify-content: center;
       padding: 50px 20px;
       box-sizing: border-box;
-      /* Semi-transparent overlay so the animated background is visible through the sections */
       background-color: rgba(0, 0, 0, 0.75); 
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
       margin-bottom: 2px;
     }
 
-    /* 3. Text Styling (Intro) */
-    .intro-text {
-      text-align: center;
-      max-width: 1000px;
-      padding: 60px 40px;
-      background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(50, 50, 50, 0.9));
-      border-radius: 15px;
-      margin-bottom: 80px;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-      border-left: 5px solid #e69900;
-      transition: transform 0.5s ease;
-    }
-
-    .intro-text:hover {
-      transform: translateY(-5px);
-    }
-
-    .intro-text h1 {
-      font-size: 5em; 
-      font-weight: 100;
-      margin-bottom: 15px;
-      letter-spacing: 4px;
-      color: #fff;
-      text-shadow: 0 0 20px rgba(230, 153, 0, 0.6);
-      transition: color 0.3s ease;
-    }
-
-    .intro-text p {
-      font-size: 1.6em; 
-      line-height: 1.6;
-      font-weight: 300;
-      color: #aaa;
-      text-transform: uppercase;
-    }
-
-    /* 4. Image Styling (Concepts) */
+    /* 4. Image Styling (Concepts) - unchanged but powerful */
     .image-wrapper {
       width: 100%;
       max-width: 1050px;
@@ -132,15 +172,13 @@
 
     /* 5. Media Queries for Responsiveness */
     @media (max-width: 768px) {
-      .intro-text h1 {
-        font-size: 3em;
-        letter-spacing: 2px;
+      .hero-content h1 {
+        font-size: 4em;
+        letter-spacing: 4px;
       }
-
-      .intro-text p {
-        font-size: 1.2em;
+      .hero-content p {
+        font-size: 1.4em;
       }
-      
       .download-button {
         font-size: 1em;
         padding: 15px 30px;
@@ -150,10 +188,12 @@
 </head>
 <body>
 
-  <div class="section" style="min-height: 80vh;">
-    <div class="intro-text">
+  <div class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
       <h1>HOTEL CONCEPTS</h1>
-      <p>A BOLD VISION FOR ROMAN RIDGE, ACCRA. <br>EXPLORE OUR GALLERY OF **20 SPECTACULAR DESIGN IDEAS**. <br>SCROLL AND DOWNLOAD YOUR FAVORITES.</p>
+      <p>A BOLD VISION FOR ROMAN RIDGE, ACCRA. <br>EXPLORE OUR GALLERY OF **29 SPECTACULAR DESIGN IDEAS**. <br>SCROLL TO BEGIN THE JOURNEY.</p>
     </div>
   </div>
 
@@ -257,25 +297,81 @@
   
   <div class="section">
     <a href="o.jpg" download class="image-wrapper">
-      <img src="o.jpg" alt="Hotel Concept O: New Design Element 1" />
+      <img src="o.jpg" alt="Hotel Concept O: Design Detail 1" />
     </a>
     <a href="o.jpg" download class="download-button">Download Concept O</a>
   </div>
   
   <div class="section">
     <a href="p.jpg" download class="image-wrapper">
-      <img src="p.jpg" alt="Hotel Concept P: New Design Element 2" />
+      <img src="p.jpg" alt="Hotel Concept P: Design Detail 2" />
     </a>
     <a href="p.jpg" download class="download-button">Download Concept P</a>
   </div>
   
   <div class="section">
     <a href="q.jpg" download class="image-wrapper">
-      <img src="q.jpg" alt="Hotel Concept Q: New Design Element 3" />
+      <img src="q.jpg" alt="Hotel Concept Q: Design Detail 3" />
     </a>
     <a href="q.jpg" download class="download-button">Download Concept Q</a>
   </div>
 
+  <div class="section">
+    <a href="r.jpg" download class="image-wrapper">
+      <img src="r.jpg" alt="Hotel Concept R: Design Detail 4" />
+    </a>
+    <a href="r.jpg" download class="download-button">Download Concept R</a>
+  </div>
+  
+  <div class="section">
+    <a href="s.jpg" download class="image-wrapper">
+      <img src="s.jpg" alt="Hotel Concept S: Design Detail 5" />
+    </a>
+    <a href="s.jpg" download class="download-button">Download Concept S</a>
+  </div>
+
+  <div class="section">
+    <a href="t.jpg" download class="image-wrapper">
+      <img src="t.jpg" alt="Hotel Concept T: Design Detail 6" />
+    </a>
+    <a href="t.jpg" download class="download-button">Download Concept T</a>
+  </div>
+
+  <div class="section">
+    <a href="u.jpg" download class="image-wrapper">
+      <img src="u.jpg" alt="Hotel Concept U: Design Detail 7" />
+    </a>
+    <a href="u.jpg" download class="download-button">Download Concept U</a>
+  </div>
+  
+  <div class="section">
+    <a href="v.jpg" download class="image-wrapper">
+      <img src="v.jpg" alt="Hotel Concept V: Design Detail 8" />
+    </a>
+    <a href="v.jpg" download class="download-button">Download Concept V</a>
+  </div>
+  
+  <div class="section">
+    <a href="w.jpg" download class="image-wrapper">
+      <img src="w.jpg" alt="Hotel Concept W: Design Detail 9" />
+    </a>
+    <a href="w.jpg" download class="download-button">Download Concept W</a>
+  </div>
+  
+  <div class="section">
+    <a href="x.jpg" download class="image-wrapper">
+      <img src="x.jpg" alt="Hotel Concept X: Design Detail 10" />
+    </a>
+    <a href="x.jpg" download class="download-button">Download Concept X</a>
+  </div>
+  
+  <div class="section">
+    <a href="y.jpg" download class="image-wrapper">
+      <img src="y.jpg" alt="Hotel Concept Y: Design Detail 11" />
+    </a>
+    <a href="y.jpg" download class="download-button">Download Concept Y</a>
+  </div>
+  
   <div class="section">
     <a href="a1.jpg" download class="image-wrapper">
       <img src="a1.jpg" alt="Hotel Concept A1: Special Feature 1" />
@@ -295,6 +391,13 @@
       <img src="a3.jpg" alt="Hotel Concept A3: Special Feature 3" />
     </a>
     <a href="a3.jpg" download class="download-button">Download Concept A3</a>
+  </div>
+
+  <div class="section">
+    <a href="1.png" download class="image-wrapper">
+      <img src="1.png" alt="Hotel Concept 1: Final Feature Image" />
+    </a>
+    <a href="1.png" download class="download-button">Download Concept 1</a>
   </div>
 
 </body>
