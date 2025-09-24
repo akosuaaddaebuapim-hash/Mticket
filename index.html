@@ -8,205 +8,188 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      background: linear-gradient(to bottom right, #e6f0ff, #ffffff);
       font-family: 'Segoe UI', sans-serif;
       color: #222;
-      overflow-x: hidden;
+      background-color: #f0f0f0;
     }
 
-    .container {
+    .section {
       position: relative;
       width: 100%;
-      min-height: 100%;
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-direction: column;
-      padding: 40px 20px;
+      padding: 50px 20px;
       box-sizing: border-box;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      transition: background-image 0.5s ease;
     }
 
-    .intro-text {
-      text-align: center;
-      margin-bottom: 40px;
-      max-width: 800px;
-      padding: 0 20px;
-    }
+    .section-1 { background-image: url('textures/linen.png'); }
+    .section-2 { background-image: url('textures/paper.png'); }
+    .section-3 { background-image: url('textures/concrete.png'); }
+    .section-4 { background-image: url('textures/fabric.png'); }
+    .section-5 { background-image: url('textures/wood.png'); }
+    .section-6 { background-image: url('textures/canvas.png'); }
+    .section-7 { background-image: url('textures/graph.png'); }
+    .section-8 { background-image: url('textures/brushed-metal.png'); }
+    .section-9 { background-image: url('textures/sand.png'); }
+    .section-10 { background-image: url('textures/denim.png'); }
+    .section-11 { background-image: url('textures/dark-noise.png'); }
+    .section-12 { background-image: url('textures/noise.png'); }
+    .section-13 { background-image: url('textures/dots.png'); }
+    .section-14 { background-image: url('textures/cross.png'); }
 
-    .intro-text h1 {
-      font-size: 2.5em;
-      font-weight: 300;
-      color: #333;
-      margin-bottom: 10px;
-    }
-
-    .intro-text p {
-      font-size: 1.1em;
-      line-height: 1.6;
-    }
-
-    .gallery-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 1000px;
-    }
-
-    .main-image-wrapper {
+    .image-wrapper {
       width: 100%;
       max-width: 900px;
-      height: auto;
       margin-bottom: 20px;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      transition: transform 0.5s ease;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.3);
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
 
-    .main-image-wrapper:hover {
-      transform: translateY(-5px);
+    .image-wrapper:hover {
+      transform: scale(1.01);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     }
 
-    .main-image-wrapper img {
+    .image-wrapper img {
       width: 100%;
       height: 100%;
       display: block;
       object-fit: cover;
     }
 
-    .thumbnails {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .thumbnail-wrapper {
-      width: 100px;
-      height: 70px;
-      cursor: pointer;
+    .download-button {
+      background-color: #b36b00;
+      color: white;
+      padding: 12px 24px;
+      text-decoration: none;
       border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-weight: bold;
+      font-size: 1em;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
-    .thumbnail-wrapper:hover,
-    .thumbnail-wrapper.active {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-    
-    .thumbnail-wrapper.active {
-      outline: 3px solid #b36b00;
-      outline-offset: 2px;
-    }
-
-    .thumbnail-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    @media (max-width: 768px) {
-      .intro-text h1 {
-        font-size: 1.8em;
-      }
-
-      .intro-text p {
-        font-size: 1em;
-      }
-      
-      .thumbnail-wrapper {
-        width: 80px;
-        height: 60px;
-      }
+    .download-button:hover {
+      background-color: #995c00;
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="intro-text">
-      <h1>Welcome to our visual gallery!</h1>
-      <p>These are all stunning **ideas** and concepts for what the hotel could be. Enjoy the visual journey and feel free to download the images.</p>
-    </div>
-    <div class="gallery-container">
-      <a id="main-image-link" href="a.jpg" download>
-        <div class="main-image-wrapper">
-          <img id="main-image" src="a.jpg" alt="Hotel Concept A" />
-        </div>
-      </a>
-      <div class="thumbnails">
-        <a href="a.jpg" download class="thumbnail-wrapper active" onclick="changeImage(event, 'a.jpg')">
-          <img src="a.jpg" alt="Hotel Concept A" />
-        </a>
-        <a href="b.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'b.jpg')">
-          <img src="b.jpg" alt="Hotel Concept B" />
-        </a>
-        <a href="c.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'c.jpg')">
-          <img src="c.jpg" alt="Hotel Concept C" />
-        </a>
-        <a href="d.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'd.jpg')">
-          <img src="d.jpg" alt="Hotel Concept D" />
-        </a>
-        <a href="e.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'e.jpg')">
-          <img src="e.jpg" alt="Hotel Concept E" />
-        </a>
-        <a href="f.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'f.jpg')">
-          <img src="f.jpg" alt="Hotel Concept F" />
-        </a>
-        <a href="g.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'g.jpg')">
-          <img src="g.jpg" alt="Hotel Concept G" />
-        </a>
-        <a href="h.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'h.jpg')">
-          <img src="h.jpg" alt="Hotel Concept H" />
-        </a>
-        <a href="i.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'i.jpg')">
-          <img src="i.jpg" alt="Hotel Concept I" />
-        </a>
-        <a href="j.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'j.jpg')">
-          <img src="j.jpg" alt="Hotel Concept J" />
-        </a>
-        <a href="k.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'k.jpg')">
-          <img src="k.jpg" alt="Hotel Concept K" />
-        </a>
-        <a href="l.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'l.jpg')">
-          <img src="l.jpg" alt="Hotel Concept L" />
-        </a>
-        <a href="m.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'm.jpg')">
-          <img src="m.jpg" alt="Hotel Concept M" />
-        </a>
-        <a href="n.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'n.jpg')">
-          <img src="n.jpg" alt="Hotel Concept N" />
-        </a>
-      </div>
+
+  <div class="section" style="background: linear-gradient(to bottom right, #e6f0ff, #ffffff);">
+    <div style="text-align: center; max-width: 800px; padding: 0 20px;">
+      <h1 style="font-size: 3em; font-weight: 300; margin-bottom: 20px;">Welcome to our gallery of ideas!</h1>
+      <p style="font-size: 1.2em; line-height: 1.6;">These are all stunning **ideas** and concepts for what the hotel could be. Scroll down to experience the full visual journey. Every picture stands on its own, big and bold.</p>
     </div>
   </div>
 
-  <script>
-    function changeImage(event, newImageSrc) {
-      // Prevent the default download behavior
-      event.preventDefault();
+  <div class="section section-1">
+    <a href="a.jpg" download class="image-wrapper">
+      <img src="a.jpg" alt="Hotel Concept A" />
+    </a>
+    <a href="a.jpg" download class="download-button">Download Image</a>
+  </div>
 
-      const mainImage = document.getElementById('main-image');
-      const mainImageLink = document.getElementById('main-image-link');
-      const allThumbnails = document.querySelectorAll('.thumbnail-wrapper');
-      
-      // Update the main image and its download link
-      mainImage.src = newImageSrc;
-      mainImage.alt = `Hotel Concept ${newImageSrc.slice(0, 1).toUpperCase()}`;
-      mainImageLink.href = newImageSrc;
+  <div class="section section-2">
+    <a href="b.jpg" download class="image-wrapper">
+      <img src="b.jpg" alt="Hotel Concept B" />
+    </a>
+    <a href="b.jpg" download class="download-button">Download Image</a>
+  </div>
 
-      // Update the active class on thumbnails
-      allThumbnails.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === newImageSrc) {
-          link.classList.add('active');
-        }
-      });
-    }
-  </script>
+  <div class="section section-3">
+    <a href="c.jpg" download class="image-wrapper">
+      <img src="c.jpg" alt="Hotel Concept C" />
+    </a>
+    <a href="c.jpg" download class="download-button">Download Image</a>
+  </div>
+
+  <div class="section section-4">
+    <a href="d.jpg" download class="image-wrapper">
+      <img src="d.jpg" alt="Hotel Concept D" />
+    </a>
+    <a href="d.jpg" download class="download-button">Download Image</a>
+  </div>
+  
+  <div class="section section-5">
+    <a href="e.jpg" download class="image-wrapper">
+      <img src="e.jpg" alt="Hotel Concept E" />
+    </a>
+    <a href="e.jpg" download class="download-button">Download Image</a>
+  </div>
+
+  <div class="section section-6">
+    <a href="f.jpg" download class="image-wrapper">
+      <img src="f.jpg" alt="Hotel Concept F" />
+    </a>
+    <a href="f.jpg" download class="download-button">Download Image</a>
+  </div>
+
+  <div class="section section-7">
+    <a href="g.jpg" download class="image-wrapper">
+      <img src="g.jpg" alt="Hotel Concept G" />
+    </a>
+    <a href="g.jpg" download class="download-button">Download Image</a>
+  </div>
+  
+  <div class="section section-8">
+    <a href="h.jpg" download class="image-wrapper">
+      <img src="h.jpg" alt="Hotel Concept H" />
+    </a>
+    <a href="h.jpg" download class="download-button">Download Image</a>
+  </div>
+  
+  <div class="section section-9">
+    <a href="i.jpg" download class="image-wrapper">
+      <img src="i.jpg" alt="Hotel Concept I" />
+    </a>
+    <a href="i.jpg" download class="download-button">Download Image</a>
+  </div>
+
+  <div class="section section-10">
+    <a href="j.jpg" download class="image-wrapper">
+      <img src="j.jpg" alt="Hotel Concept J" />
+    </a>
+    <a href="j.jpg" download class="download-button">Download Image</a>
+  </div>
+
+  <div class="section section-11">
+    <a href="k.jpg" download class="image-wrapper">
+      <img src="k.jpg" alt="Hotel Concept K" />
+    </a>
+    <a href="k.jpg" download class="download-button">Download Image</a>
+  </div>
+
+  <div class="section section-12">
+    <a href="l.jpg" download class="image-wrapper">
+      <img src="l.jpg" alt="Hotel Concept L" />
+    </a>
+    <a href="l.jpg" download class="download-button">Download Image</a>
+  </div>
+
+  <div class="section section-13">
+    <a href="m.jpg" download class="image-wrapper">
+      <img src="m.jpg" alt="Hotel Concept M" />
+    </a>
+    <a href="m.jpg" download class="download-button">Download Image</a>
+  </div>
+
+  <div class="section section-14">
+    <a href="n.jpg" download class="image-wrapper">
+      <img src="n.jpg" alt="Hotel Concept N" />
+    </a>
+    <a href="n.jpg" download class="download-button">Download Image</a>
+  </div>
+
 </body>
 </html>
