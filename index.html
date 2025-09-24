@@ -10,11 +10,13 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      color: #fff; /* Default text color set to white for contrast */
-      background-color: #000; /* Fallback for black background */
+      color: #fff;
+      background-color: #000;
+      /* Smooth scrolling for the long page */
+      scroll-behavior: smooth; 
     }
 
-    /* Set 4D.png as the fixed, full-screen background */
+    /* Set 4D.png data as the fixed, full-screen background */
     body::before {
       content: '';
       position: fixed;
@@ -22,11 +24,12 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('4D.png');
+      /* !!! PASTE YOUR 4D.png BASE64 DATA HERE !!! */
+      background-image: url('data:image/png;base64,YOUR_4D.PNG_BASE64_DATA_HERE'); 
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      filter: brightness(0.7); /* Slightly darken the background to make content pop */
+      filter: brightness(0.7);
       z-index: -1;
     }
 
@@ -41,10 +44,9 @@
       justify-content: center;
       padding: 50px 20px;
       box-sizing: border-box;
-      /* Semi-transparent dark overlay for sections for better contrast with the images inside */
       background-color: rgba(0, 0, 0, 0.4); 
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
-      margin-bottom: 2px; /* Small space between sections */
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+      margin-bottom: 2px;
     }
 
     /* 3. Image and Text Styling */
@@ -52,24 +54,27 @@
       text-align: center;
       max-width: 900px;
       padding: 40px;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7); /* Slightly darker background for text */
       border-radius: 15px;
       margin-bottom: 80px;
       box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+      border: 1px solid #b36b00; /* Subtle gold accent */
     }
 
     .intro-text h1 {
-      font-size: 4em;
-      font-weight: 200;
+      font-size: 4.5em; /* Bigger heading */
+      font-weight: 100; /* Thinner font for a modern look */
       margin-bottom: 15px;
-      text-shadow: 0 2px 10px #000;
+      text-shadow: 0 0 10px #b36b00; /* Gold glow */
+      letter-spacing: 2px;
     }
 
     .intro-text p {
-      font-size: 1.4em;
+      font-size: 1.5em; 
       line-height: 1.6;
       font-weight: 300;
       color: #ccc;
+      text-transform: uppercase; /* Powerful text */
     }
 
     .image-wrapper {
@@ -78,14 +83,13 @@
       margin-bottom: 30px;
       border-radius: 12px;
       overflow: hidden;
-      /* Making the image bold with strong shadow and transition */
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 0 5px rgba(255, 255, 255, 0.1);
       transition: transform 0.5s ease, box-shadow 0.5s ease;
     }
 
     .image-wrapper:hover {
       transform: scale(1.02);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 0 5px #b36b00;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 0 5px #e69900;
     }
 
     .image-wrapper img {
@@ -115,11 +119,11 @@
     /* Media Queries for Responsiveness */
     @media (max-width: 768px) {
       .intro-text h1 {
-        font-size: 2.5em;
+        font-size: 3em;
       }
 
       .intro-text p {
-        font-size: 1.1em;
+        font-size: 1.2em;
       }
       
       .download-button {
@@ -134,15 +138,15 @@
   <div class="section" style="min-height: 80vh;">
     <div class="intro-text">
       <h1>**mticket Hotel Concepts**</h1>
-      <p>Step inside the vision for mticket Hotel in Roman Ridge, Accra. Each image represents a **bold, unique design idea** for a spectacular future. Scroll down to explore the gallery. **All concepts are available for download.**</p>
+      <p>A BOLD VISION FOR ROMAN RIDGE, ACCRA. <br>EACH VISUAL REPRESENTS A UNIQUE, SPECTACULAR DESIGN IDEA. <br>**SCROLL AND EXPLORE OUR FULL GALLERY.**</p>
     </div>
   </div>
 
   <div class="section">
-    <a href="a.jpg" download class="image-wrapper">
-      <img src="a.jpg" alt="Hotel Concept A: Modern Lobby Design" />
+    <a href="data:image/jpeg;base64,YOUR_A.JPG_BASE64_DATA_HERE" download="Concept_A.jpg" class="image-wrapper">
+      <img src="data:image/jpeg;base64,YOUR_A.JPG_BASE64_DATA_HERE" alt="Hotel Concept A: Modern Lobby Design" />
     </a>
-    <a href="a.jpg" download class="download-button">Download Concept A</a>
+    <a href="data:image/jpeg;base64,YOUR_A.JPG_BASE64_DATA_HERE" download="Concept_A.jpg" class="download-button">Download Concept A</a>
   </div>
 
   <div class="section">
