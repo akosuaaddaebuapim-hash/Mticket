@@ -12,76 +12,201 @@
       background: linear-gradient(to bottom right, #e6f0ff, #ffffff);
       font-family: 'Segoe UI', sans-serif;
       color: #222;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     .container {
       position: relative;
       width: 100%;
-      height: 100%;
+      min-height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
+      padding: 40px 20px;
+      box-sizing: border-box;
     }
 
-    .image-wrapper {
-      position: relative;
+    .intro-text {
+      text-align: center;
+      margin-bottom: 40px;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+
+    .intro-text h1 {
+      font-size: 2.5em;
+      font-weight: 300;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .intro-text p {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    .gallery-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 1000px;
+    }
+
+    .main-image-wrapper {
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transition: transform 0.5s ease;
+    }
+
+    .main-image-wrapper:hover {
+      transform: translateY(-5px);
+    }
+
+    .main-image-wrapper img {
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      display: block;
+      object-fit: cover;
     }
 
-    .image-wrapper img {
+    .thumbnails {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .thumbnail-wrapper {
+      width: 100px;
+      height: 70px;
+      cursor: pointer;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .thumbnail-wrapper:hover,
+    .thumbnail-wrapper.active {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .thumbnail-wrapper.active {
+      outline: 3px solid #b36b00;
+      outline-offset: 2px;
+    }
+
+    .thumbnail-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 1.5s ease, box-shadow 0.5s ease;
-      box-shadow: 0 0 40px rgba(0,0,0,0.3);
-    }
-
-    .image-wrapper:hover img {
-      transform: scale(1.02);
-      box-shadow: 0 0 60px rgba(0,0,0,0.4);
-    }
-
-    .disclaimer {
-      position: absolute;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.85);
-      padding: 16px 24px;
-      border-radius: 12px;
-      font-size: 1em;
-      max-width: 90%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      text-align: center;
-    }
-
-    .disclaimer strong {
-      color: #b36b00;
     }
 
     @media (max-width: 768px) {
-      .disclaimer {
-        font-size: 0.9em;
-        padding: 12px 18px;
+      .intro-text h1 {
+        font-size: 1.8em;
+      }
+
+      .intro-text p {
+        font-size: 1em;
+      }
+      
+      .thumbnail-wrapper {
+        width: 80px;
+        height: 60px;
       }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="image-wrapper">
-      <img src="4D.png" alt="mticket Hotel – Roman Ridge, Accra" />
-      <div class="disclaimer">
-        🚧 <strong>Under Construction:</strong><br />
-        This is a visual preview of the mticket Hotel concept in Roman Ridge, Accra.<br />
-        A full interactive 3D experience is being built, where users will be able to rotate, zoom, and explore the hotel in real time.<br />
-        Please check back soon for the immersive walkthrough.
+    <div class="intro-text">
+      <h1>Welcome to our visual gallery!</h1>
+      <p>These are all stunning **ideas** and concepts for what the hotel could be. Enjoy the visual journey and feel free to download the images.</p>
+    </div>
+    <div class="gallery-container">
+      <a id="main-image-link" href="a.jpg" download>
+        <div class="main-image-wrapper">
+          <img id="main-image" src="a.jpg" alt="Hotel Concept A" />
+        </div>
+      </a>
+      <div class="thumbnails">
+        <a href="a.jpg" download class="thumbnail-wrapper active" onclick="changeImage(event, 'a.jpg')">
+          <img src="a.jpg" alt="Hotel Concept A" />
+        </a>
+        <a href="b.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'b.jpg')">
+          <img src="b.jpg" alt="Hotel Concept B" />
+        </a>
+        <a href="c.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'c.jpg')">
+          <img src="c.jpg" alt="Hotel Concept C" />
+        </a>
+        <a href="d.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'd.jpg')">
+          <img src="d.jpg" alt="Hotel Concept D" />
+        </a>
+        <a href="e.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'e.jpg')">
+          <img src="e.jpg" alt="Hotel Concept E" />
+        </a>
+        <a href="f.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'f.jpg')">
+          <img src="f.jpg" alt="Hotel Concept F" />
+        </a>
+        <a href="g.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'g.jpg')">
+          <img src="g.jpg" alt="Hotel Concept G" />
+        </a>
+        <a href="h.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'h.jpg')">
+          <img src="h.jpg" alt="Hotel Concept H" />
+        </a>
+        <a href="i.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'i.jpg')">
+          <img src="i.jpg" alt="Hotel Concept I" />
+        </a>
+        <a href="j.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'j.jpg')">
+          <img src="j.jpg" alt="Hotel Concept J" />
+        </a>
+        <a href="k.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'k.jpg')">
+          <img src="k.jpg" alt="Hotel Concept K" />
+        </a>
+        <a href="l.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'l.jpg')">
+          <img src="l.jpg" alt="Hotel Concept L" />
+        </a>
+        <a href="m.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'm.jpg')">
+          <img src="m.jpg" alt="Hotel Concept M" />
+        </a>
+        <a href="n.jpg" download class="thumbnail-wrapper" onclick="changeImage(event, 'n.jpg')">
+          <img src="n.jpg" alt="Hotel Concept N" />
+        </a>
       </div>
     </div>
   </div>
+
+  <script>
+    function changeImage(event, newImageSrc) {
+      // Prevent the default download behavior
+      event.preventDefault();
+
+      const mainImage = document.getElementById('main-image');
+      const mainImageLink = document.getElementById('main-image-link');
+      const allThumbnails = document.querySelectorAll('.thumbnail-wrapper');
+      
+      // Update the main image and its download link
+      mainImage.src = newImageSrc;
+      mainImage.alt = `Hotel Concept ${newImageSrc.slice(0, 1).toUpperCase()}`;
+      mainImageLink.href = newImageSrc;
+
+      // Update the active class on thumbnails
+      allThumbnails.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === newImageSrc) {
+          link.classList.add('active');
+        }
+      });
+    }
+  </script>
 </body>
 </html>
