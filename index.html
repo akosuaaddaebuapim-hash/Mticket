@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     /* 1. Global Setup and Vibrant Animated Background */
-    /* Keyframes for a diagonal, flowing movement */
+    /* Keyframes for a diagonal, faster flowing movement */
     @keyframes flowing-texture {
       0% { background-position: 0% 0%; }
       100% { background-position: 200% 200%; }
@@ -20,36 +20,35 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
       
-      /* New, Vibrant, Deep Purple & Gold Animated Background */
-      background-color: #1a0a2a; /* Deep violet base */
+      /* New: High-Contrast, Deep Metallic Animated Background */
+      background-color: #0d0d0d; /* Very dark base */
       background-image: 
         repeating-linear-gradient(
-          45deg,
-          #2c1a3c 0%, /* Dark purple line */
-          #2c1a3c 3px,
-          #3c2250 3px, /* Slightly lighter purple line */
-          #3c2250 6px
+          -45deg,
+          #1a1a1a 0%, 
+          #1a1a1a 5px,
+          #2c2c2c 5px, /* Metallic silver/grey stripe */
+          #2c2c2c 10px
         ),
         repeating-linear-gradient(
-          -45deg,
-          rgba(255, 215, 0, 0.15), /* Gold sparkle overlay for texture */
-          rgba(255, 215, 0, 0.15) 1px,
-          transparent 1px,
-          transparent 2px
+          45deg,
+          #4a4a4a 0%, 
+          #4a4a4a 2px,
+          transparent 2px,
+          transparent 4px
         );
-      background-size: 200px 200px; 
-      animation: flowing-texture 70s linear infinite; /* Slow, continuous flow */
+      background-size: 250px 250px; 
+      animation: flowing-texture 45s linear infinite; /* Faster, more obvious movement */
     }
 
-    /* 2. Impressive HERO Section Styling - Better Contrast and Animation */
+    /* 2. Impressive HERO Section Styling - Maxed out for impact */
     @keyframes hero-shift {
-      0% { transform: scale(1.05) translateX(0); }
-      100% { transform: scale(1.05) translateX(-5%); }
+      0% { transform: scale(1.08) translateX(0); }
+      100% { transform: scale(1.08) translateX(-5%); }
     }
     @keyframes border-flash {
-      0% { box-shadow: 0 0 0px #e69900; }
-      50% { box-shadow: 0 0 100px rgba(255, 215, 0, 0.5), 0 0 20px #e69900; }
-      100% { box-shadow: 0 0 0px #e69900; }
+      0%, 100% { box-shadow: 0 0 0px #e69900; }
+      50% { box-shadow: 0 0 150px rgba(255, 215, 0, 0.7), 0 0 30px #e69900; }
     }
 
     .hero-section {
@@ -66,7 +65,7 @@
       margin-bottom: 2px;
     }
 
-    /* HERO Background: hero.png with Stronger Animation and Filter */
+    /* HERO Background: hero.png - Stronger animation and visual impact */
     .hero-bg {
       position: absolute;
       top: 0;
@@ -77,8 +76,8 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      animation: hero-shift 25s infinite alternate; 
-      filter: contrast(1.2) brightness(0.5); /* Stronger contrast/darkness */
+      animation: hero-shift 30s infinite alternate; 
+      filter: contrast(1.3) brightness(0.5); 
       z-index: 1;
     }
 
@@ -88,7 +87,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 10%, rgba(0, 0, 0, 0.4)); /* Darker bottom fade */
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 15%, rgba(0, 0, 0, 0.3)); /* Very dark base for text pop */
       z-index: 2;
     }
 
@@ -96,31 +95,31 @@
       position: relative;
       z-index: 3;
       max-width: 1200px;
-      padding: 50px;
-      border: 3px solid transparent;
-      border-image: linear-gradient(to right, #e69900, #ffb31a);
-      border-image-slice: 1;
+      padding: 60px;
+      border: 3px solid #ffb31a;
       border-radius: 10px;
-      background: rgba(0, 0, 0, 0.4);
-      animation: border-flash 8s infinite ease-in-out; /* Pulsing glow effect */
+      background: rgba(0, 0, 0, 0.6); /* Semi-transparent black box */
+      animation: border-flash 6s infinite ease-in-out; /* More frequent, powerful glow */
+      backdrop-filter: blur(2px); /* Subtle blur behind the text */
     }
 
     .hero-content h1 {
-      font-size: 7.5em; /* Even Bigger */
+      font-size: 8em; /* Biggest heading yet */
       font-weight: 900; 
       margin-bottom: 10px;
-      letter-spacing: 12px;
+      letter-spacing: 15px;
       color: #fff;
-      text-shadow: 0 0 50px #ffb31a, 0 0 15px #e69900; /* Intense Gold Glow */
+      text-shadow: 0 0 70px #ffb31a, 0 0 20px #e69900; /* Super intense Gold Glow */
       animation: fadeIn 2s ease-out;
     }
 
     .hero-content p {
-      font-size: 2.3em; 
+      font-size: 2.5em; /* Bold tagline */
       line-height: 1.4;
       font-weight: 300;
-      color: #ffd790; 
+      color: #fff; /* White text for max contrast */
       text-transform: uppercase;
+      text-shadow: 0 0 10px #e69900;
       animation: fadeIn 3s ease-out;
     }
     
@@ -140,8 +139,8 @@
       justify-content: center;
       padding: 50px 20px;
       box-sizing: border-box;
-      /* Semi-transparent overlay so the animated background is visible through the sections */
-      background-color: rgba(0, 0, 0, 0.9); 
+      /* Sections should be semi-transparent to let the metallic background show through */
+      background-color: rgba(0, 0, 0, 0.88); 
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
       margin-bottom: 2px;
     }
@@ -155,12 +154,12 @@
       overflow: hidden;
       box-shadow: 0 25px 80px rgba(0, 0, 0, 1), 0 0 0 8px rgba(255, 255, 255, 0.05);
       transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.6s ease;
-      opacity: 0.95;
+      opacity: 0.98;
     }
 
     .image-wrapper:hover {
       transform: scale(1.03);
-      box-shadow: 0 40px 100px rgba(0, 0, 0, 1), 0 0 0 8px #ffb31a; /* Brighter gold hover */
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 1), 0 0 0 8px #ffb31a; 
       opacity: 1;
     }
 
@@ -173,7 +172,7 @@
     }
 
     .download-button {
-      background-color: #e69900;
+      background-color: #ffb31a;
       color: #1a1a1a;
       padding: 18px 35px;
       text-decoration: none;
@@ -186,7 +185,7 @@
     }
 
     .download-button:hover {
-      background-color: #ffb31a;
+      background-color: #e69900;
       transform: translateY(-4px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
     }
@@ -194,11 +193,11 @@
     /* 5. Media Queries for Responsiveness */
     @media (max-width: 768px) {
       .hero-content h1 {
-        font-size: 4.5em;
+        font-size: 4em;
         letter-spacing: 4px;
       }
       .hero-content p {
-        font-size: 1.6em;
+        font-size: 1.4em;
       }
       .download-button {
         font-size: 1em;
@@ -422,4 +421,5 @@
   </div>
 
 </body>
-</html>
+  </html>
+    
