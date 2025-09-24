@@ -5,8 +5,8 @@
   <title>Luxury Hotel Concepts – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* 1. Global Setup and Refined Animated Background */
-    @keyframes flowing-texture {
+    /* 1. Global Setup and Rich, Ambient Background */
+    @keyframes flowing-gold {
       0% { background-position: 0% 0%; }
       100% { background-position: 200% 200%; }
     }
@@ -19,31 +19,31 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
       
-      /* Refined: High-Contrast, Deep Metallic Animated Background (Subtle Flow) */
-      background-color: #0d0d0d; 
+      /* New: Deep Charcoal, Ambient Gold Texture */
+      background-color: #111111; 
       background-image: 
         repeating-linear-gradient(
           -45deg,
-          #1a1a1a 0%, 
-          #1a1a1a 5px,
-          #2c2c2c 5px, 
-          #2c2c2c 10px
+          #1f1f1f 0%, 
+          #1f1f1f 1px,
+          #111111 1px,
+          #111111 20px
         ),
         repeating-linear-gradient(
           45deg,
-          #4a4a4a 0%, 
-          #4a4a4a 2px,
-          transparent 2px,
-          transparent 4px
+          rgba(255, 215, 0, 0.05), /* Very subtle gold specks */
+          rgba(255, 215, 0, 0.05) 1px,
+          transparent 1px,
+          transparent 100px
         );
-      background-size: 250px 250px; 
-      animation: flowing-texture 60s linear infinite; /* Slower, more professional speed */
+      background-size: 200px 200px; 
+      animation: flowing-gold 100s linear infinite; /* Extremely slow, elegant movement */
     }
 
-    /* 2. Professional HERO Section Styling (No Glow, High Contrast) */
+    /* 2. Cinematic HERO Section Styling */
     @keyframes hero-shift {
-      0% { transform: scale(1.03) translateX(0); } /* More subtle zoom */
-      100% { transform: scale(1.03) translateX(-3%); }
+      0% { transform: scale(1.02) translateX(0); }
+      100% { transform: scale(1.02) translateX(-2%); }
     }
 
     .hero-section {
@@ -60,7 +60,7 @@
       margin-bottom: 2px;
     }
 
-    /* HERO Background: hero.png */
+    /* HERO Background: hero.png - Subtle cinematic movement */
     .hero-bg {
       position: absolute;
       top: 0;
@@ -71,8 +71,8 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      animation: hero-shift 35s infinite alternate; 
-      filter: contrast(1.2) brightness(0.4); /* Deep, mood-setting darkness */
+      animation: hero-shift 40s infinite alternate; 
+      filter: contrast(1.1) brightness(0.45); /* Deep contrast */
       z-index: 1;
     }
 
@@ -91,28 +91,30 @@
       z-index: 3;
       max-width: 1200px;
       padding: 60px;
-      border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle, elegant border */
+      background: rgba(0, 0, 0, 0.6); 
       border-radius: 4px;
-      background: rgba(0, 0, 0, 0.5); 
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .hero-content h1 {
       font-size: 7em; 
-      font-weight: 300; /* Lighter font weight for modern look */
-      margin-bottom: 10px;
-      letter-spacing: 10px;
+      font-weight: 200; 
+      margin-bottom: 25px; /* More spacing */
+      letter-spacing: 12px;
       color: #ffffff;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8), 0 0 1px #ffb31a; /* Sharp shadow, tiny gold accent */
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.9); 
       animation: fadeIn 2s ease-out;
+      border-bottom: 2px solid #e69900; /* Elegant underline */
+      padding-bottom: 20px;
     }
 
     .hero-content p {
-      font-size: 2em; 
-      line-height: 1.4;
+      font-size: 1.8em; 
+      line-height: 1.6;
       font-weight: 300;
-      color: #e0e0e0; 
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      color: #ffd790; /* Soft gold text for tagline */
+      text-transform: none; /* Default capitalization */
+      letter-spacing: 1px;
       animation: fadeIn 3s ease-out;
     }
     
@@ -142,16 +144,16 @@
       width: 100%;
       max-width: 1050px;
       margin-bottom: 30px;
-      border-radius: 8px; /* Slightly smaller radius for professionalism */
+      border-radius: 8px; 
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 1), 0 0 0 4px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 1), 0 0 0 1px rgba(255, 255, 255, 0.1);
       transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.6s ease;
       opacity: 0.98;
     }
 
     .image-wrapper:hover {
-      transform: scale(1.02);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 1), 0 0 0 8px #e69900; /* Controlled hover glow */
+      transform: scale(1.01); /* More subtle hover effect */
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 1), 0 0 0 6px #e69900;
       opacity: 1;
     }
 
@@ -165,7 +167,7 @@
 
     .download-button {
       background-color: #e69900;
-      color: #111111; /* Very dark text for contrast */
+      color: #111111; 
       padding: 16px 30px;
       text-decoration: none;
       border-radius: 30px;
@@ -178,8 +180,8 @@
 
     .download-button:hover {
       background-color: #ffb31a;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
     }
 
     /* 5. Media Queries for Responsiveness */
@@ -205,7 +207,11 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1>HOTEL CONCEPTS</h1>
-      <p>A bold vision for roman ridge, accra. <br>Our gallery showcases **29 design ideas**. <br>Scroll to explore our full portfolio.</p>
+      <p>
+        Presenting a refined architectural vision for Roman Ridge, Accra.
+        <br>Our portfolio features **29 unique design concepts**. 
+        <br>Scroll down to explore the gallery and download files.
+      </p>
     </div>
   </div>
   
