@@ -5,7 +5,7 @@
   <title>Luxury Hotel Concepts – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* 1. Global Setup and Rich, Ambient Background */
+    /* 1. Global Setup and Image Background */
     @keyframes flowing-gold {
       0% { background-position: 0% 0%; }
       100% { background-position: 200% 200%; }
@@ -19,25 +19,12 @@
       scroll-behavior: smooth;
       overflow-x: hidden;
       
-      /* New: Deep Charcoal, Ambient Gold Texture */
+      /* USING CUSTOM BACKGROUND.JPG */
       background-color: #111111; 
-      background-image: 
-        repeating-linear-gradient(
-          -45deg,
-          #1f1f1f 0%, 
-          #1f1f1f 1px,
-          #111111 1px,
-          #111111 20px
-        ),
-        repeating-linear-gradient(
-          45deg,
-          rgba(255, 215, 0, 0.05), /* Very subtle gold specks */
-          rgba(255, 215, 0, 0.05) 1px,
-          transparent 1px,
-          transparent 100px
-        );
-      background-size: 200px 200px; 
-      animation: flowing-gold 100s linear infinite; /* Extremely slow, elegant movement */
+      background-image: url('background.jpg');
+      background-size: cover; /* Ensures the image covers the entire page */
+      background-attachment: fixed; /* Keeps the background static while scrolling */
+      background-position: center center;
     }
 
     /* 2. Cinematic HERO Section Styling */
@@ -72,7 +59,7 @@
       background-position: center;
       background-attachment: fixed;
       animation: hero-shift 40s infinite alternate; 
-      filter: contrast(1.1) brightness(0.45); /* Deep contrast */
+      filter: contrast(1.1) brightness(0.45); 
       z-index: 1;
     }
 
@@ -91,7 +78,7 @@
       z-index: 3;
       max-width: 1200px;
       padding: 60px;
-      background: rgba(0, 0, 0, 0.6); 
+      background: rgba(0, 0, 0, 0.7); /* Slightly darker background box for contrast */
       border-radius: 4px;
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
@@ -99,12 +86,12 @@
     .hero-content h1 {
       font-size: 7em; 
       font-weight: 200; 
-      margin-bottom: 25px; /* More spacing */
+      margin-bottom: 25px; 
       letter-spacing: 12px;
       color: #ffffff;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.9); 
       animation: fadeIn 2s ease-out;
-      border-bottom: 2px solid #e69900; /* Elegant underline */
+      border-bottom: 2px solid #e69900; 
       padding-bottom: 20px;
     }
 
@@ -112,8 +99,8 @@
       font-size: 1.8em; 
       line-height: 1.6;
       font-weight: 300;
-      color: #ffd790; /* Soft gold text for tagline */
-      text-transform: none; /* Default capitalization */
+      color: #ffd790; 
+      text-transform: none; 
       letter-spacing: 1px;
       animation: fadeIn 3s ease-out;
     }
@@ -134,7 +121,8 @@
       justify-content: center;
       padding: 50px 20px;
       box-sizing: border-box;
-      background-color: rgba(0, 0, 0, 0.9); 
+      /* Using a highly transparent black background on sections to let the new background.jpg show through */
+      background-color: rgba(0, 0, 0, 0.92); 
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
       margin-bottom: 2px;
     }
@@ -152,7 +140,7 @@
     }
 
     .image-wrapper:hover {
-      transform: scale(1.01); /* More subtle hover effect */
+      transform: scale(1.01); 
       box-shadow: 0 25px 60px rgba(0, 0, 0, 1), 0 0 0 6px #e69900;
       opacity: 1;
     }
