@@ -5,10 +5,10 @@
   <title>Hotel Concepts – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* 1. Global Setup and Animated Textured Background */
-    @keyframes texture-move {
-      0% { background-position: 0 0; }
-      100% { background-position: 100% 100%; }
+    /* 1. Global Setup and Enhanced Animated Textured Background */
+    @keyframes flowing-texture {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 200%; }
     }
     
     html, body {
@@ -18,26 +18,22 @@
       color: #fff;
       scroll-behavior: smooth;
       overflow-x: hidden;
-      /* Full-Page Animated Background */
-      background-color: #0d0d0d;
+      
+      /* New, richer animated background */
+      background-color: #0c0c1e; /* Deep dark blue */
       background-image: 
-        repeating-linear-gradient(
-          -45deg,
-          rgba(255, 255, 255, 0.04),
-          rgba(255, 255, 255, 0.04) 5px,
-          transparent 5px,
-          transparent 10px
-        );
-      background-size: 200px 200px;
-      animation: texture-move 60s linear infinite;
-      filter: brightness(0.95);
+        radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      background-position: 0 0, 25px 25px;
+      animation: flowing-texture 40s linear infinite; /* Faster, more obvious movement */
     }
 
     /* 2. Impressive HERO Section Styling */
     .hero-section {
       position: relative;
       width: 100%;
-      height: 100vh; /* Full screen height */
+      height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -48,7 +44,7 @@
       margin-bottom: 2px;
     }
 
-    /* HERO Background: hero.png with Parallax/Zoom Effect */
+    /* HERO Background: hero.png with Stronger Animation */
     .hero-bg {
       position: absolute;
       top: 0;
@@ -58,14 +54,15 @@
       background-image: url('hero.png');
       background-size: cover;
       background-position: center;
-      background-attachment: fixed; /* Pseudo-parallax */
-      animation: hero-zoom 30s infinite alternate; /* Subtle breathing animation */
+      background-attachment: fixed;
+      animation: hero-shift 25s infinite alternate; /* More dynamic movement */
+      filter: saturate(1.2) brightness(0.6); /* More contrast and saturation */
       z-index: 1;
     }
 
-    @keyframes hero-zoom {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.05); }
+    @keyframes hero-shift {
+      0% { transform: scale(1.1) translateX(0); }
+      100% { transform: scale(1.1) translateX(-5%); }
     }
 
     .hero-overlay {
@@ -74,32 +71,35 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.6); /* Darkens background for text contrast */
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4));
       z-index: 2;
     }
 
     .hero-content {
       position: relative;
       z-index: 3;
-      max-width: 1000px;
+      max-width: 1200px;
       padding: 40px;
+      /* Adding a background to the text for maximum pop */
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
     }
 
     .hero-content h1 {
-      font-size: 6em; 
-      font-weight: 100;
-      margin-bottom: 15px;
-      letter-spacing: 8px;
+      font-size: 7em; /* Bolder Text */
+      font-weight: 900; /* Extra Bold */
+      margin-bottom: 10px;
+      letter-spacing: 10px;
       color: #fff;
-      text-shadow: 0 0 30px rgba(230, 153, 0, 0.8);
+      text-shadow: 0 0 40px #e69900, 0 0 10px #e69900;
       animation: fadeIn 2s ease-out;
     }
 
     .hero-content p {
-      font-size: 1.8em; 
-      line-height: 1.6;
+      font-size: 2.2em; /* Bigger tagline */
+      line-height: 1.4;
       font-weight: 300;
-      color: #ddd;
+      color: #ffd790; /* Soft gold color */
       text-transform: uppercase;
       animation: fadeIn 3s ease-out;
     }
@@ -120,12 +120,13 @@
       justify-content: center;
       padding: 50px 20px;
       box-sizing: border-box;
-      background-color: rgba(0, 0, 0, 0.75); 
+      /* Semi-transparent overlay so the animated background is visible through the sections */
+      background-color: rgba(0, 0, 0, 0.85); 
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
       margin-bottom: 2px;
     }
 
-    /* 4. Image Styling (Concepts) - unchanged but powerful */
+    /* 4. Image Styling (Concepts) */
     .image-wrapper {
       width: 100%;
       max-width: 1050px;
@@ -134,7 +135,7 @@
       overflow: hidden;
       box-shadow: 0 25px 80px rgba(0, 0, 0, 1), 0 0 0 8px rgba(255, 255, 255, 0.05);
       transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.6s ease;
-      opacity: 0.9;
+      opacity: 0.95;
     }
 
     .image-wrapper:hover {
@@ -195,6 +196,27 @@
       <h1>HOTEL CONCEPTS</h1>
       <p>A BOLD VISION FOR ROMAN RIDGE, ACCRA. <br>EXPLORE OUR GALLERY OF **29 SPECTACULAR DESIGN IDEAS**. <br>SCROLL TO BEGIN THE JOURNEY.</p>
     </div>
+  </div>
+  
+  <div class="section">
+    <a href="a1.jpg" download class="image-wrapper">
+      <img src="a1.jpg" alt="Hotel Concept A1: Signature Feature 1" />
+    </a>
+    <a href="a1.jpg" download class="download-button">Download Concept A1 - Signature Design</a>
+  </div>
+
+  <div class="section">
+    <a href="a2.jpg" download class="image-wrapper">
+      <img src="a2.jpg" alt="Hotel Concept A2: Signature Feature 2" />
+    </a>
+    <a href="a2.jpg" download class="download-button">Download Concept A2 - Signature Design</a>
+  </div>
+
+  <div class="section">
+    <a href="a3.jpg" download class="image-wrapper">
+      <img src="a3.jpg" alt="Hotel Concept A3: Signature Feature 3" />
+    </a>
+    <a href="a3.jpg" download class="download-button">Download Concept A3 - Signature Design</a>
   </div>
 
   <div class="section">
@@ -372,27 +394,6 @@
     <a href="y.jpg" download class="download-button">Download Concept Y</a>
   </div>
   
-  <div class="section">
-    <a href="a1.jpg" download class="image-wrapper">
-      <img src="a1.jpg" alt="Hotel Concept A1: Special Feature 1" />
-    </a>
-    <a href="a1.jpg" download class="download-button">Download Concept A1</a>
-  </div>
-
-  <div class="section">
-    <a href="a2.jpg" download class="image-wrapper">
-      <img src="a2.jpg" alt="Hotel Concept A2: Special Feature 2" />
-    </a>
-    <a href="a2.jpg" download class="download-button">Download Concept A2</a>
-  </div>
-
-  <div class="section">
-    <a href="a3.jpg" download class="image-wrapper">
-      <img src="a3.jpg" alt="Hotel Concept A3: Special Feature 3" />
-    </a>
-    <a href="a3.jpg" download class="download-button">Download Concept A3</a>
-  </div>
-
   <div class="section">
     <a href="1.png" download class="image-wrapper">
       <img src="1.png" alt="Hotel Concept 1: Final Feature Image" />
