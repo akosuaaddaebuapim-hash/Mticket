@@ -1,462 +1,752 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Luxury Hotel Concepts – Roman Ridge, Accra</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roman Ridge Luxury City 3D</title>
   <style>
-    /* 1. Global Setup with Rich Dark Bronze Theme and Animated Overlay */
-    @keyframes slow-pulse {
-        0% { filter: brightness(1); }
-        50% { filter: brightness(1.06); } /* Slightly stronger pulse */
-        100% { filter: brightness(1); }
-    }
-    @keyframes subtle-scan {
-        0% { background-position: 0% 0%; }
-        100% { background-position: 100% 100%; }
-    }
-
-    html, body {
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-      color: #e0e0e0; 
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      
-      /* Base Background: background.jpg */
-      background-image: url('background.jpg');
-      background-size: cover; 
-      background-attachment: fixed; 
-      background-position: center center;
-      background-color: #1a1510; 
-      position: relative; 
-    }
-
-    /* Animated Overlay for Background.jpg */
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1; 
-        background-image: repeating-linear-gradient(
-          45deg,
-          rgba(184, 134, 11, 0.05) 0%, 
-          rgba(184, 134, 11, 0.05) 1px,
-          transparent 1px,
-          transparent 100px
-        );
-        background-size: 200px 200px;
-        animation: subtle-scan 150s linear infinite; 
-        opacity: 0.5;
-    }
-
-    /* 2. Dynamic Hero Section Styling - Breathing and Depth */
-    @keyframes hero-shift {
-      0% { transform: scale(1.02) translateX(0); }
-      100% { transform: scale(1.02) translateX(-2%); }
-    }
-    @keyframes depth-pulse {
-        0%, 100% { box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); }
-        50% { box-shadow: 0 0 90px rgba(0, 0, 0, 1); } /* Increased pulse depth */
-    }
-
-    .hero-section {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-      animation: depth-pulse 10s infinite alternate ease-in-out; 
-      margin-bottom: 2px;
-    }
-
-    /* HERO Background: hero.png - Animated Filter */
-    .hero-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('hero.png');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      animation: hero-shift 40s infinite alternate, slow-pulse 8s infinite alternate; 
-      filter: sepia(0.3) contrast(1.1) brightness(0.6) saturate(1.2); 
-      z-index: 1;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to top, rgba(26, 21, 16, 0.9) 15%, rgba(26, 21, 16, 0.4)); 
-      z-index: 2;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 3;
-      max-width: 1200px;
-      padding: 60px;
-      background: rgba(26, 21, 16, 0.85); 
-      border-radius: 4px;
-      border: 1px solid rgba(184, 134, 11, 0.4); /* Slightly bolder bronze border */
-      backdrop-filter: blur(5px); 
-      box-shadow: 0 8px 30px rgba(0,0,0,0.8); 
-    }
-
-    .hero-content h1 {
-      font-size: 7em; 
-      font-weight: 200; 
-      margin-bottom: 25px; 
-      letter-spacing: 12px;
-      color: #f0f0f0; 
-      text-shadow: 0 0 8px rgba(184, 134, 11, 0.7); /* Stronger bronze glow */
-      animation: fadeIn 2s ease-out;
-      border-bottom: 2px solid #b8860b; 
-      padding-bottom: 20px;
-      text-transform: uppercase; 
-    }
-
-    .hero-content p {
-      font-size: 1.8em; 
-      line-height: 1.6;
-      font-weight: 300;
-      color: #deb887; 
-      letter-spacing: 1px;
-      animation: fadeIn 3s ease-out;
+      box-sizing: border-box;
     }
     
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* 3. General Section Styling - Maximum Background Visibility */
-    .section {
-      position: relative;
-      width: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 50px 20px;
-      box-sizing: border-box;
-      /* Significantly increased transparency for background.jpg */
-      background-color: rgba(26, 21, 16, 0.7); 
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
-      margin-bottom: 2px;
-    }
-
-    /* 4. Image Styling (Concepts) */
-    .image-wrapper {
-      width: 100%;
-      max-width: 1050px;
-      margin-bottom: 30px;
-      border-radius: 8px; 
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
       overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 1), 0 0 0 1px rgba(184, 134, 11, 0.2); 
-      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.6s ease;
-      opacity: 0.98;
+      background: #000;
     }
-
-    .image-wrapper:hover {
-      transform: scale(1.01); 
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 1), 0 0 0 6px #daa520; 
-      opacity: 1;
+    
+    #canvas-container {
+      width: 100vw;
+      height: 100vh;
     }
-
-    .image-wrapper img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      filter: saturate(1.02);
-    }
-
-    .download-button {
-      background-color: #b8860b; 
-      color: #f0f0f0; 
-      padding: 16px 30px;
-      text-decoration: none;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 1.2em;
-      letter-spacing: 1px;
-      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    }
-
-    .download-button:hover {
-      background-color: #daa520; 
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
-    }
-
-    /* 6. Footer Styling - Enhanced Visibility for Scribe Haus */
-    .footer {
-      background-color: #0d0a08; 
-      color: #554a3e; 
+    
+    #loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.95);
+      color: #daa520;
+      padding: 50px 70px;
+      border-radius: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      border: 3px solid #b8860b;
       text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      letter-spacing: 0.5px;
-      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.9);
     }
-    .footer span {
-      color: #daa520; /* Brightened bronze for better visibility */
-      font-weight: 600;
+    
+    #loading.hidden {
+      display: none;
     }
-
-    /* 5. Media Queries for Responsiveness */
-    @media (max-width: 768px) {
-      .hero-content h1 {
-        font-size: 4em;
-        letter-spacing: 4px;
-      }
-      .hero-content p {
-        font-size: 1.4em;
-      }
-      .download-button {
-        font-size: 1em;
-        padding: 15px 30px;
-      }
+    
+    #progress {
+      font-size: 56px;
+      color: #fff;
+      margin: 20px 0;
+    }
+    
+    #progress-text {
+      font-size: 16px;
+      color: #999;
+      margin-top: 15px;
+    }
+    
+    #controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.95);
+      color: #daa520;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 350px;
+      border: 2px solid #b8860b;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+      z-index: 100;
+    }
+    
+    #controls h2 {
+      margin: 0 0 20px 0;
+      color: #daa520;
+      font-size: 24px;
+      border-bottom: 2px solid #b8860b;
+      padding-bottom: 12px;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      background: #444;
+      color: #fff;
+      border: 2px solid #666;
+      padding: 14px 22px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+      flex: 1;
+      transition: all 0.3s ease;
+      min-width: 140px;
+    }
+    
+    button:hover {
+      background: #555;
+      transform: translateY(-2px);
+    }
+    
+    button.active {
+      background: linear-gradient(135deg, #daa520 0%, #b8860b 100%);
+      border: 2px solid #ffd700;
+      box-shadow: 0 5px 20px rgba(218, 165, 32, 0.5);
+    }
+    
+    .walk-controls {
+      font-size: 14px;
+      line-height: 2;
+      color: #ddd;
+      background: rgba(218, 165, 32, 0.1);
+      padding: 18px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+    }
+    
+    .walk-controls strong {
+      color: #daa520;
+      display: block;
+      margin-bottom: 8px;
+    }
+    
+    .walk-controls span {
+      color: #ffd700;
+      font-weight: bold;
+    }
+    
+    .features {
+      font-size: 13px;
+      color: #aaa;
+      line-height: 1.9;
+    }
+    
+    .features strong {
+      color: #daa520;
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    .footer-info {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid #555;
+      font-size: 11px;
+      color: #888;
+      text-align: center;
+    }
+    
+    .footer-info span {
+      color: #daa520;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-
-  <div class="hero-section">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>Hotel Concepts</h1>
-      <p>
-        Presenting a refined architectural vision for Roman Ridge, Accra.
-        <br>Our portfolio features 29 unique design concepts. 
-        <br>Scroll down to explore the gallery and download files.
-      </p>
+  <div id="canvas-container"></div>
+  
+  <div id="loading">
+    <div>Loading Your Luxury City...</div>
+    <div id="progress">0%</div>
+    <div id="progress-text">Loading building designs from Roman Ridge</div>
+  </div>
+  
+  <div id="controls">
+    <h2>🏙️ Roman Ridge Luxury City</h2>
+    
+    <div class="button-group">
+      <button id="walkBtn">🚶 Walk Mode OFF</button>
+      <button id="rotateBtn" class="active">🔄 360° ON</button>
+    </div>
+    
+    <div id="walkControls" class="walk-controls" style="display: none;">
+      <strong>🎮 Walk Controls:</strong>
+      <span>W</span> - Move Forward<br>
+      <span>S</span> - Move Backward<br>
+      <span>A</span> - Turn Left<br>
+      <span>D</span> - Turn Right<br>
+      <span>Q</span> - Fly Up<br>
+      <span>E</span> - Fly Down
+    </div>
+    
+    <div class="features">
+      <strong>✨ City Features:</strong>
+      • 12 Luxury Skyscrapers (Your Designs)<br>
+      • Shopping Mall & Hospital<br>
+      • Schools, Church & Mosque<br>
+      • Flowing Photorealistic River<br>
+      • 40+ Luxury Vehicles<br>
+      • 80+ Residents<br>
+      • 150+ Trees & Gardens<br>
+      • Real-time Lighting & Shadows
+    </div>
+    
+    <div class="footer-info">
+      Powered by <span>Scribe Haus</span><br>
+      Using 29 Original Designs
     </div>
   </div>
-  
-  <div class="section">
-    <a href="a1.jpg" download class="image-wrapper">
-      <img src="a1.jpg" alt="Hotel Concept A1: Signature Feature 1" />
-    </a>
-    <a href="a1.jpg" download class="download-button">Download Concept A1 — Signature Design</a>
-  </div>
 
-  <div class="section">
-    <a href="a2.jpg" download class="image-wrapper">
-      <img src="a2.jpg" alt="Hotel Concept A2: Signature Feature 2" />
-    </a>
-    <a href="a2.jpg" download class="download-button">Download Concept A2 — Signature Design</a>
-  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Building images - your actual designs
+    const buildingImages = [
+      'a1.jpg', 'a2.jpg', 'a3.jpg', 'a.jpg', 'b.jpg', 'c.jpg', 'd.jpg', 
+      'e.jpg', 'f.jpg', 'g.jpg', 'h.jpg', 'i.jpg', 'j.jpg', 'k.jpg', 
+      'l.jpg', 'm.jpg', 'n.jpg', 'o.jpg', 'p.jpg', 'q.jpg', 'r.jpg', 
+      's.jpg', 't.jpg', 'u.jpg', 'v.jpg', 'w.jpg', 'x.jpg', 'y.jpg', '1.png'
+    ];
 
-  <div class="section">
-    <a href="a3.jpg" download class="image-wrapper">
-      <img src="a3.jpg" alt="Hotel Concept A3: Signature Feature 3" />
-    </a>
-    <a href="a3.jpg" download class="download-button">Download Concept A3 — Signature Design</a>
-  </div>
+    // Scene setup
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x87CEEB);
+    scene.fog = new THREE.Fog(0x87CEEB, 200, 1200);
 
-  <div class="section">
-    <a href="a.jpg" download class="image-wrapper">
-      <img src="a.jpg" alt="Hotel Concept A: Modern Lobby Design" />
-    </a>
-    <a href="a.jpg" download class="download-button">Download Concept A</a>
-  </div>
+    // Camera
+    const camera = new THREE.PerspectiveCamera(
+      60,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      3000
+    );
+    camera.position.set(0, 120, 350);
+    camera.lookAt(0, 50, 0);
 
-  <div class="section">
-    <a href="b.jpg" download class="image-wrapper">
-      <img src="b.jpg" alt="Hotel Concept B: Rooftop Terrace View" />
-    </a>
-    <a href="b.jpg" download class="download-button">Download Concept B</a>
-  </div>
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowShadowMap;
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-  <div class="section">
-    <a href="c.jpg" download class="image-wrapper">
-      <img src="c.jpg" alt="Hotel Concept C: Luxury Suite Interior" />
-    </a>
-    <a href="c.jpg" download class="download-button">Download Concept C</a>
-  </div>
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
 
-  <div class="section">
-    <a href="d.jpg" download class="image-wrapper">
-      <img src="d.jpg" alt="Hotel Concept D: Poolside Design" />
-    </a>
-    <a href="d.jpg" download class="download-button">Download Concept D</a>
-  </div>
-  
-  <div class="section">
-    <a href="e.jpg" download class="image-wrapper">
-      <img src="e.jpg" alt="Hotel Concept E: Restaurant Dining Area" />
-    </a>
-    <a href="e.jpg" download class="download-button">Download Concept E</a>
-  </div>
+    const sunLight = new THREE.DirectionalLight(0xfff5e1, 1.5);
+    sunLight.position.set(200, 300, 100);
+    sunLight.castShadow = true;
+    sunLight.shadow.mapSize.width = 4096;
+    sunLight.shadow.mapSize.height = 4096;
+    sunLight.shadow.camera.far = 800;
+    sunLight.shadow.camera.left = -400;
+    sunLight.shadow.camera.right = 400;
+    sunLight.shadow.camera.top = 400;
+    sunLight.shadow.camera.bottom = -400;
+    scene.add(sunLight);
 
-  <div class="section">
-    <a href="f.jpg" download class="image-wrapper">
-      <img src="f.jpg" alt="Hotel Concept F: Executive Meeting Room" />
-    </a>
-    <a href="f.jpg" download class="download-button">Download Concept F</a>
-  </div>
+    const hemiLight = new THREE.HemisphereLight(0x87CEEB, 0x2d5016, 0.6);
+    scene.add(hemiLight);
 
-  <div class="section">
-    <a href="g.jpg" download class="image-wrapper">
-      <img src="g.jpg" alt="Hotel Concept G: Exterior Night View" />
-    </a>
-    <a href="g.jpg" download class="download-button">Download Concept G</a>
-  </div>
-  
-  <div class="section">
-    <a href="h.jpg" download class="image-wrapper">
-      <img src="h.jpg" alt="Hotel Concept H: Fitness Center" />
-    </a>
-    <a href="h.jpg" download class="download-button">Download Concept H</a>
-  </div>
-  
-  <div class="section">
-    <a href="i.jpg" download class="image-wrapper">
-      <img src="i.jpg" alt="Hotel Concept I: Guest Bathroom Design" />
-    </a>
-    <a href="i.jpg" download class="download-button">Download Concept I</a>
-  </div>
+    // Ground
+    const groundGeometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+    const vertices = groundGeometry.attributes.position.array;
+    for (let i = 0; i < vertices.length; i += 3) {
+      vertices[i + 2] = Math.random() * 0.8;
+    }
+    groundGeometry.attributes.position.needsUpdate = true;
+    groundGeometry.computeVertexNormals();
 
-  <div class="section">
-    <a href="j.jpg" download class="image-wrapper">
-      <img src="j.jpg" alt="Hotel Concept J: Bar and Lounge Area" />
-    </a>
-    <a href="j.jpg" download class="download-button">Download Concept J</a>
-  </div>
+    const groundMaterial = new THREE.MeshStandardMaterial({
+      color: 0x1a5a1a,
+      roughness: 0.9,
+      metalness: 0.1
+    });
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    ground.receiveShadow = true;
+    scene.add(ground);
 
-  <div class="section">
-    <a href="k.jpg" download class="image-wrapper">
-      <img src="k.jpg" alt="Hotel Concept K: Entrance Foyer" />
-    </a>
-    <a href="k.jpg" download class="download-button">Download Concept K</a>
-  </div>
+    // Roads
+    const roadMaterial = new THREE.MeshStandardMaterial({
+      color: 0x2a2a2a,
+      roughness: 0.7,
+      metalness: 0.3
+    });
 
-  <div class="section">
-    <a href="l.jpg" download class="image-wrapper">
-      <img src="l.jpg" alt="Hotel Concept L: Standard Room Layout" />
-    </a>
-    <a href="l.jpg" download class="download-button">Download Concept L</a>
-  </div>
+    for (let i = -5; i <= 5; i++) {
+      const road = new THREE.Mesh(new THREE.PlaneGeometry(2000, 15), roadMaterial);
+      road.rotation.x = -Math.PI / 2;
+      road.position.set(0, 0.2, i * 120);
+      road.receiveShadow = true;
+      scene.add(road);
 
-  <div class="section">
-    <a href="m.jpg" download class="image-wrapper">
-      <img src="m.jpg" alt="Hotel Concept M: Alfresco Dining" />
-    </a>
-    <a href="m.jpg" download class="download-button">Download Concept M</a>
-  </div>
+      const road2 = new THREE.Mesh(new THREE.PlaneGeometry(15, 2000), roadMaterial);
+      road2.rotation.x = -Math.PI / 2;
+      road2.position.set(i * 120, 0.2, 0);
+      road2.receiveShadow = true;
+      scene.add(road2);
+    }
 
-  <div class="section">
-    <a href="n.jpg" download class="image-wrapper">
-      <img src="n.jpg" alt="Hotel Concept N: Panoramic View from Balcony" />
-    </a>
-    <a href="n.jpg" download class="download-button">Download Concept N</a>
-  </div>
-  
-  <div class="section">
-    <a href="o.jpg" download class="image-wrapper">
-      <img src="o.jpg" alt="Hotel Concept O: Design Detail 1" />
-    </a>
-    <a href="o.jpg" download class="download-button">Download Concept O</a>
-  </div>
-  
-  <div class="section">
-    <a href="p.jpg" download class="image-wrapper">
-      <img src="p.jpg" alt="Hotel Concept P: Design Detail 2" />
-    </a>
-    <a href="p.jpg" download class="download-button">Download Concept P</a>
-  </div>
-  
-  <div class="section">
-    <a href="q.jpg" download class="image-wrapper">
-      <img src="q.jpg" alt="Hotel Concept Q: Design Detail 3" />
-    </a>
-    <a href="q.jpg" download class="download-button">Download Concept Q</a>
-  </div>
+    // River
+    const riverGeometry = new THREE.PlaneGeometry(800, 40, 200, 50);
+    const riverMaterial = new THREE.MeshStandardMaterial({
+      color: 0x0077be,
+      transparent: true,
+      opacity: 0.85,
+      roughness: 0.05,
+      metalness: 0.9
+    });
+    const river = new THREE.Mesh(riverGeometry, riverMaterial);
+    river.rotation.x = -Math.PI / 2;
+    river.rotation.z = Math.PI / 8;
+    river.position.set(-100, 0.3, 0);
+    scene.add(river);
 
-  <div class="section">
-    <a href="r.jpg" download class="image-wrapper">
-      <img src="r.jpg" alt="Hotel Concept R: Design Detail 4" />
-    </a>
-    <a href="r.jpg" download class="download-button">Download Concept R</a>
-  </div>
-  
-  <div class="section">
-    <a href="s.jpg" download class="image-wrapper">
-      <img src="s.jpg" alt="Hotel Concept S: Design Detail 5" />
-    </a>
-    <a href="s.jpg" download class="download-button">Download Concept S</a>
-  </div>
+    let riverTime = 0;
 
-  <div class="section">
-    <a href="t.jpg" download class="image-wrapper">
-      <img src="t.jpg" alt="Hotel Concept T: Design Detail 6" />
-    </a>
-    <a href="t.jpg" download class="download-button">Download Concept T</a>
-  </div>
+    // Texture loader
+    const textureLoader = new THREE.TextureLoader();
+    const loadedTextures = {};
+    let loadedCount = 0;
 
-  <div class="section">
-    <a href="u.jpg" download class="image-wrapper">
-      <img src="u.jpg" alt="Hotel Concept U: Design Detail 7" />
-    </a>
-    <a href="u.jpg" download class="download-button">Download Concept U</a>
-  </div>
-  
-  <div class="section">
-    <a href="v.jpg" download class="image-wrapper">
-      <img src="v.jpg" alt="Hotel Concept V: Design Detail 8" />
-    </a>
-    <a href="v.jpg" download class="download-button">Download Concept V</a>
-  </div>
-  
-  <div class="section">
-    <a href="w.jpg" download class="image-wrapper">
-      <img src="w.jpg" alt="Hotel Concept W: Design Detail 9" />
-    </a>
-    <a href="w.jpg" download class="download-button">Download Concept W</a>
-  </div>
-  
-  <div class="section">
-    <a href="x.jpg" download class="image-wrapper">
-      <img src="x.jpg" alt="Hotel Concept X: Design Detail 10" />
-    </a>
-    <a href="x.jpg" download class="download-button">Download Concept X</a>
-  </div>
-  
-  <div class="section">
-    <a href="y.jpg" download class="image-wrapper">
-      <img src="y.jpg" alt="Hotel Concept Y: Design Detail 11" />
-    </a>
-    <a href="y.jpg" download class="download-button">Download Concept Y</a>
-  </div>
-  
-  <div class="section">
-    <a href="1.png" download class="image-wrapper">
-      <img src="1.png" alt="Hotel Concept 1: Final Feature Image" />
-    </a>
-    <a href="1.png" download class="download-button">Download Concept 1</a>
-  </div>
+    // Load textures
+    function loadTexture(imageName) {
+      return new Promise((resolve) => {
+        textureLoader.load(
+          imageName,
+          (texture) => {
+            texture.minFilter = THREE.LinearMipmapLinearFilter;
+            texture.magFilter = THREE.LinearFilter;
+            texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+            loadedTextures[imageName] = texture;
+            loadedCount++;
+            const progress = Math.floor((loadedCount / buildingImages.length) * 100);
+            document.getElementById('progress').textContent = progress + '%';
+            resolve(texture);
+          },
+          undefined,
+          (error) => {
+            console.warn('Failed to load ' + imageName, error);
+            loadedCount++;
+            const progress = Math.floor((loadedCount / buildingImages.length) * 100);
+            document.getElementById('progress').textContent = progress + '%';
+            resolve(null);
+          }
+        );
+      });
+    }
 
-  <footer class="footer">
-    Powered by <span>Scribe Haus</span>
-  </footer>
+    // Create photorealistic building
+    function createBuilding(x, z, height, textureKey) {
+      const group = new THREE.Group();
+      const width = 40;
+      const depth = 40;
 
+      const buildingGeometry = new THREE.BoxGeometry(width, height, depth);
+      const texture = loadedTextures[textureKey];
+      
+      let materials;
+      if (texture) {
+        const faceMaterial = new THREE.MeshStandardMaterial({
+          map: texture,
+          roughness: 0.3,
+          metalness: 0.6
+        });
+
+        materials = [
+          faceMaterial.clone(),
+          faceMaterial.clone(),
+          new THREE.MeshStandardMaterial({ color: 0x3a3a3a, roughness: 0.4, metalness: 0.5 }),
+          new THREE.MeshStandardMaterial({ color: 0x2a2a2a, roughness: 0.6, metalness: 0.4 }),
+          faceMaterial.clone(),
+          faceMaterial.clone()
+        ];
+      } else {
+        const fallbackMaterial = new THREE.MeshStandardMaterial({
+          color: 0xb8860b,
+          roughness: 0.3,
+          metalness: 0.7
+        });
+        materials = Array(6).fill(fallbackMaterial);
+      }
+
+      const building = new THREE.Mesh(buildingGeometry, materials);
+      building.position.y = height / 2;
+      building.castShadow = true;
+      building.receiveShadow = true;
+      group.add(building);
+
+      // Windows
+      for (let floor = 0; floor < height / 4; floor++) {
+        for (let side = 0; side < 4; side++) {
+          const windowRowGeometry = new THREE.PlaneGeometry(width * 0.9, 2);
+          const windowMaterial = new THREE.MeshStandardMaterial({
+            color: 0x88ccff,
+            emissive: 0xffaa00,
+            emissiveIntensity: 0.3,
+            roughness: 0,
+            metalness: 1,
+            transparent: true,
+            opacity: 0.8
+          });
+          
+          const windowRow = new THREE.Mesh(windowRowGeometry, windowMaterial);
+          const y = floor * 4 + 3;
+          
+          switch(side) {
+            case 0:
+              windowRow.position.set(0, y, depth/2 + 0.1);
+              break;
+            case 1:
+              windowRow.position.set(0, y, -depth/2 - 0.1);
+              windowRow.rotation.y = Math.PI;
+              break;
+            case 2:
+              windowRow.position.set(width/2 + 0.1, y, 0);
+              windowRow.rotation.y = Math.PI / 2;
+              break;
+            case 3:
+              windowRow.position.set(-width/2 - 0.1, y, 0);
+              windowRow.rotation.y = -Math.PI / 2;
+              break;
+          }
+          
+          group.add(windowRow);
+        }
+      }
+
+      // Rooftop
+      const roofGeometry = new THREE.BoxGeometry(width + 2, 4, depth + 2);
+      const roofMaterial = new THREE.MeshStandardMaterial({
+        color: 0xdaa520,
+        roughness: 0.2,
+        metalness: 0.8,
+        emissive: 0xb8860b,
+        emissiveIntensity: 0.2
+      });
+      const roof = new THREE.Mesh(roofGeometry, roofMaterial);
+      roof.position.y = height + 2;
+      roof.castShadow = true;
+      group.add(roof);
+
+      group.position.set(x, 0, z);
+      return group;
+    }
+
+    // Create amenity building
+    function createAmenity(x, z, type, textureKey) {
+      const group = new THREE.Group();
+      const height = 30;
+      const size = 50;
+
+      const texture = loadedTextures[textureKey];
+      const buildingGeometry = new THREE.BoxGeometry(size, height, size);
+      
+      let materials;
+      if (texture) {
+        const mat = new THREE.MeshStandardMaterial({
+          map: texture,
+          roughness: 0.4,
+          metalness: 0.5
+        });
+        materials = [
+          mat.clone(), mat.clone(),
+          new THREE.MeshStandardMaterial({ color: 0x444444 }),
+          new THREE.MeshStandardMaterial({ color: 0x333333 }),
+          mat.clone(), mat.clone()
+        ];
+      } else {
+        const colors = {
+          mall: 0xdaa520,
+          hospital: 0xff4444,
+          school: 0x4169e1,
+          church: 0xf5f5dc,
+          mosque: 0x90ee90
+        };
+        const mat = new THREE.MeshStandardMaterial({
+          color: colors[type] || 0xcccccc,
+          roughness: 0.5,
+          metalness: 0.4
+        });
+        materials = mat;
+      }
+
+      const building = new THREE.Mesh(buildingGeometry, materials);
+      building.position.y = height / 2;
+      building.castShadow = true;
+      building.receiveShadow = true;
+      group.add(building);
+
+      if (type === 'church' || type === 'mosque') {
+        const domeGeometry = new THREE.SphereGeometry(10, 32, 32);
+        const domeMaterial = new THREE.MeshStandardMaterial({
+          color: 0xffd700,
+          roughness: 0.1,
+          metalness: 0.9
+        });
+        const dome = new THREE.Mesh(domeGeometry, domeMaterial);
+        dome.position.y = height + 8;
+        dome.castShadow = true;
+        group.add(dome);
+
+        if (type === 'mosque') {
+          const spireGeometry = new THREE.CylinderGeometry(1, 1, 20, 8);
+          const spire = new THREE.Mesh(spireGeometry, domeMaterial);
+          spire.position.set(size/2 - 5, height + 10, size/2 - 5);
+          group.add(spire);
+        }
+      }
+
+      group.position.set(x, 0, z);
+      return group;
+    }
+
+    // Create luxury car
+    function createCar(x, z, color) {
+      const carGroup = new THREE.Group();
+      
+      const bodyGeometry = new THREE.BoxGeometry(5, 1.8, 2.5);
+      const bodyMaterial = new THREE.MeshStandardMaterial({
+        color: color,
+        roughness: 0.1,
+        metalness: 0.95
+      });
+      const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      body.position.y = 1.5;
+      body.castShadow = true;
+      carGroup.add(body);
+
+      const cabinGeometry = new THREE.BoxGeometry(3, 1.2, 2.3);
+      const glassMaterial = new THREE.MeshStandardMaterial({
+        color: 0x111111,
+        roughness: 0.05,
+        metalness: 0.9,
+        transparent: true,
+        opacity: 0.7
+      });
+      const cabin = new THREE.Mesh(cabinGeometry, glassMaterial);
+      cabin.position.set(-0.3, 2.7, 0);
+      carGroup.add(cabin);
+
+      const wheelGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.4, 16);
+      const wheelMaterial = new THREE.MeshStandardMaterial({
+        color: 0x0a0a0a,
+        roughness: 0.6,
+        metalness: 0.8
+      });
+      
+      [[1.5, 0.5, 1.2], [1.5, 0.5, -1.2], [-1.5, 0.5, 1.2], [-1.5, 0.5, -1.2]].forEach(pos => {
+        const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+        wheel.rotation.z = Math.PI / 2;
+        wheel.position.set(pos[0], pos[1], pos[2]);
+        wheel.castShadow = true;
+        carGroup.add(wheel);
+      });
+
+      carGroup.position.set(x, 0, z);
+      carGroup.rotation.y = Math.random() * Math.PI * 2;
+      return carGroup;
+    }
+
+    // Create person
+    function createPerson(x, z) {
+      const group = new THREE.Group();
+      
+      const bodyGeo = new THREE.CylinderGeometry(0.35, 0.4, 1.8, 12);
+      const colors = [0x2c3e50, 0x8e44ad, 0x27ae60, 0xe74c3c, 0x3498db];
+      const bodyMat = new THREE.MeshStandardMaterial({
+        color: colors[Math.floor(Math.random() * colors.length)],
+        roughness: 0.8
+      });
+      const body = new THREE.Mesh(bodyGeo, bodyMat);
+      body.position.y = 1.8;
+      body.castShadow = true;
+      group.add(body);
+
+      const headGeo = new THREE.SphereGeometry(0.35, 16, 16);
+      const headMat = new THREE.MeshStandardMaterial({
+        color: 0xffdbac,
+        roughness: 0.7
+      });
+      const head = new THREE.Mesh(headGeo, headMat);
+      head.position.y = 3;
+      head.castShadow = true;
+      group.add(head);
+
+      group.position.set(x, 0, z);
+      return group;
+    }
+
+    // Create tree
+    function createTree(x, z) {
+      const group = new THREE.Group();
+      
+      const trunkGeo = new THREE.CylinderGeometry(0.6, 0.8, 6, 10);
+      const trunkMat = new THREE.MeshStandardMaterial({
+        color: 0x4a3728,
+        roughness: 0.9
+      });
+      const trunk = new THREE.Mesh(trunkGeo, trunkMat);
+      trunk.position.y = 3;
+      trunk.castShadow = true;
+      group.add(trunk);
+
+      const leavesGeo = new THREE.SphereGeometry(4, 12, 12);
+      const leavesMat = new THREE.MeshStandardMaterial({
+        color: 0x1a5a1a,
+        roughness: 0.9
+      });
+      const leaves = new THREE.Mesh(leavesGeo, leavesMat);
+      leaves.position.y = 7;
+      leaves.castShadow = true;
+      group.add(leaves);
+
+      group.position.set(x, 0, z);
+      return group;
+    }
+
+    // Build city after loading textures
+    Promise.all(buildingImages.map(img => loadTexture(img))).then(() => {
+      // Skyscrapers
+      const positions = [
+        [-200, -180, 180], [-200, 0, 160], [-200, 180, 200],
+        [-80, -180, 170], [-80, 0, 150], [-80, 180, 190],
+        [80, -180, 185], [80, 0, 145], [80, 180, 175],
+        [200, -180, 155], [200, 0, 195], [200, 180, 165]
+      ];
+
+      positions.forEach((pos, i) => {
+        const texture = buildingImages[i % buildingImages.length];
+        scene.add(createBuilding(pos[0], pos[1], pos[2], texture));
+      });
+
+      // Amenities
+      scene.add(createAmenity(-140, 90, 'mall', buildingImages[12]));
+      scene.add(createAmenity(-140, -90, 'hospital', buildingImages[13]));
+      scene.add(createAmenity(140, 90, 'school', buildingImages[14]));
+      scene.add(createAmenity(140, -90, 'church', buildingImages[15]));
+      scene.add(createAmenity(0, -250, 'mosque', buildingImages[16]));
+
+      // Cars
+      const carColors = [0xdc143c, 0x000000, 0xffffff, 0x0033cc, 0xffd700, 0x8b0000];
+      for (let i = 0; i < 40; i++) {
+        const x = (Math.random() - 0.5) * 500;
+        const z = (Math.random() - 0.5) * 500;
+        if (Math.abs(x + 100) > 50 || Math.abs(z) > 30) {
+          scene.add(createCar(x, z, carColors[Math.floor(Math.random() * carColors.length)]));
+        }
+      }
+
+      // People
+      for (let i = 0; i < 80; i++) {
+        const x = (Math.random() - 0.5) * 500;
+        const z = (Math.random() - 0.5) * 500;
+        scene.add(createPerson(x, z));
+      }
+
+      // Trees
+      for (let i = 0; i < 150; i++) {
+        const x = (Math.random() - 0.5) * 700;
+        const z = (Math.random() - 0.5) * 700;
+        if (Math.abs(x + 100) > 60 || Math.abs(z) > 40) {
+          scene.add(createTree(x, z));
+        }
+      }
+
+      document.getElementById('loading').classList.add('hidden');
+    });
+
+    // Controls
+    let walkMode = false;
+    let autoRotate = true;
+    let angle = 0;
+    const keys = {};
+
+    document.getElementById('walkBtn').addEventListener('click', () => {
+      walkMode = !walkMode;
+      autoRotate = false;
+      document.getElementById('walkBtn').classList.toggle('active');
+      document.getElementById('rotateBtn').classList.remove('active');
+      document.getElementById('walkBtn').textContent = walkMode ? '🚶 Walk Mode ON' : '🚶 Walk Mode OFF';
+      document.getElementById('walkControls').style.display = walkMode ? 'block' : 'none';
+    });
+
+    document.getElementById('rotateBtn').addEventListener('click', () => {
+      autoRotate = !autoRotate;
+      walkMode = false;
+      document.getElementById('rotateBtn').classList.toggle('active');
+      document.getElementById('walkBtn').classList.remove('active');
+      document.getElementById('rotateBtn').textContent = autoRotate ? '🔄 360° ON' : '🔄 360° OFF';
+      document.getElementById('walkBtn').textContent = '🚶 Walk Mode OFF';
+      document.getElementById('walkControls').style.display = 'none';
+    });
+
+    window.addEventListener('keydown', (e) => {
+      keys[e.key.toLowerCase()] = true;
+    });
+
+    window.addEventListener('keyup', (e) => {
+      keys[e.key.toLowerCase()] = false;
+    });
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Animate river
+      riverTime += 0.003;
+      const riverPos = river.geometry.attributes.position;
+      for (let i = 0; i < riverPos.count; i++) {
+        const x = riverPos.getX(i);
+        const y = riverPos.getY(i);
+        riverPos.setZ(i, Math.sin(x * 0.03 + riverTime) * 1.5 + Math.cos(y * 0.02 + riverTime) * 1);
+      }
+      riverPos.needsUpdate = true;
+
+      if (walkMode) {
+        const speed = 3;
+        const turnSpeed = 0.04;
+
+        if (keys['w']) {
+          camera.position.x += Math.sin(camera.rotation.y) * speed;
+          camera.position.z += Math.cos(camera.rotation.y) * speed;
+        }
+        if (keys['s']) {
+          camera.position.x -= Math.sin(camera.rotation.y) * speed;
+          camera.position.z -= Math.cos(camera.rotation.y) * speed;
+        }
+        if (keys['a']) camera.rotation.y += turnSpeed;
+        if (keys['d']) camera.rotation.y -= turnSpeed;
+        if (keys['q']) camera.position.y += 2;
+        if (keys['e']) camera.position.y -= 2;
+
+        camera.position.y = Math.max(5, Math.min(camera.position.y, 300));
+      } else if (autoRotate) {
+        angle += 0.002;
+        camera.position.x = Math.sin(angle) * 350;
+        camera.position.z = Math.cos(angle) * 350;
+        camera.position.y = 120 + Math.sin(angle * 0.5) * 30;
+        camera.lookAt(0, 60, 0);
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
 </body>
 </html>
