@@ -45,23 +45,22 @@
       margin-top: 10px;
     }
 
-    /* Featured Section (Concepts 22–24) */
-    .featured {
-      padding: 60px 20px;
-      background: #1a1a1a;
+    /* Section Headings */
+    section h2 {
       text-align: center;
-    }
-    .featured h2 {
       color: goldenrod;
       font-size: 2.5em;
-      margin-bottom: 30px;
+      margin: 40px 0 30px;
     }
+
+    /* Featured Concepts (22–24) */
     .featured-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
       max-width: 1200px;
       margin: auto;
+      padding: 20px;
     }
     .card {
       background: #222;
@@ -70,13 +69,8 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.6);
       transition: transform 0.3s ease;
     }
-    .card:hover {
-      transform: scale(1.03);
-    }
-    .card img {
-      width: 100%;
-      display: block;
-    }
+    .card:hover { transform: scale(1.03); }
+    .card img { width: 100%; display: block; }
     .card a {
       display: block;
       padding: 15px;
@@ -86,27 +80,16 @@
       font-weight: bold;
       transition: background 0.3s;
     }
-    .card a:hover {
-      background: #ffcc00;
-    }
+    .card a:hover { background: #ffcc00; }
 
     /* Video Showcase */
-    .video-showcase {
-      padding: 60px 20px;
-      background: #111;
-      text-align: center;
-    }
-    .video-showcase h2 {
-      color: goldenrod;
-      font-size: 2.2em;
-      margin-bottom: 25px;
-    }
     .video-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
       max-width: 1200px;
       margin: auto;
+      padding: 20px;
     }
     .video-grid video {
       width: 100%;
@@ -116,27 +99,16 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.6);
       transition: transform 0.3s ease;
     }
-    .video-grid video:hover {
-      transform: scale(1.05);
-    }
+    .video-grid video:hover { transform: scale(1.05); }
 
     /* Gallery */
-    .gallery {
-      padding: 60px 20px;
-      background: #1a1a1a;
-      text-align: center;
-    }
-    .gallery h2 {
-      color: goldenrod;
-      font-size: 2.2em;
-      margin-bottom: 25px;
-    }
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       max-width: 1200px;
       margin: auto;
+      padding: 20px;
     }
     .gallery-item {
       position: relative;
@@ -149,9 +121,7 @@
       display: block;
       transition: transform 0.3s ease;
     }
-    .gallery-item:hover img {
-      transform: scale(1.08);
-    }
+    .gallery-item:hover img { transform: scale(1.08); }
     .download {
       position: absolute;
       bottom: 10px;
@@ -165,9 +135,7 @@
       font-size: 0.9em;
       transition: background 0.3s;
     }
-    .download:hover {
-      background: #ffcc00;
-    }
+    .download:hover { background: #ffcc00; }
 
     /* Footer */
     .footer {
@@ -176,10 +144,7 @@
       background: #000;
       color: #aaa;
     }
-    .footer span {
-      color: goldenrod;
-      font-weight: bold;
-    }
+    .footer span { color: goldenrod; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -193,68 +158,58 @@
   </div>
 
   <!-- Featured Concepts (22–24 first) -->
-  <section class="featured">
+  <section>
     <h2>🌟 Featured Concepts</h2>
     <div class="featured-grid">
-      <div class="card">
-        <img src="22.jpg" alt="Concept 22">
-        <a href="22.jpg" download>Download Concept 22</a>
-      </div>
-      <div class="card">
-        <img src="23.jpg" alt="Concept 23">
-        <a href="23.jpg" download>Download Concept 23</a>
-      </div>
-      <div class="card">
-        <img src="24.jpg" alt="Concept 24">
-        <a href="24.jpg" download>Download Concept 24</a>
-      </div>
+      <div class="card"><img src="22.jpg" alt="Concept 22"><a href="22.jpg" download>Download Concept 22</a></div>
+      <div class="card"><img src="23.jpg" alt="Concept 23"><a href="23.jpg" download>Download Concept 23</a></div>
+      <div class="card"><img src="24.jpg" alt="Concept 24"><a href="24.jpg" download>Download Concept 24</a></div>
     </div>
   </section>
 
   <!-- Video Showcase -->
-  <section class="video-showcase">
+  <section>
     <h2>🎬 Cinematic Showcase</h2>
     <div class="video-grid">
-      <video autoplay muted loop>
-        <source src="gt1.mp4" type="video/mp4">
-      </video>
-      <video autoplay muted loop>
-        <source src="gt2.mp4" type="video/mp4">
-      </video>
-      <video autoplay muted loop>
-        <source src="gt3.mp4" type="video/mp4">
-      </video>
-      <video autoplay muted loop>
-        <source src="gt5.mp4" type="video/mp4">
-      </video>
+      <video autoplay muted loop><source src="gt1.mp4" type="video/mp4"></video>
+      <video autoplay muted loop><source src="gt2.mp4" type="video/mp4"></video>
+      <video autoplay muted loop><source src="gt3.mp4" type="video/mp4"></video>
+      <video autoplay muted loop><source src="gt5.mp4" type="video/mp4"></video>
     </div>
   </section>
 
-  <!-- Gallery -->
-  <section class="gallery">
+  <!-- Full Gallery -->
+  <section>
     <h2>🖼 Full Gallery</h2>
     <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="a1.jpg" alt="Concept A1">
-        <a href="a1.jpg" download class="download">Download</a>
-      </div>
-      <div class="gallery-item">
-        <img src="b.jpg" alt="Concept B">
-        <a href="b.jpg" download class="download">Download</a>
-      </div>
-      <div class="gallery-item">
-        <img src="c.jpg" alt="Concept C">
-        <a href="c.jpg" download class="download">Download</a>
-      </div>
-      <div class="gallery-item">
-        <img src="1.png" alt="Concept PNG 1">
-        <a href="1.png" download class="download">Download</a>
-      </div>
-      <div class="gallery-item">
-        <img src="y.jpg" alt="Concept Y">
-        <a href="y.jpg" download class="download">Download</a>
-      </div>
-      <!-- keep adding rest of your a–y, etc -->
+      <!-- All images arranged neatly -->
+      <div class="gallery-item"><img src="a1.jpg" alt="Concept A1"><a href="a1.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="b.jpg" alt="Concept B"><a href="b.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="c.jpg" alt="Concept C"><a href="c.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="d.jpg" alt="Concept D"><a href="d.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="e.jpg" alt="Concept E"><a href="e.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="f.jpg" alt="Concept F"><a href="f.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="g.jpg" alt="Concept G"><a href="g.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="h.jpg" alt="Concept H"><a href="h.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="i.jpg" alt="Concept I"><a href="i.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="j.jpg" alt="Concept J"><a href="j.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="k.jpg" alt="Concept K"><a href="k.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="l.jpg" alt="Concept L"><a href="l.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="m.jpg" alt="Concept M"><a href="m.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="n.jpg" alt="Concept N"><a href="n.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="o.jpg" alt="Concept O"><a href="o.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="p.jpg" alt="Concept P"><a href="p.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="q.jpg" alt="Concept Q"><a href="q.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="r.jpg" alt="Concept R"><a href="r.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="s.jpg" alt="Concept S"><a href="s.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="t.jpg" alt="Concept T"><a href="t.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="u.jpg" alt="Concept U"><a href="u.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="v.jpg" alt="Concept V"><a href="v.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="w.jpg" alt="Concept W"><a href="w.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="x.jpg" alt="Concept X"><a href="x.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="y.jpg" alt="Concept Y"><a href="y.jpg" download class="download">Download</a></div>
+      <div class="gallery-item"><img src="1.png" alt="Concept 1"><a href="1.png" download class="download">Download</a></div>
+      <!-- concepts 22–24 are already in featured above -->
     </div>
   </section>
 
