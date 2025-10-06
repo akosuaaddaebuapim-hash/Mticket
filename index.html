@@ -6,11 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body, html {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       font-family: Arial, sans-serif;
-      background: #fdfdfd;
-      color: #222;
+      background: #fdfdfd; color: #222;
       scroll-behavior: smooth;
     }
 
@@ -33,7 +31,6 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0,0,0,0.5);
-      z-index: 0;
     }
     .hero-content {
       position: relative;
@@ -42,30 +39,14 @@
       text-align: center;
       color: white;
       z-index: 1;
-      padding: 20px;
     }
-    .hero-content h1 {
-      font-size: 3em;
-      margin-bottom: 0.5em;
-    }
-    .hero-content p {
-      font-size: 1.2em;
-      max-width: 600px;
-      margin: auto;
-    }
+    .hero-content h1 { font-size: 3em; margin-bottom: .5em; }
+    .hero-content p { font-size: 1.2em; max-width: 600px; margin: auto; }
 
-    /* Sections */
-    section {
-      padding: 60px 20px;
-      text-align: center;
-    }
-    h2 {
-      margin-bottom: 20px;
-      font-size: 2em;
-      color: #444;
-    }
+    section { padding: 60px 20px; text-align: center; }
+    h2 { margin-bottom: 20px; font-size: 2em; color: #444; }
 
-    /* Gallery Grid */
+    /* Gallery */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -74,11 +55,29 @@
     .gallery img {
       width: 100%;
       border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      transition: transform 0.3s;
+      cursor: pointer;
+      transition: transform .3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
     }
-    .gallery img:hover {
-      transform: scale(1.05);
+    .gallery img:hover { transform: scale(1.05); }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox img {
+      max-width: 90%; max-height: 90%;
+      border-radius: 10px;
+    }
+    .lightbox:target {
+      display: flex;
     }
   </style>
 </head>
@@ -86,11 +85,9 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <video autoplay muted loop poster="background.jpg">
+    <video autoplay muted loop playsinline poster="background.jpg">
       <source src="gt1.mp4" type="video/mp4">
-      <source src="gt2.mp4" type="video/mp4">
-      <source src="gt3.mp4" type="video/mp4">
-      <source src="gt5.mp4" type="video/mp4">
+      <!-- fallback -->
     </video>
     <div class="overlay"></div>
     <div class="hero-content">
@@ -99,55 +96,65 @@
     </div>
   </section>
 
-  <!-- Featured Gallery -->
+  <!-- Gallery -->
   <section>
-    <h2>Featured Highlights</h2>
+    <h2>Our Gallery</h2>
     <div class="gallery">
-      <img src="100.png" alt="Featured Work 100">
-      <img src="102.png" alt="Featured Work 102">
-      <img src="103.png" alt="Featured Work 103">
-      <img src="104.png" alt="Featured Work 104">
+      <img src="1.png" alt="1" onclick="openLightbox(this)">
+      <img src="100.png" alt="100" onclick="openLightbox(this)">
+      <img src="102.png" alt="102" onclick="openLightbox(this)">
+      <img src="103.png" alt="103" onclick="openLightbox(this)">
+      <img src="104.png" alt="104" onclick="openLightbox(this)">
+      <img src="22.jpg" alt="22" onclick="openLightbox(this)">
+      <img src="23.jpg" alt="23" onclick="openLightbox(this)">
+      <img src="24.jpg" alt="24" onclick="openLightbox(this)">
+      <img src="25.jpg" alt="25" onclick="openLightbox(this)">
+      <img src="4D.png" alt="4D" onclick="openLightbox(this)">
+      <img src="a.jpg" alt="a" onclick="openLightbox(this)">
+      <img src="a1.jpg" alt="a1" onclick="openLightbox(this)">
+      <img src="a2.jpg" alt="a2" onclick="openLightbox(this)">
+      <img src="a3.jpg" alt="a3" onclick="openLightbox(this)">
+      <img src="b.jpg" alt="b" onclick="openLightbox(this)">
+      <img src="c.jpg" alt="c" onclick="openLightbox(this)">
+      <img src="d.jpg" alt="d" onclick="openLightbox(this)">
+      <img src="e.jpg" alt="e" onclick="openLightbox(this)">
+      <img src="f.jpg" alt="f" onclick="openLightbox(this)">
+      <img src="g.jpg" alt="g" onclick="openLightbox(this)">
+      <img src="h.jpg" alt="h" onclick="openLightbox(this)">
+      <img src="hero.png" alt="hero" onclick="openLightbox(this)">
+      <img src="i.jpg" alt="i" onclick="openLightbox(this)">
+      <img src="j.jpg" alt="j" onclick="openLightbox(this)">
+      <img src="k.jpg" alt="k" onclick="openLightbox(this)">
+      <img src="l.jpg" alt="l" onclick="openLightbox(this)">
+      <img src="m.jpg" alt="m" onclick="openLightbox(this)">
+      <img src="n.jpg" alt="n" onclick="openLightbox(this)">
+      <img src="o.jpg" alt="o" onclick="openLightbox(this)">
+      <img src="p.jpg" alt="p" onclick="openLightbox(this)">
+      <img src="q.jpg" alt="q" onclick="openLightbox(this)">
+      <img src="r.jpg" alt="r" onclick="openLightbox(this)">
+      <img src="s.jpg" alt="s" onclick="openLightbox(this)">
+      <img src="t.jpg" alt="t" onclick="openLightbox(this)">
+      <img src="u.jpg" alt="u" onclick="openLightbox(this)">
+      <img src="v.jpg" alt="v" onclick="openLightbox(this)">
+      <img src="w.jpg" alt="w" onclick="openLightbox(this)">
+      <img src="x.jpg" alt="x" onclick="openLightbox(this)">
+      <img src="y.jpg" alt="y" onclick="openLightbox(this)">
     </div>
   </section>
 
-  <!-- Concept Showcase -->
-  <section>
-    <h2>Concept Showcase</h2>
-    <div class="gallery">
-      <img src="22.jpg" alt="Concept 22">
-      <img src="23.jpg" alt="Concept 23">
-      <img src="24.jpg" alt="Concept 24">
-      <img src="25.jpg" alt="Concept 25">
-    </div>
-  </section>
-
-  <!-- Main Gallery -->
-  <section>
-    <h2>Full Gallery</h2>
-    <div class="gallery" id="autoGallery"></div>
-  </section>
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
 
   <script>
-    // List of all your image files
-    const allImages = [
-      "1.png","4D.png","a.jpg","a1.jpg","a2.jpg","a3.jpg","b.jpg",
-      "c.jpg","d.jpg","e.jpg","f.jpg","g.jpg","h.jpg","hero.png",
-      "i.jpg","j.jpg","k.jpg","l.jpg","m.jpg","n.jpg","o.jpg","p.jpg",
-      "q.jpg","r.jpg","s.jpg","t.jpg","u.jpg","v.jpg","w.jpg","x.jpg","y.jpg"
-    ];
-
-    // Exclude files already used in hero/featured/concept/background
-    const exclude = ["background.jpg","100.png","102.png","103.png","104.png","22.jpg","23.jpg","24.jpg","25.jpg"];
-    const gallery = document.getElementById("autoGallery");
-
-    allImages.forEach(file => {
-      if (!exclude.includes(file)) {
-        const img = document.createElement("img");
-        img.src = file;
-        img.alt = file;
-        gallery.appendChild(img);
-      }
-    });
+    function openLightbox(img) {
+      document.getElementById("lightbox-img").src = img.src;
+      document.getElementById("lightbox").style.display = "flex";
+    }
+    document.getElementById("lightbox").onclick = function() {
+      this.style.display = "none";
+    }
   </script>
 
 </body>
