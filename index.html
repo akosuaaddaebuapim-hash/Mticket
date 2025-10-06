@@ -1,33 +1,154 @@
-<section>
-  <h2>Test All Images</h2>
-  <div class="gallery">
-    <img src="a.jpg" alt="a" width="200" height="150">
-    <img src="a1.jpg" alt="a1" width="200" height="150">
-    <img src="a2.jpg" alt="a2" width="200" height="150">
-    <img src="a3.jpg" alt="a3" width="200" height="150">
-    <img src="b.jpg" alt="b" width="200" height="150">
-    <img src="c.jpg" alt="c" width="200" height="150">
-    <img src="d.jpg" alt="d" width="200" height="150">
-    <img src="e.jpg" alt="e" width="200" height="150">
-    <img src="f.jpg" alt="f" width="200" height="150">
-    <img src="g.jpg" alt="g" width="200" height="150">
-    <img src="h.jpg" alt="h" width="200" height="150">
-    <img src="i.jpg" alt="i" width="200" height="150">
-    <img src="j.jpg" alt="j" width="200" height="150">
-    <img src="k.jpg" alt="k" width="200" height="150">
-    <img src="l.jpg" alt="l" width="200" height="150">
-    <img src="m.jpg" alt="m" width="200" height="150">
-    <img src="n.jpg" alt="n" width="200" height="150">
-    <img src="o.jpg" alt="o" width="200" height="150">
-    <img src="p.jpg" alt="p" width="200" height="150">
-    <img src="q.jpg" alt="q" width="200" height="150">
-    <img src="r.jpg" alt="r" width="200" height="150">
-    <img src="s.jpg" alt="s" width="200" height="150">
-    <img src="t.jpg" alt="t" width="200" height="150">
-    <img src="u.jpg" alt="u" width="200" height="150">
-    <img src="v.jpg" alt="v" width="200" height="150">
-    <img src="w.jpg" alt="w" width="200" height="150">
-    <img src="x.jpg" alt="x" width="200" height="150">
-    <img src="y.jpg" alt="y" width="200" height="150">
-  </div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PhotMedia Ghana – Creativity Meets Innovation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #fdfdfd;
+      color: #222;
+      scroll-behavior: smooth;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+    }
+    .hero video, .hero img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      color: white;
+      z-index: 1;
+      padding: 20px;
+    }
+    .hero-content h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+    }
+    .hero-content p {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    /* Sections */
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #444;
+    }
+
+    /* Gallery Grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <video autoplay muted loop poster="background.jpg">
+      <source src="gt1.mp4" type="video/mp4">
+      <source src="gt2.mp4" type="video/mp4">
+      <source src="gt3.mp4" type="video/mp4">
+      <source src="gt5.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Welcome to PhotMedia Ghana</h1>
+      <p>We merge creativity and technology to capture stories, build brands, and redefine visuals in Ghana and beyond.</p>
+    </div>
+  </section>
+
+  <!-- Featured Gallery -->
+  <section>
+    <h2>Featured Highlights</h2>
+    <div class="gallery">
+      <img src="100.png" alt="Featured Work 100">
+      <img src="102.png" alt="Featured Work 102">
+      <img src="103.png" alt="Featured Work 103">
+      <img src="104.png" alt="Featured Work 104">
+    </div>
+  </section>
+
+  <!-- Concept Showcase -->
+  <section>
+    <h2>Concept Showcase</h2>
+    <div class="gallery">
+      <img src="22.jpg" alt="Concept 22">
+      <img src="23.jpg" alt="Concept 23">
+      <img src="24.jpg" alt="Concept 24">
+      <img src="25.jpg" alt="Concept 25">
+    </div>
+  </section>
+
+  <!-- Main Gallery -->
+  <section>
+    <h2>Full Gallery</h2>
+    <div class="gallery" id="autoGallery"></div>
+  </section>
+
+  <script>
+    // List of all your image files
+    const allImages = [
+      "1.png","4D.png","a.jpg","a1.jpg","a2.jpg","a3.jpg","b.jpg",
+      "c.jpg","d.jpg","e.jpg","f.jpg","g.jpg","h.jpg","hero.png",
+      "i.jpg","j.jpg","k.jpg","l.jpg","m.jpg","n.jpg","o.jpg","p.jpg",
+      "q.jpg","r.jpg","s.jpg","t.jpg","u.jpg","v.jpg","w.jpg","x.jpg","y.jpg"
+    ];
+
+    // Exclude files already used in hero/featured/concept/background
+    const exclude = ["background.jpg","100.png","102.png","103.png","104.png","22.jpg","23.jpg","24.jpg","25.jpg"];
+    const gallery = document.getElementById("autoGallery");
+
+    allImages.forEach(file => {
+      if (!exclude.includes(file)) {
+        const img = document.createElement("img");
+        img.src = file;
+        img.alt = file;
+        gallery.appendChild(img);
+      }
+    });
+  </script>
+
+</body>
+</html>
