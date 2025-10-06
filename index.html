@@ -1,174 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PhotMedia Showcase</title>
+  <meta charset="UTF-8">
+  <title>Luxury Hotels & Gated Communities Showcase</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('background.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      overflow-x: hidden;
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {font-family: Arial, sans-serif; background:#111; color:#fff; line-height:1.6;}
+    header {
+      background:url('background.jpg') no-repeat center center/cover;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      flex-direction:column;
+      color:#fff;
+      padding:20px;
     }
-
-    /* Hero Section */
-    header.hero {
-      background: rgba(0,0,0,0.65);
-      text-align: center;
-      padding: 100px 20px;
+    header h1 {font-size:3em; margin-bottom:15px; text-shadow:2px 2px 6px #000;}
+    header p {font-size:1.3em; max-width:700px; text-shadow:1px 1px 4px #000;}
+    section {padding:50px 20px; text-align:center;}
+    section h2 {font-size:2em; margin-bottom:20px;}
+    .media {margin-bottom:40px;}
+    .media img, .media video {
+      width:100%;
+      max-width:1200px;
+      height:auto;
+      display:block;
+      margin:0 auto 10px;
+      border-radius:8px;
+      box-shadow:0 0 15px rgba(0,0,0,0.6);
     }
-    header.hero img {
-      max-width: 250px;
-      border-radius: 15px;
-      margin-bottom: 20px;
+    .download-btn {
+      display:inline-block;
+      padding:10px 20px;
+      background:#e91e63;
+      color:#fff;
+      text-decoration:none;
+      border-radius:5px;
+      transition:background 0.3s ease;
     }
-    header.hero h1 {
-      font-size: 3rem;
-      margin: 10px 0;
-    }
-    header.hero p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-
-    /* Video Showcase */
-    .videos {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 20px;
-      padding: 60px 20px;
-      background: rgba(0,0,0,0.75);
-    }
-    .videos video {
-      width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
-    }
-
-    /* Featured Images */
-    .featured-images {
-      padding: 60px 20px;
-      text-align: center;
-      background: rgba(0,0,0,0.65);
-    }
-    .featured-images h2 {
-      margin-bottom: 20px;
-      font-size: 2rem;
-    }
-    .featured-images img {
-      width: 30%;
-      margin: 10px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    }
-
-    /* Gallery */
-    .gallery {
-      padding: 60px 20px;
-      background: rgba(0,0,0,0.85);
-    }
-    .gallery h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 2rem;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    .gallery-grid img {
-      width: 100%;
-      border-radius: 8px;
-      transition: transform 0.3s;
-    }
-    .gallery-grid img:hover {
-      transform: scale(1.05);
-    }
-
-    /* Footer */
+    .download-btn:hover {background:#c2185b;}
     footer {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.7);
-      font-size: 0.9rem;
+      background:#000;
+      text-align:center;
+      padding:20px;
+      font-size:0.9em;
+      color:#bbb;
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero Section -->
-  <header class="hero">
-    <img src="hero.png" alt="PhotMedia Logo" />
-    <h1>Welcome to PhotMedia Showcase</h1>
-    <p>A curated collection of concepts, communities, and creativity brought to life through visuals.</p>
+  <header>
+    <h1>Luxury Hotels & Gated Communities Showcase</h1>
+    <p>Explore breathtaking designs, luxury experiences, and the best gated communities captured through photos and videos.</p>
   </header>
 
-  <!-- Video Showcase -->
-  <section class="videos">
-    <video src="gt1.mp4" autoplay loop muted playsinline></video>
-    <video src="gt2.mp4" autoplay loop muted playsinline></video>
-    <video src="gt3.mp4" autoplay loop muted playsinline></video>
-    <video src="gt5.mp4" autoplay loop muted playsinline></video>
-  </section>
-
-  <!-- Featured Images -->
-  <section class="featured-images">
-    <h2>Featured Concepts</h2>
-    <img src="22.jpg" alt="Concept 22">
-    <img src="23.jpg" alt="Concept 23">
-    <img src="24.jpg" alt="Concept 24">
-  </section>
-
-  <!-- Full Gallery -->
-  <section class="gallery">
-    <h2>Full Gallery</h2>
-    <div class="gallery-grid">
-      <img src="1.png" alt="Concept 1">
-      <img src="100.png" alt="Concept 100">
-      <img src="102.png" alt="Concept 102">
-      <img src="103.png" alt="Concept 103">
-      <img src="104.png" alt="Concept 104">
-      <img src="25.jpg" alt="Concept 25">
-      <img src="a.jpg" alt="A">
-      <img src="a1.jpg" alt="A1">
-      <img src="a2.jpg" alt="A2">
-      <img src="a3.jpg" alt="A3">
-      <img src="b.jpg" alt="B">
-      <img src="c.jpg" alt="C">
-      <img src="d.jpg" alt="D">
-      <img src="e.jpg" alt="E">
-      <img src="f.jpg" alt="F">
-      <img src="g.jpg" alt="G">
-      <img src="h.jpg" alt="H">
-      <img src="i.jpg" alt="I">
-      <img src="j.jpg" alt="J">
-      <img src="k.jpg" alt="K">
-      <img src="l.jpg" alt="L">
-      <img src="m.jpg" alt="M">
-      <img src="n.jpg" alt="N">
-      <img src="o.jpg" alt="O">
-      <img src="p.jpg" alt="P">
-      <img src="q.jpg" alt="Q">
-      <img src="r.jpg" alt="R">
-      <img src="s.jpg" alt="S">
-      <img src="t.jpg" alt="T">
-      <img src="u.jpg" alt="U">
-      <img src="v.jpg" alt="V">
-      <img src="w.jpg" alt="W">
-      <img src="x.jpg" alt="X">
-      <img src="y.jpg" alt="Y">
+  <section>
+    <h2>Video Showcase</h2>
+    <div class="media">
+      <video controls src="gt1.mp4"></video>
+      <a class="download-btn" href="gt1.mp4" download>Download Video</a>
+    </div>
+    <div class="media">
+      <video controls src="gt2.mp4"></video>
+      <a class="download-btn" href="gt2.mp4" download>Download Video</a>
+    </div>
+    <div class="media">
+      <video controls src="gt3.mp4"></video>
+      <a class="download-btn" href="gt3.mp4" download>Download Video</a>
+    </div>
+    <div class="media">
+      <video controls src="gt5.mp4"></video>
+      <a class="download-btn" href="gt5.mp4" download>Download Video</a>
     </div>
   </section>
 
-  <!-- Footer -->
+  <section>
+    <h2>Featured Concepts</h2>
+    <div class="media">
+      <img src="100.png" alt="Concept 100">
+      <a class="download-btn" href="100.png" download>Download</a>
+    </div>
+    <div class="media">
+      <img src="102.png" alt="Concept 102">
+      <a class="download-btn" href="102.png" download>Download</a>
+    </div>
+    <div class="media">
+      <img src="103.png" alt="Concept 103">
+      <a class="download-btn" href="103.png" download>Download</a>
+    </div>
+    <div class="media">
+      <img src="104.png" alt="Concept 104">
+      <a class="download-btn" href="104.png" download>Download</a>
+    </div>
+    <div class="media">
+      <img src="22.jpg" alt="Concept 22">
+      <a class="download-btn" href="22.jpg" download>Download</a>
+    </div>
+    <div class="media">
+      <img src="23.jpg" alt="Concept 23">
+      <a class="download-btn" href="23.jpg" download>Download</a>
+    </div>
+    <div class="media">
+      <img src="24.jpg" alt="Concept 24">
+      <a class="download-btn" href="24.jpg" download>Download</a>
+    </div>
+    <div class="media">
+      <img src="25.jpg" alt="Concept 25">
+      <a class="download-btn" href="25.jpg" download>Download</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Gallery</h2>
+    <!-- Start dumping all other images -->
+    <div class="media"><img src="1.png" alt="Image"><a class="download-btn" href="1.png" download>Download</a></div>
+    <div class="media"><img src="a.jpg" alt="Image"><a class="download-btn" href="a.jpg" download>Download</a></div>
+    <div class="media"><img src="a1.jpg" alt="Image"><a class="download-btn" href="a1.jpg" download>Download</a></div>
+    <div class="media"><img src="a2.jpg" alt="Image"><a class="download-btn" href="a2.jpg" download>Download</a></div>
+    <div class="media"><img src="a3.jpg" alt="Image"><a class="download-btn" href="a3.jpg" download>Download</a></div>
+    <div class="media"><img src="b.jpg" alt="Image"><a class="download-btn" href="b.jpg" download>Download</a></div>
+    <div class="media"><img src="c.jpg" alt="Image"><a class="download-btn" href="c.jpg" download>Download</a></div>
+    <div class="media"><img src="d.jpg" alt="Image"><a class="download-btn" href="d.jpg" download>Download</a></div>
+    <div class="media"><img src="e.jpg" alt="Image"><a class="download-btn" href="e.jpg" download>Download</a></div>
+    <div class="media"><img src="f.jpg" alt="Image"><a class="download-btn" href="f.jpg" download>Download</a></div>
+    <div class="media"><img src="g.jpg" alt="Image"><a class="download-btn" href="g.jpg" download>Download</a></div>
+    <div class="media"><img src="h.jpg" alt="Image"><a class="download-btn" href="h.jpg" download>Download</a></div>
+    <div class="media"><img src="hero.png" alt="Hero"><a class="download-btn" href="hero.png" download>Download</a></div>
+    <div class="media"><img src="i.jpg" alt="Image"><a class="download-btn" href="i.jpg" download>Download</a></div>
+    <div class="media"><img src="j.jpg" alt="Image"><a class="download-btn" href="j.jpg" download>Download</a></div>
+    <div class="media"><img src="k.jpg" alt="Image"><a class="download-btn" href="k.jpg" download>Download</a></div>
+    <div class="media"><img src="l.jpg" alt="Image"><a class="download-btn" href="l.jpg" download>Download</a></div>
+    <div class="media"><img src="m.jpg" alt="Image"><a class="download-btn" href="m.jpg" download>Download</a></div>
+    <div class="media"><img src="n.jpg" alt="Image"><a class="download-btn" href="n.jpg" download>Download</a></div>
+    <div class="media"><img src="o.jpg" alt="Image"><a class="download-btn" href="o.jpg" download>Download</a></div>
+    <div class="media"><img src="p.jpg" alt="Image"><a class="download-btn" href="p.jpg" download>Download</a></div>
+    <div class="media"><img src="q.jpg" alt="Image"><a class="download-btn" href="q.jpg" download>Download</a></div>
+    <div class="media"><img src="r.jpg" alt="Image"><a class="download-btn" href="r.jpg" download>Download</a></div>
+    <div class="media"><img src="s.jpg" alt="Image"><a class="download-btn" href="s.jpg" download>Download</a></div>
+    <div class="media"><img src="t.jpg" alt="Image"><a class="download-btn" href="t.jpg" download>Download</a></div>
+    <div class="media"><img src="u.jpg" alt="Image"><a class="download-btn" href="u.jpg" download>Download</a></div>
+    <div class="media"><img src="v.jpg" alt="Image"><a class="download-btn" href="v.jpg" download>Download</a></div>
+    <div class="media"><img src="w.jpg" alt="Image"><a class="download-btn" href="w.jpg" download>Download</a></div>
+    <div class="media"><img src="x.jpg" alt="Image"><a class="download-btn" href="x.jpg" download>Download</a></div>
+    <div class="media"><img src="y.jpg" alt="Image"><a class="download-btn" href="y.jpg" download>Download</a></div>
+  </section>
+
   <footer>
-    <p>&copy; 2025 PhotMedia. All rights reserved.</p>
+    Powered by Scribe Haus
   </footer>
 
 </body>
 </html>
+
