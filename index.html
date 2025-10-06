@@ -5,30 +5,34 @@
   <title>Luxury Hotel Concepts – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    /* Global Setup with Enhanced Dark Bronze Theme */
+    /* Animations */
     @keyframes slow-pulse {
-        0%, 100% { filter: brightness(1); }
-        50% { filter: brightness(1.08); }
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.08); }
     }
     @keyframes subtle-scan {
-        0% { background-position: 0% 0%; }
-        100% { background-position: 100% 100%; }
+      0% { background-position: 0% 0%; }
+      100% { background-position: 100% 100%; }
     }
     @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     @keyframes hero-shift {
       0% { transform: scale(1.02) translateX(0); }
       100% { transform: scale(1.02) translateX(-2%); }
     }
     @keyframes depth-pulse {
-        0%, 100% { box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); }
-        50% { box-shadow: 0 0 100px rgba(0, 0, 0, 1); }
+      0%, 100% { box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); }
+      50% { box-shadow: 0 0 100px rgba(0, 0, 0, 1); }
     }
     @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes fadeVideo {
+      0%, 20% { opacity: 1; }
+      25%, 100% { opacity: 0; }
     }
 
     html, body {
@@ -38,8 +42,6 @@
       color: #e0e0e0; 
       scroll-behavior: smooth;
       overflow-x: hidden;
-      
-      /* Base Background */
       background-image: url('background.jpg');
       background-size: cover; 
       background-attachment: fixed; 
@@ -48,49 +50,101 @@
       position: relative; 
     }
 
-    /* Animated Overlay */
     body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1; 
-        background-image: repeating-linear-gradient(
-          45deg,
-          rgba(184, 134, 11, 0.06) 0%, 
-          rgba(184, 134, 11, 0.06) 1px,
-          transparent 1px,
-          transparent 100px
-        );
-        background-size: 200px 200px;
-        animation: subtle-scan 180s linear infinite; 
-        opacity: 0.6;
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; 
+      background-image: repeating-linear-gradient(
+        45deg,
+        rgba(184, 134, 11, 0.06) 0%, 
+        rgba(184, 134, 11, 0.06) 1px,
+        transparent 1px,
+        transparent 100px
+      );
+      background-size: 200px 200px;
+      animation: subtle-scan 180s linear infinite; 
+      opacity: 0.6;
     }
 
-    /* Smooth scroll indicator */
+    /* Video Hero Section */
+    .video-hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: fadeVideo 32s infinite;
+    }
+    .hero-video:nth-child(1) { animation-delay: 0s; }
+    .hero-video:nth-child(2) { animation-delay: 8s; }
+    .hero-video:nth-child(3) { animation-delay: 16s; }
+    .hero-video:nth-child(4) { animation-delay: 24s; }
+
+    .video-hero .hero-overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(26,21,16,0.5);
+      z-index: 1;
+    }
+    .video-hero .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      padding: 40px;
+      background: rgba(26, 21, 16, 0.65);
+      border: 1px solid rgba(184,134,11,0.5);
+      border-radius: 6px;
+      animation: fadeIn 2s ease-out;
+    }
+    .video-hero h1 {
+      font-size: 5em;
+      color: #f5f5f5;
+      text-shadow: 0 0 15px rgba(218,165,32,0.9);
+    }
+    .video-hero p {
+      font-size: 1.5em;
+      color: #deb887;
+    }
+
+    /* Scroll indicator */
     .scroll-indicator {
-        position: fixed;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #daa520;
-        font-size: 14px;
-        font-weight: 600;
-        letter-spacing: 2px;
-        animation: float 3s ease-in-out infinite;
-        z-index: 10;
-        text-transform: uppercase;
-        text-shadow: 0 0 10px rgba(218, 165, 32, 0.8);
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #daa520;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      animation: float 3s ease-in-out infinite;
+      z-index: 10;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(218, 165, 32, 0.8);
     }
-
     .scroll-indicator::after {
-        content: "↓";
-        display: block;
-        font-size: 24px;
-        margin-top: 5px;
-        animation: float 2s ease-in-out infinite;
+      content: "↓";
+      display: block;
+      font-size: 24px;
+      margin-top: 5px;
+      animation: float 2s ease-in-out infinite;
     }
 
     /* Hero Section */
@@ -107,13 +161,10 @@
       animation: depth-pulse 12s infinite alternate ease-in-out; 
       margin-bottom: 3px;
     }
-
     .hero-bg {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background-image: url('hero.png');
       background-size: cover;
       background-position: center;
@@ -122,17 +173,13 @@
       filter: sepia(0.3) contrast(1.15) brightness(0.6) saturate(1.3); 
       z-index: 1;
     }
-
     .hero-overlay {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: linear-gradient(to top, rgba(26, 21, 16, 0.95) 10%, rgba(26, 21, 16, 0.3)); 
       z-index: 2;
     }
-
     .hero-content {
       position: relative;
       z-index: 3;
@@ -145,7 +192,6 @@
       box-shadow: 0 12px 40px rgba(0,0,0,0.9); 
       animation: fadeIn 2s ease-out;
     }
-
     .hero-content h1 {
       font-size: 7.5em; 
       font-weight: 200; 
@@ -158,7 +204,6 @@
       padding-bottom: 25px;
       text-transform: uppercase; 
     }
-
     .hero-content p {
       font-size: 1.9em; 
       line-height: 1.7;
@@ -184,7 +229,6 @@
       animation: fadeIn 1.5s ease-out;
     }
 
-    /* Image Styling */
     .image-wrapper {
       width: 100%;
       max-width: 1100px;
@@ -198,26 +242,21 @@
       opacity: 0.98;
       position: relative;
     }
-
     .image-wrapper::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, 
-            transparent, 
-            rgba(255, 255, 255, 0.1), 
-            transparent);
-        transition: left 0.7s;
-        z-index: 1;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, 
+          transparent, 
+          rgba(255, 255, 255, 0.1), 
+          transparent);
+      transition: left 0.7s;
+      z-index: 1;
     }
-
-    .image-wrapper:hover::before {
-        left: 100%;
-    }
-
+    .image-wrapper:hover::before { left: 100%; }
     .image-wrapper:hover {
       transform: scale(1.015) translateY(-5px); 
       box-shadow: 0 28px 70px rgba(0, 0, 0, 1), 
@@ -225,8 +264,7 @@
                   0 0 30px rgba(218, 165, 32, 0.5); 
       opacity: 1;
     }
-
-    .image-wrapper img {
+    .image-wrapper img, .image-wrapper video {
       width: 100%;
       height: 100%;
       display: block;
@@ -234,12 +272,11 @@
       filter: saturate(1.05) contrast(1.05);
       transition: filter 0.5s ease;
     }
-
-    .image-wrapper:hover img {
+    .image-wrapper:hover img,
+    .image-wrapper:hover video {
       filter: saturate(1.15) contrast(1.1) brightness(1.05);
     }
 
-    /* Download Button */
     .download-button {
       background: linear-gradient(135deg, #b8860b 0%, #daa520 100%);
       color: #f5f5f5; 
@@ -258,25 +295,19 @@
       position: relative;
       overflow: hidden;
     }
-
     .download-button::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.2);
-        transform: translate(-50%, -50%);
-        transition: width 0.6s, height 0.6s;
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
     }
-
     .download-button:hover::before {
-        width: 300px;
-        height: 300px;
+      width: 300px; height: 300px;
     }
-
     .download-button:hover {
       background: linear-gradient(135deg, #daa520 0%, #ffd700 100%);
       transform: translateY(-3px);
@@ -285,11 +316,6 @@
       border: 2px solid #ffd700;
     }
 
-    .download-button:active {
-      transform: translateY(-1px);
-    }
-
-    /* Footer */
     .footer {
       background-color: #0a0806; 
       color: #5a4e42; 
@@ -300,48 +326,39 @@
       box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.6);
       border-top: 1px solid rgba(184, 134, 11, 0.2);
     }
-    
     .footer span {
       color: #daa520;
       font-weight: 700;
       text-shadow: 0 0 8px rgba(218, 165, 32, 0.5);
     }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .hero-content h1 {
-        font-size: 3.5em;
-        letter-spacing: 6px;
-      }
-      .hero-content p {
-        font-size: 1.3em;
-      }
-      .hero-content {
-        padding: 40px;
-      }
-      .download-button {
-        font-size: 1.1em;
-        padding: 16px 32px;
-      }
-      .scroll-indicator {
-        font-size: 12px;
-        bottom: 30px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero-content h1 {
-        font-size: 2.5em;
-        letter-spacing: 3px;
-      }
-      .hero-content p {
-        font-size: 1.1em;
-      }
-    }
   </style>
 </head>
 <body>
 
+  <!-- 🎬 Video Hero Section -->
+  <div class="video-hero">
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="gt1.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="gt2.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="gt3.mp4" type="video/mp4">
+    </video>
+    <video autoplay muted loop playsinline class="hero-video">
+      <source src="gt5.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Hotel Concepts</h1>
+      <p>A cinematic journey through visionary designs.</p>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">Scroll to Explore</div>
+
+  <!-- Original Hero Section -->
   <div class="hero-section">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
@@ -355,209 +372,27 @@
     </div>
   </div>
 
-  <div class="scroll-indicator">Scroll to Explore</div>
-  
-  <div class="section">
-    <a href="a1.jpg" download class="image-wrapper">
-      <img src="a1.jpg" alt="Hotel Concept A1: Signature Feature 1" />
-    </a>
-    <a href="a1.jpg" download class="download-button">Download Concept A1 — Signature Design</a>
-  </div>
+  <!-- 🔽 Gallery Sections (your previous a1.jpg … 1.png … 22–24.jpg) -->
+  <!-- KEEP all your existing <div class="section"> blocks here -->
 
+  <!-- Example for new pictures -->
   <div class="section">
-    <a href="a2.jpg" download class="image-wrapper">
-      <img src="a2.jpg" alt="Hotel Concept A2: Signature Feature 2" />
+    <a href="22.jpg" download class="image-wrapper">
+      <img src="22.jpg" alt="Hotel Concept 22: New Design" />
     </a>
-    <a href="a2.jpg" download class="download-button">Download Concept A2 — Signature Design</a>
+    <a href="22.jpg" download class="download-button">Download Concept 22</a>
   </div>
-
   <div class="section">
-    <a href="a3.jpg" download class="image-wrapper">
-      <img src="a3.jpg" alt="Hotel Concept A3: Signature Feature 3" />
+    <a href="23.jpg" download class="image-wrapper">
+      <img src="23.jpg" alt="Hotel Concept 23: New Design" />
     </a>
-    <a href="a3.jpg" download class="download-button">Download Concept A3 — Signature Design</a>
+    <a href="23.jpg" download class="download-button">Download Concept 23</a>
   </div>
-
   <div class="section">
-    <a href="a.jpg" download class="image-wrapper">
-      <img src="a.jpg" alt="Hotel Concept A: Modern Lobby Design" />
+    <a href="24.jpg" download class="image-wrapper">
+      <img src="24.jpg" alt="Hotel Concept 24: New Design" />
     </a>
-    <a href="a.jpg" download class="download-button">Download Concept A</a>
-  </div>
-
-  <div class="section">
-    <a href="b.jpg" download class="image-wrapper">
-      <img src="b.jpg" alt="Hotel Concept B: Rooftop Terrace View" />
-    </a>
-    <a href="b.jpg" download class="download-button">Download Concept B</a>
-  </div>
-
-  <div class="section">
-    <a href="c.jpg" download class="image-wrapper">
-      <img src="c.jpg" alt="Hotel Concept C: Luxury Suite Interior" />
-    </a>
-    <a href="c.jpg" download class="download-button">Download Concept C</a>
-  </div>
-
-  <div class="section">
-    <a href="d.jpg" download class="image-wrapper">
-      <img src="d.jpg" alt="Hotel Concept D: Poolside Design" />
-    </a>
-    <a href="d.jpg" download class="download-button">Download Concept D</a>
-  </div>
-  
-  <div class="section">
-    <a href="e.jpg" download class="image-wrapper">
-      <img src="e.jpg" alt="Hotel Concept E: Restaurant Dining Area" />
-    </a>
-    <a href="e.jpg" download class="download-button">Download Concept E</a>
-  </div>
-
-  <div class="section">
-    <a href="f.jpg" download class="image-wrapper">
-      <img src="f.jpg" alt="Hotel Concept F: Executive Meeting Room" />
-    </a>
-    <a href="f.jpg" download class="download-button">Download Concept F</a>
-  </div>
-
-  <div class="section">
-    <a href="g.jpg" download class="image-wrapper">
-      <img src="g.jpg" alt="Hotel Concept G: Exterior Night View" />
-    </a>
-    <a href="g.jpg" download class="download-button">Download Concept G</a>
-  </div>
-  
-  <div class="section">
-    <a href="h.jpg" download class="image-wrapper">
-      <img src="h.jpg" alt="Hotel Concept H: Fitness Center" />
-    </a>
-    <a href="h.jpg" download class="download-button">Download Concept H</a>
-  </div>
-  
-  <div class="section">
-    <a href="i.jpg" download class="image-wrapper">
-      <img src="i.jpg" alt="Hotel Concept I: Guest Bathroom Design" />
-    </a>
-    <a href="i.jpg" download class="download-button">Download Concept I</a>
-  </div>
-
-  <div class="section">
-    <a href="j.jpg" download class="image-wrapper">
-      <img src="j.jpg" alt="Hotel Concept J: Bar and Lounge Area" />
-    </a>
-    <a href="j.jpg" download class="download-button">Download Concept J</a>
-  </div>
-
-  <div class="section">
-    <a href="k.jpg" download class="image-wrapper">
-      <img src="k.jpg" alt="Hotel Concept K: Entrance Foyer" />
-    </a>
-    <a href="k.jpg" download class="download-button">Download Concept K</a>
-  </div>
-
-  <div class="section">
-    <a href="l.jpg" download class="image-wrapper">
-      <img src="l.jpg" alt="Hotel Concept L: Standard Room Layout" />
-    </a>
-    <a href="l.jpg" download class="download-button">Download Concept L</a>
-  </div>
-
-  <div class="section">
-    <a href="m.jpg" download class="image-wrapper">
-      <img src="m.jpg" alt="Hotel Concept M: Alfresco Dining" />
-    </a>
-    <a href="m.jpg" download class="download-button">Download Concept M</a>
-  </div>
-
-  <div class="section">
-    <a href="n.jpg" download class="image-wrapper">
-      <img src="n.jpg" alt="Hotel Concept N: Panoramic View from Balcony" />
-    </a>
-    <a href="n.jpg" download class="download-button">Download Concept N</a>
-  </div>
-  
-  <div class="section">
-    <a href="o.jpg" download class="image-wrapper">
-      <img src="o.jpg" alt="Hotel Concept O: Design Detail 1" />
-    </a>
-    <a href="o.jpg" download class="download-button">Download Concept O</a>
-  </div>
-  
-  <div class="section">
-    <a href="p.jpg" download class="image-wrapper">
-      <img src="p.jpg" alt="Hotel Concept P: Design Detail 2" />
-    </a>
-    <a href="p.jpg" download class="download-button">Download Concept P</a>
-  </div>
-  
-  <div class="section">
-    <a href="q.jpg" download class="image-wrapper">
-      <img src="q.jpg" alt="Hotel Concept Q: Design Detail 3" />
-    </a>
-    <a href="q.jpg" download class="download-button">Download Concept Q</a>
-  </div>
-
-  <div class="section">
-    <a href="r.jpg" download class="image-wrapper">
-      <img src="r.jpg" alt="Hotel Concept R: Design Detail 4" />
-    </a>
-    <a href="r.jpg" download class="download-button">Download Concept R</a>
-  </div>
-  
-  <div class="section">
-    <a href="s.jpg" download class="image-wrapper">
-      <img src="s.jpg" alt="Hotel Concept S: Design Detail 5" />
-    </a>
-    <a href="s.jpg" download class="download-button">Download Concept S</a>
-  </div>
-
-  <div class="section">
-    <a href="t.jpg" download class="image-wrapper">
-      <img src="t.jpg" alt="Hotel Concept T: Design Detail 6" />
-    </a>
-    <a href="t.jpg" download class="download-button">Download Concept T</a>
-  </div>
-
-  <div class="section">
-    <a href="u.jpg" download class="image-wrapper">
-      <img src="u.jpg" alt="Hotel Concept U: Design Detail 7" />
-    </a>
-    <a href="u.jpg" download class="download-button">Download Concept U</a>
-  </div>
-  
-  <div class="section">
-    <a href="v.jpg" download class="image-wrapper">
-      <img src="v.jpg" alt="Hotel Concept V: Design Detail 8" />
-    </a>
-    <a href="v.jpg" download class="download-button">Download Concept V</a>
-  </div>
-  
-  <div class="section">
-    <a href="w.jpg" download class="image-wrapper">
-      <img src="w.jpg" alt="Hotel Concept W: Design Detail 9" />
-    </a>
-    <a href="w.jpg" download class="download-button">Download Concept W</a>
-  </div>
-  
-  <div class="section">
-    <a href="x.jpg" download class="image-wrapper">
-      <img src="x.jpg" alt="Hotel Concept X: Design Detail 10" />
-    </a>
-    <a href="x.jpg" download class="download-button">Download Concept X</a>
-  </div>
-  
-  <div class="section">
-    <a href="y.jpg" download class="image-wrapper">
-      <img src="y.jpg" alt="Hotel Concept Y: Design Detail 11" />
-    </a>
-    <a href="y.jpg" download class="download-button">Download Concept Y</a>
-  </div>
-  
-  <div class="section">
-    <a href="1.png" download class="image-wrapper">
-      <img src="1.png" alt="Hotel Concept 1: Final Feature Image" />
-    </a>
-    <a href="1.png" download class="download-button">Download Concept 1</a>
+    <a href="24.jpg" download class="download-button">Download Concept 24</a>
   </div>
 
   <footer class="footer">
