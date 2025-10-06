@@ -6,9 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {margin:0; padding:0; box-sizing:border-box;}
-    body {font-family: Arial, sans-serif; background:#111; color:#fff; line-height:1.6;}
+    body {
+      font-family: Arial, sans-serif;
+      background:url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color:#fff;
+      line-height:1.6;
+    }
+
     header {
-      background:url('background.jpg') no-repeat center center/cover;
+      background:url('hero.png') no-repeat center center/cover;
       height:100vh;
       display:flex;
       justify-content:center;
@@ -17,24 +24,31 @@
       flex-direction:column;
       color:#fff;
       padding:20px;
+      background-attachment: fixed;
     }
     header h1 {font-size:3em; margin-bottom:15px; text-shadow:2px 2px 6px #000;}
     header p {font-size:1.3em; max-width:700px; text-shadow:1px 1px 4px #000;}
-    section {padding:50px 20px; text-align:center;}
+
+    section {padding:50px 20px; text-align:center; background:rgba(0,0,0,0.6); margin-bottom:20px;}
     section h2 {font-size:2em; margin-bottom:20px;}
-    .media {margin-bottom:40px;}
-    .media img, .media video {
-      width:100%;
-      max-width:1200px;
-      height:auto;
-      display:block;
-      margin:0 auto 10px;
-      border-radius:8px;
-      box-shadow:0 0 15px rgba(0,0,0,0.6);
+
+    .media-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap:20px;
+      margin-top:20px;
     }
+
+    .media-grid img, .media-grid video {
+      width:100%;
+      border-radius:10px;
+      box-shadow:0 0 10px rgba(0,0,0,0.7);
+    }
+
     .download-btn {
       display:inline-block;
-      padding:10px 20px;
+      margin-top:8px;
+      padding:8px 15px;
       background:#e91e63;
       color:#fff;
       text-decoration:none;
@@ -42,6 +56,7 @@
       transition:background 0.3s ease;
     }
     .download-btn:hover {background:#c2185b;}
+
     footer {
       background:#000;
       text-align:center;
@@ -53,106 +68,89 @@
 </head>
 <body>
 
+  <!-- Hero Section -->
   <header>
     <h1>Luxury Hotels & Gated Communities Showcase</h1>
-    <p>Explore breathtaking designs, luxury experiences, and the best gated communities captured through photos and videos.</p>
+    <p>Discover breathtaking designs, exclusive gated communities, and luxury experiences through curated photos and videos.</p>
   </header>
 
+  <!-- Video Showcase -->
   <section>
-    <h2>Video Showcase</h2>
-    <div class="media">
-      <video controls src="gt1.mp4"></video>
-      <a class="download-btn" href="gt1.mp4" download>Download Video</a>
-    </div>
-    <div class="media">
-      <video controls src="gt2.mp4"></video>
-      <a class="download-btn" href="gt2.mp4" download>Download Video</a>
-    </div>
-    <div class="media">
-      <video controls src="gt3.mp4"></video>
-      <a class="download-btn" href="gt3.mp4" download>Download Video</a>
-    </div>
-    <div class="media">
-      <video controls src="gt5.mp4"></video>
-      <a class="download-btn" href="gt5.mp4" download>Download Video</a>
+    <h2>Gated Community Videos</h2>
+    <div class="media-grid">
+      <div>
+        <video controls src="gt1.mp4"></video>
+        <a class="download-btn" href="gt1.mp4" download>Download</a>
+      </div>
+      <div>
+        <video controls src="gt2.mp4"></video>
+        <a class="download-btn" href="gt2.mp4" download>Download</a>
+      </div>
+      <div>
+        <video controls src="gt3.mp4"></video>
+        <a class="download-btn" href="gt3.mp4" download>Download</a>
+      </div>
+      <div>
+        <video controls src="gt5.mp4"></video>
+        <a class="download-btn" href="gt5.mp4" download>Download</a>
+      </div>
     </div>
   </section>
 
+  <!-- Featured Concepts -->
   <section>
     <h2>Featured Concepts</h2>
-    <div class="media">
-      <img src="100.png" alt="Concept 100">
-      <a class="download-btn" href="100.png" download>Download</a>
-    </div>
-    <div class="media">
-      <img src="102.png" alt="Concept 102">
-      <a class="download-btn" href="102.png" download>Download</a>
-    </div>
-    <div class="media">
-      <img src="103.png" alt="Concept 103">
-      <a class="download-btn" href="103.png" download>Download</a>
-    </div>
-    <div class="media">
-      <img src="104.png" alt="Concept 104">
-      <a class="download-btn" href="104.png" download>Download</a>
-    </div>
-    <div class="media">
-      <img src="22.jpg" alt="Concept 22">
-      <a class="download-btn" href="22.jpg" download>Download</a>
-    </div>
-    <div class="media">
-      <img src="23.jpg" alt="Concept 23">
-      <a class="download-btn" href="23.jpg" download>Download</a>
-    </div>
-    <div class="media">
-      <img src="24.jpg" alt="Concept 24">
-      <a class="download-btn" href="24.jpg" download>Download</a>
-    </div>
-    <div class="media">
-      <img src="25.jpg" alt="Concept 25">
-      <a class="download-btn" href="25.jpg" download>Download</a>
+    <div class="media-grid">
+      <div><img src="100.png" alt="Concept 100"><a class="download-btn" href="100.png" download>Download</a></div>
+      <div><img src="102.png" alt="Concept 102"><a class="download-btn" href="102.png" download>Download</a></div>
+      <div><img src="103.png" alt="Concept 103"><a class="download-btn" href="103.png" download>Download</a></div>
+      <div><img src="104.png" alt="Concept 104"><a class="download-btn" href="104.png" download>Download</a></div>
+      <div><img src="22.jpg" alt="Concept 22"><a class="download-btn" href="22.jpg" download>Download</a></div>
+      <div><img src="23.jpg" alt="Concept 23"><a class="download-btn" href="23.jpg" download>Download</a></div>
+      <div><img src="24.jpg" alt="Concept 24"><a class="download-btn" href="24.jpg" download>Download</a></div>
+      <div><img src="25.jpg" alt="Concept 25"><a class="download-btn" href="25.jpg" download>Download</a></div>
     </div>
   </section>
 
+  <!-- Full Gallery -->
   <section>
-    <h2>Gallery</h2>
-    <!-- Start dumping all other images -->
-    <div class="media"><img src="1.png" alt="Image"><a class="download-btn" href="1.png" download>Download</a></div>
-    <div class="media"><img src="a.jpg" alt="Image"><a class="download-btn" href="a.jpg" download>Download</a></div>
-    <div class="media"><img src="a1.jpg" alt="Image"><a class="download-btn" href="a1.jpg" download>Download</a></div>
-    <div class="media"><img src="a2.jpg" alt="Image"><a class="download-btn" href="a2.jpg" download>Download</a></div>
-    <div class="media"><img src="a3.jpg" alt="Image"><a class="download-btn" href="a3.jpg" download>Download</a></div>
-    <div class="media"><img src="b.jpg" alt="Image"><a class="download-btn" href="b.jpg" download>Download</a></div>
-    <div class="media"><img src="c.jpg" alt="Image"><a class="download-btn" href="c.jpg" download>Download</a></div>
-    <div class="media"><img src="d.jpg" alt="Image"><a class="download-btn" href="d.jpg" download>Download</a></div>
-    <div class="media"><img src="e.jpg" alt="Image"><a class="download-btn" href="e.jpg" download>Download</a></div>
-    <div class="media"><img src="f.jpg" alt="Image"><a class="download-btn" href="f.jpg" download>Download</a></div>
-    <div class="media"><img src="g.jpg" alt="Image"><a class="download-btn" href="g.jpg" download>Download</a></div>
-    <div class="media"><img src="h.jpg" alt="Image"><a class="download-btn" href="h.jpg" download>Download</a></div>
-    <div class="media"><img src="hero.png" alt="Hero"><a class="download-btn" href="hero.png" download>Download</a></div>
-    <div class="media"><img src="i.jpg" alt="Image"><a class="download-btn" href="i.jpg" download>Download</a></div>
-    <div class="media"><img src="j.jpg" alt="Image"><a class="download-btn" href="j.jpg" download>Download</a></div>
-    <div class="media"><img src="k.jpg" alt="Image"><a class="download-btn" href="k.jpg" download>Download</a></div>
-    <div class="media"><img src="l.jpg" alt="Image"><a class="download-btn" href="l.jpg" download>Download</a></div>
-    <div class="media"><img src="m.jpg" alt="Image"><a class="download-btn" href="m.jpg" download>Download</a></div>
-    <div class="media"><img src="n.jpg" alt="Image"><a class="download-btn" href="n.jpg" download>Download</a></div>
-    <div class="media"><img src="o.jpg" alt="Image"><a class="download-btn" href="o.jpg" download>Download</a></div>
-    <div class="media"><img src="p.jpg" alt="Image"><a class="download-btn" href="p.jpg" download>Download</a></div>
-    <div class="media"><img src="q.jpg" alt="Image"><a class="download-btn" href="q.jpg" download>Download</a></div>
-    <div class="media"><img src="r.jpg" alt="Image"><a class="download-btn" href="r.jpg" download>Download</a></div>
-    <div class="media"><img src="s.jpg" alt="Image"><a class="download-btn" href="s.jpg" download>Download</a></div>
-    <div class="media"><img src="t.jpg" alt="Image"><a class="download-btn" href="t.jpg" download>Download</a></div>
-    <div class="media"><img src="u.jpg" alt="Image"><a class="download-btn" href="u.jpg" download>Download</a></div>
-    <div class="media"><img src="v.jpg" alt="Image"><a class="download-btn" href="v.jpg" download>Download</a></div>
-    <div class="media"><img src="w.jpg" alt="Image"><a class="download-btn" href="w.jpg" download>Download</a></div>
-    <div class="media"><img src="x.jpg" alt="Image"><a class="download-btn" href="x.jpg" download>Download</a></div>
-    <div class="media"><img src="y.jpg" alt="Image"><a class="download-btn" href="y.jpg" download>Download</a></div>
+    <h2>Full Gallery</h2>
+    <div class="media-grid">
+      <img src="1.png" alt="Image">
+      <img src="a.jpg" alt="Image">
+      <img src="a1.jpg" alt="Image">
+      <img src="a2.jpg" alt="Image">
+      <img src="a3.jpg" alt="Image">
+      <img src="b.jpg" alt="Image">
+      <img src="c.jpg" alt="Image">
+      <img src="d.jpg" alt="Image">
+      <img src="e.jpg" alt="Image">
+      <img src="f.jpg" alt="Image">
+      <img src="g.jpg" alt="Image">
+      <img src="h.jpg" alt="Image">
+      <img src="i.jpg" alt="Image">
+      <img src="j.jpg" alt="Image">
+      <img src="k.jpg" alt="Image">
+      <img src="l.jpg" alt="Image">
+      <img src="m.jpg" alt="Image">
+      <img src="n.jpg" alt="Image">
+      <img src="o.jpg" alt="Image">
+      <img src="p.jpg" alt="Image">
+      <img src="q.jpg" alt="Image">
+      <img src="r.jpg" alt="Image">
+      <img src="s.jpg" alt="Image">
+      <img src="t.jpg" alt="Image">
+      <img src="u.jpg" alt="Image">
+      <img src="v.jpg" alt="Image">
+      <img src="w.jpg" alt="Image">
+      <img src="x.jpg" alt="Image">
+      <img src="y.jpg" alt="Image">
+    </div>
   </section>
 
   <footer>
-    Powered by Scribe Haus
+    © 2025 Luxury Showcase | Powered by Scribe Haus
   </footer>
 
 </body>
 </html>
-
