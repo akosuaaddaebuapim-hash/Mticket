@@ -2,205 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Luxury Concepts – Roman Ridge, Accra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhotMedia Showcase</title>
   <style>
-    /* Global Setup */
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-      color: #e0e0e0;
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      background-image: url('background.jpg');
+      font-family: Arial, sans-serif;
+      background: url('background.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      background-color: #1a1510;
+      color: #fff;
+      overflow-x: hidden;
     }
 
     /* Hero Section */
-    .hero-section {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    header.hero {
+      background: rgba(0,0,0,0.65);
       text-align: center;
-      overflow: hidden;
-      background: url('hero.png') center/cover no-repeat fixed;
+      padding: 100px 20px;
     }
-    .hero-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(to top, rgba(26,21,16,0.9) 10%, rgba(26,21,16,0.4));
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
-      padding: 60px;
-      background: rgba(26, 21, 16, 0.85);
-      border-radius: 8px;
-      border: 1px solid rgba(218, 165, 32, 0.5);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.8);
-    }
-    .hero-content h1 {
-      font-size: 5em;
-      font-weight: 300;
-      color: #f5f5f5;
-      text-transform: uppercase;
-      letter-spacing: 12px;
-      text-shadow: 0 0 15px rgba(218,165,32,0.7);
+    header.hero img {
+      max-width: 250px;
+      border-radius: 15px;
       margin-bottom: 20px;
     }
-    .hero-content p {
-      font-size: 1.6em;
-      color: #deb887;
-      line-height: 1.7;
+    header.hero h1 {
+      font-size: 3rem;
+      margin: 10px 0;
+    }
+    header.hero p {
+      font-size: 1.2rem;
+      opacity: 0.9;
     }
 
-    /* Sections */
-    .section {
-      padding: 60px 25px;
-      background: rgba(26, 21, 16, 0.8);
-      box-shadow: 0 0 40px rgba(0,0,0,0.8);
-      margin-bottom: 3px;
-      text-align: center;
-    }
-    .section h2 {
-      font-size: 2.5em;
-      color: #daa520;
-      margin-bottom: 30px;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-    }
-
-    /* Video Grid */
-    .video-grid {
+    /* Video Showcase */
+    .videos {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
       gap: 20px;
+      padding: 60px 20px;
+      background: rgba(0,0,0,0.75);
     }
-    .video-grid video {
+    .videos video {
       width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
 
-    /* Gallery Grid */
+    /* Featured Images */
+    .featured-images {
+      padding: 60px 20px;
+      text-align: center;
+      background: rgba(0,0,0,0.65);
+    }
+    .featured-images h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+    .featured-images img {
+      width: 30%;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    /* Gallery */
+    .gallery {
+      padding: 60px 20px;
+      background: rgba(0,0,0,0.85);
+    }
+    .gallery h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
     }
     .gallery-grid img {
       width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.9);
-      transition: transform 0.3s ease;
+      border-radius: 8px;
+      transition: transform 0.3s;
     }
     .gallery-grid img:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
     }
 
     /* Footer */
-    .footer {
-      background-color: #0a0806;
-      color: #5a4e42;
+    footer {
       text-align: center;
-      padding: 25px;
-      font-size: 1em;
-      border-top: 1px solid rgba(218,165,32,0.3);
-    }
-    .footer span {
-      color: #daa520;
-      font-weight: 700;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
   <!-- Hero Section -->
-  <div class="hero-section">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <h1>Luxury Concepts</h1>
-      <p>Discover our evolving portfolio of architectural designs for Roman Ridge, Accra.  
-      From modern hotels to gated communities, explore visuals and videos that bring innovation to life.</p>
-    </div>
-  </div>
+  <header class="hero">
+    <img src="hero.png" alt="PhotMedia Logo" />
+    <h1>Welcome to PhotMedia Showcase</h1>
+    <p>A curated collection of concepts, communities, and creativity brought to life through visuals.</p>
+  </header>
 
-  <!-- Featured Videos -->
-  <div class="section">
-    <h2>Featured Gated Community Videos</h2>
-    <div class="video-grid">
-      <video src="gt1.mp4" autoplay muted loop playsinline></video>
-      <video src="gt2.mp4" autoplay muted loop playsinline></video>
-      <video src="gt3.mp4" autoplay muted loop playsinline></video>
-      <video src="gt5.mp4" autoplay muted loop playsinline></video>
-    </div>
-  </div>
+  <!-- Video Showcase -->
+  <section class="videos">
+    <video src="gt1.mp4" autoplay loop muted playsinline></video>
+    <video src="gt2.mp4" autoplay loop muted playsinline></video>
+    <video src="gt3.mp4" autoplay loop muted playsinline></video>
+    <video src="gt5.mp4" autoplay loop muted playsinline></video>
+  </section>
 
   <!-- Featured Images -->
-  <div class="section">
-    <h2>Highlighted Concepts</h2>
-    <div class="gallery-grid">
-      <img src="22.jpg" alt="Concept 22 Highlight">
-      <img src="23.jpg" alt="Concept 23 Highlight">
-      <img src="24.jpg" alt="Concept 24 Highlight">
-    </div>
-  </div>
+  <section class="featured-images">
+    <h2>Featured Concepts</h2>
+    <img src="22.jpg" alt="Concept 22">
+    <img src="23.jpg" alt="Concept 23">
+    <img src="24.jpg" alt="Concept 24">
+  </section>
 
   <!-- Full Gallery -->
-  <div class="section">
-    <h2>Full Concept Gallery</h2>
+  <section class="gallery">
+    <h2>Full Gallery</h2>
     <div class="gallery-grid">
-      <img src="a1.jpg" alt="Concept A1">
-      <img src="a2.jpg" alt="Concept A2">
-      <img src="a3.jpg" alt="Concept A3">
-      <img src="a.jpg" alt="Concept A">
-      <img src="b.jpg" alt="Concept B">
-      <img src="c.jpg" alt="Concept C">
-      <img src="d.jpg" alt="Concept D">
-      <img src="e.jpg" alt="Concept E">
-      <img src="f.jpg" alt="Concept F">
-      <img src="g.jpg" alt="Concept G">
-      <img src="h.jpg" alt="Concept H">
-      <img src="i.jpg" alt="Concept I">
-      <img src="j.jpg" alt="Concept J">
-      <img src="k.jpg" alt="Concept K">
-      <img src="l.jpg" alt="Concept L">
-      <img src="m.jpg" alt="Concept M">
-      <img src="n.jpg" alt="Concept N">
-      <img src="o.jpg" alt="Concept O">
-      <img src="p.jpg" alt="Concept P">
-      <img src="q.jpg" alt="Concept Q">
-      <img src="r.jpg" alt="Concept R">
-      <img src="s.jpg" alt="Concept S">
-      <img src="t.jpg" alt="Concept T">
-      <img src="u.jpg" alt="Concept U">
-      <img src="v.jpg" alt="Concept V">
-      <img src="w.jpg" alt="Concept W">
-      <img src="x.jpg" alt="Concept X">
-      <img src="y.jpg" alt="Concept Y">
       <img src="1.png" alt="Concept 1">
       <img src="100.png" alt="Concept 100">
       <img src="102.png" alt="Concept 102">
       <img src="103.png" alt="Concept 103">
       <img src="104.png" alt="Concept 104">
+      <img src="25.jpg" alt="Concept 25">
+      <img src="a.jpg" alt="A">
+      <img src="a1.jpg" alt="A1">
+      <img src="a2.jpg" alt="A2">
+      <img src="a3.jpg" alt="A3">
+      <img src="b.jpg" alt="B">
+      <img src="c.jpg" alt="C">
+      <img src="d.jpg" alt="D">
+      <img src="e.jpg" alt="E">
+      <img src="f.jpg" alt="F">
+      <img src="g.jpg" alt="G">
+      <img src="h.jpg" alt="H">
+      <img src="i.jpg" alt="I">
+      <img src="j.jpg" alt="J">
+      <img src="k.jpg" alt="K">
+      <img src="l.jpg" alt="L">
+      <img src="m.jpg" alt="M">
+      <img src="n.jpg" alt="N">
+      <img src="o.jpg" alt="O">
+      <img src="p.jpg" alt="P">
+      <img src="q.jpg" alt="Q">
+      <img src="r.jpg" alt="R">
+      <img src="s.jpg" alt="S">
+      <img src="t.jpg" alt="T">
+      <img src="u.jpg" alt="U">
+      <img src="v.jpg" alt="V">
+      <img src="w.jpg" alt="W">
+      <img src="x.jpg" alt="X">
+      <img src="y.jpg" alt="Y">
     </div>
-  </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="footer">
-    Powered by <span>Scribe Haus</span>
+  <footer>
+    <p>&copy; 2025 PhotMedia. All rights reserved.</p>
   </footer>
+
 </body>
 </html>
