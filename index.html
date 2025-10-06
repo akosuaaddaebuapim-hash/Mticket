@@ -1,139 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Luxury Living Concepts – Roman Ridge, Accra</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>PhotMedia Ghana – Creativity Meets Innovation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
   <style>
-    body {
+    body, html {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fafafa;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #fdfdfd;
       color: #222;
+      scroll-behavior: smooth;
     }
 
     /* Hero Section */
     .hero {
       position: relative;
       height: 100vh;
-      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("hero.png") center/cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 100%;
+      overflow: hidden;
+    }
+    .hero video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    .hero-content {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
       text-align: center;
       color: white;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.7);
       padding: 20px;
     }
-    .hero h1 {
-      font-size: 3.5rem;
+    .hero-content h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+    }
+    .hero-content p {
+      font-size: 1.2em;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 60px 20px;
+      text-align: center;
+    }
+    h2 {
       margin-bottom: 20px;
-      font-weight: bold;
-    }
-    .hero p {
-      font-size: 1.3rem;
-      max-width: 800px;
-      margin: 0 auto;
-      line-height: 1.6;
+      font-size: 2em;
+      color: #444;
     }
 
-    /* Video Section */
-    .video-section {
-      width: 100%;
-      height: 100vh;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 12px;
-      padding: 20px;
-      background: #000;
-    }
-    .video-section video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.5);
-    }
-
-    /* Gallery */
+    /* Gallery Grid */
     .gallery {
-      padding: 50px 20px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      background: #fff;
+      gap: 15px;
     }
     .gallery img {
       width: 100%;
       border-radius: 10px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
     }
     .gallery img:hover {
       transform: scale(1.05);
-      box-shadow: 0 8px 18px rgba(0,0,0,0.2);
-    }
-
-    /* Section Titles */
-    .section-title {
-      text-align: center;
-      font-size: 2.2rem;
-      margin: 60px 0 20px;
-      color: #444;
-      font-weight: 600;
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero -->
+  <!-- Hero Section with Video Background -->
   <section class="hero">
-    <div>
-      <h1>Luxury Living Concepts</h1>
-      <p>
-        A vision of refined architecture and modern elegance at Roman Ridge, Accra.  
-        Explore our gated community and hotel designs — crafted to inspire, designed to last.
-      </p>
+    <video autoplay muted loop>
+      <source src="gt1.mp4" type="video/mp4">
+      <source src="gt2.mp4" type="video/mp4">
+      <source src="gt3.mp4" type="video/mp4">
+      <source src="gt5.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Welcome to PhotMedia Ghana</h1>
+      <p>Where Creativity Meets Innovation – Capturing stories, building brands, and redefining visuals.</p>
     </div>
   </section>
 
-  <!-- Videos -->
-  <h2 class="section-title">Gated Community Concepts in Motion</h2>
-  <section class="video-section">
-    <video autoplay muted loop playsinline>
-      <source src="gt1.mp4" type="video/mp4">
-    </video>
-    <video autoplay muted loop playsinline>
-      <source src="gt2.mp4" type="video/mp4">
-    </video>
-    <video autoplay muted loop playsinline>
-      <source src="gt3.mp4" type="video/mp4">
-    </video>
-    <video autoplay muted loop playsinline>
-      <source src="gt5.mp4" type="video/mp4">
-    </video>
+  <!-- Featured Gallery (100, 102, 103, 104.png) -->
+  <section>
+    <h2>Featured Highlights</h2>
+    <div class="gallery">
+      <img src="100.png" alt="Featured Work 100">
+      <img src="102.png" alt="Featured Work 102">
+      <img src="103.png" alt="Featured Work 103">
+      <img src="104.png" alt="Featured Work 104">
+    </div>
   </section>
 
-  <!-- Gallery -->
-  <h2 class="section-title">Gallery Showcase</h2>
-  <section class="gallery">
-    <!-- Featured first: 100, 102, 103, 104 -->
-    <img src="100.png" alt="Concept 100">
-    <img src="102.png" alt="Concept 102">
-    <img src="103.png" alt="Concept 103">
-    <img src="104.png" alt="Concept 104">
+  <!-- Concept Showcase (22–25.jpg) -->
+  <section>
+    <h2>Concept Showcase</h2>
+    <div class="gallery">
+      <img src="22.jpg" alt="Concept 22">
+      <img src="23.jpg" alt="Concept 23">
+      <img src="24.jpg" alt="Concept 24">
+      <img src="25.jpg" alt="Concept 25">
+    </div>
+  </section>
 
-    <!-- Then Concepts 22–24 -->
-    <img src="22.png" alt="Concept 22">
-    <img src="23.png" alt="Concept 23">
-    <img src="24.png" alt="Concept 24">
-
-    <!-- Then the rest -->
-    <img src="25.png" alt="Concept 25">
-    <img src="26.png" alt="Concept 26">
-    <img src="27.png" alt="Concept 27">
-    <img src="28.png" alt="Concept 28">
-    <img src="29.png" alt="Concept 29">
-    <img src="30.png" alt="Concept 30">
-    <!-- keep adding all your files -->
+  <!-- Full Gallery -->
+  <section>
+    <h2>Full Gallery</h2>
+    <div class="gallery">
+      <img src="1.png" alt="Image 1">
+      <img src="4D.png" alt="4D">
+      <img src="a.jpg" alt="a">
+      <img src="a1.jpg" alt="a1">
+      <img src="a2.jpg" alt="a2">
+      <img src="a3.jpg" alt="a3">
+      <img src="b.jpg" alt="b">
+      <img src="background.jpg" alt="background">
+      <img src="c.jpg" alt="c">
+      <img src="d.jpg" alt="d">
+      <img src="e.jpg" alt="e">
+      <img src="f.jpg" alt="f">
+      <img src="g.jpg" alt="g">
+      <img src="h.jpg" alt="h">
+      <img src="hero.png" alt="hero">
+      <img src="i.jpg" alt="i">
+      <img src="j.jpg" alt="j">
+      <img src="k.jpg" alt="k">
+      <img src="l.jpg" alt="l">
+      <img src="m.jpg" alt="m">
+      <img src="n.jpg" alt="n">
+      <img src="o.jpg" alt="o">
+      <img src="p.jpg" alt="p">
+      <img src="q.jpg" alt="q">
+      <img src="r.jpg" alt="r">
+      <img src="s.jpg" alt="s">
+      <img src="t.jpg" alt="t">
+      <img src="u.jpg" alt="u">
+      <img src="v.jpg" alt="v">
+      <img src="w.jpg" alt="w">
+      <img src="x.jpg" alt="x">
+      <img src="y.jpg" alt="y">
+    </div>
   </section>
 
 </body>
